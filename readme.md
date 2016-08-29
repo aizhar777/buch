@@ -2,4 +2,4 @@
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The  BUCH Project is open-sourced software licensed under the [MIT license](https://github.com/aizhar777/buch/blob/master/LICENSE).
