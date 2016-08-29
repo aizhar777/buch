@@ -1,0 +1,6 @@
+{
+    "name": "Auth",
+    "slug": "auth",
+    "version": "1.0",
+    "description": "Authorization system users"
+}
