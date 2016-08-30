@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Auth::routes();
+Route::get('/login', function () {
+    return redirect()->route('signInForm');
+});
+
+Route::get('/test', function () {
+    $role = \App\Role::where('slug','admin')->first();
+   dd($role);
+});
 
 Route::get('/home', 'HomeController@index');

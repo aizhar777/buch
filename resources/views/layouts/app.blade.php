@@ -64,10 +64,7 @@
                                                  document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
-
-                                    <form id="logout-form" action="{{ url('/auth/signout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
+                                    @include('block.logout_form')
                                 </li>
                             </ul>
                         </li>
@@ -76,6 +73,14 @@
             </div>
         </div>
     </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                @include('flash::message')
+            </div>
+        </div>
+    </div>
 
     @yield('content')
 

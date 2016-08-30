@@ -16,6 +16,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     use Notifiable, Authenticatable, CanResetPassword, ShinobiTrait;
 
     /**
+     * Type of relations
+     *
+     * @var string
+     */
+    public $type = 'user';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -32,6 +39,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Users can have many roles.
+     *
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('\App\Role')->withTimestamps();
+    }
 
     /**
      * Send the password reset notification.

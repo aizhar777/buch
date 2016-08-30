@@ -65,6 +65,13 @@
         </style>
     </head>
     <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                @include('flash::message')
+            </div>
+        </div>
+    </div>
         <div class="flex-center position-ref full-height">
             @if (Auth::guest())
                 <div class="top-right links">
@@ -80,11 +87,18 @@
 
                 <div class="links">
                     <a href="#">Documentation</a>
-                    <a href="#">Laracasts</a>
+                    <a href="#">Accounting</a>
                     <a href="#">News</a>
-                    <a href="#">Forge</a>
-                    <a href="#">GitHub</a>
+                    <a href="https://github.com/aizhar777/buch">GitHub</a>
+                    @if (Auth::guest())
+                        <a href="{{ url('/auth/signin') }}">Sign in</a>
+                    @else
+                        <a href="{{ url('/auth/signout') }}" onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">Sign out</a>
+                        @include('block.logout_form')
+                    @endif
                 </div>
+
             </div>
         </div>
     </body>

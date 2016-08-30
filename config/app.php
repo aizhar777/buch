@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Buch Accounting',
+    'name' => env('APP_NAME', 'BUCH'),
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -169,6 +169,7 @@ return [
         Caffeinated\Modules\ModulesServiceProvider::class, //https://github.com/caffeinated/modules
         Caffeinated\Shinobi\ShinobiServiceProvider::class, //https://github.com/caffeinated/shinobi
         Caffeinated\Flash\FlashServiceProvider::class,     //https://github.com/caffeinated/flash
+        Barryvdh\Debugbar\ServiceProvider::class, //https://github.com/barryvdh/laravel-debugbar
         //
 
         /*
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Module' => Caffeinated\Modules\Facades\Module::class,
         'Flash' => Caffeinated\Flash\Facades\Flash::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

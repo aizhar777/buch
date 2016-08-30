@@ -48,12 +48,9 @@ class SentEmailLink extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line([
-                'You are receiving this email because we received a password reset request for your account.',
-                'Click the button below to reset your password:',
-            ])
-            ->action('Reset Password', url('auth/forgot', $this->token))
-            ->line('If you did not request a password reset, no further action is required.');
+            ->line(trans('auth::messages.reset_pass_line'))
+            ->action(trans('auth::messages.reset_pass_button'), url('auth/forgot', $this->token))
+            ->line(trans('auth::messages.if_not_request'));
     }
 
     /**
