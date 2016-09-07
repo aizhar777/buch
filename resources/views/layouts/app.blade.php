@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,83 +8,55 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Laravel</title>
+    <title>{{config('app.name')}}</title>
 
-    <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{{url('vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{url('vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="{{url('vendors/animate.css/animate.min.css')}}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{url('vendors/nprogress/nprogress.css')}}" rel="stylesheet">
 
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
-</head>
-<body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+    <!-- Custom Theme Style -->
+    <link href="{{url('css/custom.min.css')}}" rel="stylesheet">
+    <style>
+        body{
+            width: 99%;
+        }
+        {!! $style or '' !!}
+    </style>
+    </head>
+    <body>
+    <div class="container body">
+        <div class="main_container">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    BUCH
-                </a>
+            <div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        @include('flash::message')
+                    </div>
+                </div>
             </div>
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
+            @yield('content')
 
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ route('signInForm') }}">Login</a></li>
-                        <li><a href="{{ route('signUpForm') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ url('/auth/signout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    @include('block.logout_form')
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                @include('flash::message')
-            </div>
         </div>
     </div>
 
-    @yield('content')
 
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <!-- jQuery -->
+    <script src="{{url('vendors/jquery/dist/jquery.min.js')}}"></script>
+    <!-- Bootstrap -->
+    <script src="{{url('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- FastClick -->
+    <script src="{{url('vendors/fastclick/lib/fastclick.js')}}"></script>
+    <!-- NProgress -->
+    <script src="{{url('vendors/nprogress/nprogress.js')}}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{{url('build/js/custom.min.js')}}"></script>
 </body>
 </html>
