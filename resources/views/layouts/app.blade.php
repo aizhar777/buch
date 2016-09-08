@@ -20,7 +20,7 @@
     <link href="{{url('vendors/nprogress/nprogress.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{url('css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{url('css/custom.css')}}" rel="stylesheet">
     <style>
         body{
             width: 99%;
