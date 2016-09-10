@@ -2,7 +2,9 @@
 
 namespace App\Modules\Auth\Http\Controllers;
 
+use App\Events\UserIsLogged;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Http\Request;
 
 class SignInController extends LoginController
 {
@@ -21,5 +23,17 @@ class SignInController extends LoginController
     public function showLoginForm()
     {
         return view('auth::login');
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        event(new UserIsLogged($user));
     }
 }
