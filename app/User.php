@@ -20,7 +20,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var string
      */
-    public $type = 'user';
+    public $type = 'App\User';
 
     /**
      * The attributes that are mass assignable.

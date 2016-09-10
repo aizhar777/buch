@@ -4,19 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class TradeStatus extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    public $table = 'clients';
+    public $table = 'trade_statuses';
 
     /**
      * Type of relations
      *
      * @var string
      */
-    public $type = 'App\Client';
+    public $type = 'App\TradeStatus';
 }

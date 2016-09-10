@@ -4,19 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Product extends Model
 {
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    public $table = 'clients';
+    public $table = 'products';
 
     /**
      * Type of relations
      *
      * @var string
      */
-    public $type = 'App\Client';
+    public $type = 'App\Product';
 }
