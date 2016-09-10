@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['prefix' => 'auth'], function() {
+Route::group(['prefix' => 'auth','middleware'=>'debug'], function() {
     Route::get('/', 'SignInController@showLoginForm');
 
     Route::get('/signin',  'SignInController@showLoginForm')->name('signInForm');

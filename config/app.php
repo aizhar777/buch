@@ -230,6 +230,7 @@ return [
         'Module' => Caffeinated\Modules\Facades\Module::class,
         'Flash' => Caffeinated\Flash\Facades\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class,
 
     ],
 
