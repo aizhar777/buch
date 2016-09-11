@@ -170,6 +170,7 @@ return [
         Caffeinated\Shinobi\ShinobiServiceProvider::class, //https://github.com/caffeinated/shinobi
         Caffeinated\Flash\FlashServiceProvider::class,     //https://github.com/caffeinated/flash
         Barryvdh\Debugbar\ServiceProvider::class, //https://github.com/barryvdh/laravel-debugbar
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         //
 
         /*

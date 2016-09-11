@@ -20,8 +20,10 @@ Route::get('/login',  ['middleware'=>'debug',function () {
 }]);
 
 Route::get('/test', function () {
-    $role = \App\Role::where('slug','admin')->first();
-   dd($role);
+    $first = config('test.balance');
+    config(['test.balance' => 999.02]);
+    $after = config('test.balance');
+    return $first.' | '.$after;
 });
 
 Route::get('/home', 'HomeController@index')->middleware('debug');
