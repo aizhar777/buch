@@ -78,6 +78,11 @@
                     <a href="{{ url('/auth/signin') }}">Login</a>
                     <a href="{{ url('/auth/signup') }}">Register</a>
                 </div>
+            @else
+                <div class="top-right links">
+                    <a href="{{url('/home')}}">{{Auth::user()->email}}</a>
+                </div>
+
             @endif
 
             <div class="content">

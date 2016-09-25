@@ -19,7 +19,7 @@ class Log extends Model
      *
      * @var string
      */
-    public $type = 'App\Log';
+    const TYPE = 'App\Log';
 
     /**
      * The attributes that are mass assignable.

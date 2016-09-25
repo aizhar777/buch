@@ -18,5 +18,5 @@ class Requisite extends Model
      *
      * @var string
      */
-    public $type = 'App\Requisite';
+    const TYPE = 'App\Requisite';
 }

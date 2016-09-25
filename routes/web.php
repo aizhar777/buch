@@ -20,10 +20,19 @@ Route::get('/login',  ['middleware'=>'debug',function () {
 }]);
 
 Route::get('/test', function () {
-    $first = config('test.balance');
-    config(['test.balance' => 999.02]);
-    $after = config('test.balance');
-    return $first.' | '.$after;
+    //$field = \App\Library\BFields::getInstance();
+/*    $paramModel = $field->createMapField([
+        'name' => 'Gender',
+        'slug' => 'gender',
+        'default_value' => 'Male|Female',
+        'description' => 'User Gender',
+        'accessory_type' => \App\User::TYPE,
+        'is_many_values' => 1
+    ]);*/
+    $plugin = App\Library\BFields::getInstance();
+    dd(
+        $plugin->all(1,'App\User')
+    );
 });
 
 Route::get('/home', 'HomeController@index')->middleware('debug');

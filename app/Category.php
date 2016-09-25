@@ -19,5 +19,5 @@ class Category extends Model
      *
      * @var string
      */
-    public $type = 'App\Category';
+    const TYPE = 'App\Category';
 }

@@ -19,5 +19,5 @@ class Product extends Model
      *
      * @var string
      */
-    public $type = 'App\Product';
+    const TYPE = 'App\Product';
 }

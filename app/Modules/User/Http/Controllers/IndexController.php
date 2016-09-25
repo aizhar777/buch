@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Http\Controllers;
 
+use App\Library\BFields;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -56,8 +57,10 @@ class IndexController extends Controller
      */
     public function showProfile(User $user)
     {
+        $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile',[
-            'user'=> $user
+            'user'=> $user,
+            'fields' => $fields
         ]);
     }
 }

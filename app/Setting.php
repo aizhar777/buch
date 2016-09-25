@@ -18,5 +18,5 @@ class Setting extends Model
      *
      * @var string
      */
-    public $type = 'App\Setting';
+    const TYPE = 'App\Setting';
 }

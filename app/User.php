@@ -20,7 +20,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var string
      */
-    public $type = 'App\User';
+    const TYPE = 'App\User';
 
     /**
      * The attributes that are mass assignable.
@@ -59,5 +59,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Get all of the post's comments.
+     */
+    public function fields()
+    {
+        return $this->morphMany('App\Field', 'accessory');
     }
 }

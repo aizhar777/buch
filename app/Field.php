@@ -18,6 +18,37 @@ class Field extends Model
      *
      * @var string
      */
-    public $type = 'App\Field';
+    const TYPE = 'App\Field';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public $fillable =[
+        'name',
+        'slug',
+        'value',
+        'default_value',
+        'description',
+        'accessory_id' ,
+        'accessory_type',
+    ];
+
+
+    /**
+     * Get all of the owning commentable models.
+     */
+    public function accessory()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get the post that owns the comment.
+     */
+    public function params()
+    {
+        return $this->belongsTo('App\FieldParam', 'param_id');
+    }
 }

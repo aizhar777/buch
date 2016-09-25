@@ -18,5 +18,5 @@ class Client extends Model
      *
      * @var string
      */
-    public $type = 'App\Client';
+    const TYPE = 'App\Client';
 }

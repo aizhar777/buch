@@ -19,5 +19,27 @@ class FieldParam extends Model
      *
      * @var string
      */
-    public $type = 'App\FieldParam';
+    const TYPE = 'App\FieldParam';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public $fillable =[
+        'name',
+        'slug',
+        'default_value',
+        'description',
+        'accessory_type' ,
+        'is_many_values',
+    ];
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function fields()
+    {
+        return $this->hasMany('App\Field','param_id','id');
+    }
 }

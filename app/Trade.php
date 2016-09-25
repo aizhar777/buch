@@ -18,5 +18,5 @@ class Trade extends Model
      *
      * @var string
      */
-    public $type = 'App\Trade';
+    const TYPE = 'App\Trade';
 }

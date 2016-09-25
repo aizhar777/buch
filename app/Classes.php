@@ -19,5 +19,5 @@ class Classes extends Model
      *
      * @var string
      */
-    public $type = 'App\Classes';
+    const TYPE = 'App\Classes';
 }
