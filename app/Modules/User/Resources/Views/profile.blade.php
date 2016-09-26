@@ -27,17 +27,24 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Plain Page</h2>
+                            <h2>User Data</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <a href="#"
+                                       class="dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       role="button"
+                                       aria-expanded="false">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a>
+                                        <li>
+                                            <a href="#">Add field</a>
                                         </li>
-                                        <li><a href="#">Settings 2</a>
+                                        <li>
+                                            <a href="#">Delete</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -47,7 +54,22 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            You are logged in!
+                            @if(!empty($fields))
+                                @foreach($fields as $key => $value)
+                                    @if(is_array($value))
+                                        <select name="{{$key}}" id="{{$key}}">
+                                            <option value="*">Select gender</option>
+                                            @foreach($value as $k => $v)
+                                                <option value="{{$k}}">{{$v}}</option>
+                                            @endforeach
+                                        </select>
+                                    @else
+                                        <ul>
+                                            <li><b>{{$key}}:</b> {{$value}}</li>
+                                        </ul>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
