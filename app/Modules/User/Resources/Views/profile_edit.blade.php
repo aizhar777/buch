@@ -58,20 +58,30 @@
                         </div>
                         <div class="x_content">
                             @if(!empty($fields))
+                                <form action="{{route('user.edit.post',$user->id)}}" method="post">
+                                    {{ csrf_field() }}
                                 @foreach($fields as $key => $value)
                                     @if(is_array($value))
-                                        <select name="{{$key}}" id="{{$key}}">
-                                            <option value="">Select {{$key}}</option>
-                                            @foreach($value as $k => $v)
-                                                <option value="{{$k}}">{{$v}}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="form-group">
+                                            <label>{{$key}}</label>
+                                            <select name="fields[{{$key}}]" id="{{$key}}">
+                                                <option value="*">Select {{$key}}</option>
+                                                @foreach($value as $k => $v)
+                                                    <option value="{{$k}}">{{$v}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     @else
-                                        <ul>
-                                            <li><b>{{$key}}:</b> {{$value}}</li>
-                                        </ul>
+                                        <div class="form-group">
+                                            <label>{{$key}}</label>
+                                            <input type="text" name="fields[{{$key}}]" value="{{$value}}" placeholder="{{$value}}">
+                                        </div>
                                     @endif
                                 @endforeach
+                                    <div class="form-group">
+                                        <button class="btn btn-default">Send</button>
+                                    </div>
+                                </form>
                             @endif
                         </div>
                     </div>

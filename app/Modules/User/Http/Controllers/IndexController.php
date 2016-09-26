@@ -32,6 +32,16 @@ class IndexController extends Controller
         }
     }
 
+    public function userEdit($id)
+    {
+        $user = \Auth::user();
+        $fields = BFields::getInstance()->all($user->id,$user::TYPE);
+        return View('user::profile_edit',[
+            'user'=> $user,
+            'fields' => $fields
+        ]);
+    }
+
     /**
      * Show user
      *

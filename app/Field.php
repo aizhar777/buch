@@ -29,8 +29,8 @@ class Field extends Model
         'name',
         'slug',
         'value',
+        'param_id',
         'default_value',
-        'description',
         'accessory_id' ,
         'accessory_type',
     ];

@@ -20,21 +20,21 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
     Route::get('/{id?}', 'IndexController@userProfile')
         ->where([
             'id' => '[0-9]+'
-        ]);
+        ])->name('user.profile');
 
     # Create
     Route::get('/create', 'IndexController@userCreate');
     Route::post('/create', 'DataController@userCreate');
 
     # Edit
-    Route::put('/edit/{id}', 'DataController@userEdit')
+    Route::post('/edit/{id}', 'DataController@userEdit')
         ->where([
             'id' => '[0-9]+'
-        ]);
+        ])->name('user.edit.post');
     Route::get('/edit/{id}', 'IndexController@userEdit')
         ->where([
             'id' => '[0-9]+'
-        ]);
+        ])->name('user.edit');
 
     # Delete
     Route::delete('/delete/{id}', 'DataController@userDelete')

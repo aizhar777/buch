@@ -6,6 +6,8 @@ namespace App\Library;
 use App\Field;
 use App\FieldParam;
 use App\Library\Interfaces\PluginInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class BFields implements PluginInterface
 {
@@ -70,6 +72,56 @@ class BFields implements PluginInterface
 
         return null;
 
+    }
+
+    /**
+     * Update or create fields
+     *
+     * @param Model $model
+     * @param Request $request
+     */
+    public function updateOrCreate(Model $model, Request $request)
+    {
+        $fieldMap = $this->getAllFieldMap($model::TYPE);
+
+        foreach ($fieldMap as $fParam){
+            $field = $fParam->fields()->where('accessory_id', $model->id)->first();
+            if($field != null) {
+                $data = $request->get('fields');
+                if(!empty($data[$field->slug])){
+                    if($fParam->is_many_values){
+
+                        $defaultValue = explode("|", $fParam->default_value);
+                        $validator = Validator::make($request->get('fields'), [
+                            $fParam->slug => 'required|in:'.implode(',',$defaultValue)
+                        ]);
+
+                        if ($validator->fails()) {
+                            //TODO: if validate fails
+                            continue;
+                        }
+
+                        $field->value = $data[$field->slug];
+
+                    }else{
+
+                        $field->value = $data[$field->slug];
+                    }
+                    $field->save();
+                }
+            }else{
+
+                Field::create([
+                    'name' => $fParam->name,
+                    'slug' => $fParam->slug,
+                    'value' => $data[$fParam->slug],
+                    'default_value' => $fParam->default_value,
+                    'param_id' => $fParam->id,
+                    'accessory_id' => $model->id,
+                    'accessory_type' => $model::TYPE,
+                ]);
+            }
+        }
     }
 
     /**
