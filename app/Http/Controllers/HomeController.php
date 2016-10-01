@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $modules = '';
+        return view('home',[
+            'modules' => $modules
+        ]);
     }
 }

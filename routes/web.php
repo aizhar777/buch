@@ -20,19 +20,11 @@ Route::get('/login',  ['middleware'=>'debug',function () {
 }]);
 
 Route::get('/test', function () {
-    //$field = \App\Library\BFields::getInstance();
-/*    $paramModel = $field->createMapField([
-        'name' => 'Gender',
-        'slug' => 'gender',
-        'default_value' => 'Male|Female',
-        'description' => 'User Gender',
-        'accessory_type' => \App\User::TYPE,
-        'is_many_values' => 1
-    ]);*/
-    $plugin = App\Library\BFields::getInstance();
-    dd(
-        $plugin->all(1,'App\User')
-    );
+    $mod = new App\Modules\User\UserModule();
+
+    //$users = App\User::all(['name','email','created_at'])->take(10);
+    //$mod = new App\Modules\User\UserModule();
+    //return $mod->widget();
 });
 
 Route::get('/home', 'HomeController@index')->middleware('debug');
