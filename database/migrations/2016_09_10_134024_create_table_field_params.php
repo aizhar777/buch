@@ -21,6 +21,7 @@ class CreateTableFieldParams extends Migration
             $table->text('description')->nullable();
             $table->string('accessory_type');
             $table->boolean('is_many_values')->default(0);
+            $table->boolean('is_required')->default(0);
             $table->timestamps();
 
             $table->foreign('accessory_type')

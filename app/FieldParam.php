@@ -33,6 +33,7 @@ class FieldParam extends Model
         'description',
         'accessory_type' ,
         'is_many_values',
+        'is_required',
     ];
 
     /**
