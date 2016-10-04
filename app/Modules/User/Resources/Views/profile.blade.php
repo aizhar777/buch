@@ -57,7 +57,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+                            <ul>
+                                <li><b>Name:</b> {{$user->name or 'No name'}}</li>
+                                <li><b>Email:</b> {{$user->email or 'No Email'}}</li>
+                            </ul>
                             @if(!empty($fields))
+                                <h4>Additional Information:</h4>
                                 @foreach($fields as $key => $value)
                                     @if(is_array($value))
                                         <select name="{{$key}}" id="{{$key}}">

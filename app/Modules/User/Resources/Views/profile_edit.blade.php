@@ -24,6 +24,19 @@
             <div class="clearfix"></div>
 
             <div class="row">
+
+                @if (count($errors) > 0)
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
@@ -57,32 +70,44 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            @if(!empty($fields))
+
                                 <form action="{{route('user.edit.post',$user->id)}}" method="post">
                                     {{ csrf_field() }}
-                                @foreach($fields as $key => $value)
-                                    @if(is_array($value))
-                                        <div class="form-group">
-                                            <label>{{$key}}</label>
-                                            <select name="fields[{{$key}}]" id="{{$key}}">
-                                                <option value="*">Select {{$key}}</option>
-                                                @foreach($value as $k => $v)
-                                                    <option value="{{$k}}">{{$v}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @else
-                                        <div class="form-group">
-                                            <label>{{$key}}</label>
-                                            <input type="text" name="fields[{{$key}}]" value="{{$value}}" placeholder="{{$value}}">
-                                        </div>
+
+                                    <div class="form-group">
+                                        <label>You'r name</label>
+                                        <input type="text" name="name" value="{{$user->name}}" placeholder="Name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
+                                    </div>
+
+                                    @if(!empty($fields))
+                                        @foreach($fields as $key => $value)
+                                            @if(is_array($value))
+                                                <div class="form-group">
+                                                    <label>{{$key}}</label>
+                                                    <select name="fields[{{$key}}]" id="{{$key}}">
+                                                        <option value="*">Select {{$key}}</option>
+                                                        @foreach($value as $k => $v)
+                                                            <option value="{{$k}}">{{$v}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @else
+                                                <div class="form-group">
+                                                    <label>{{$key}}</label>
+                                                    <input type="text" name="fields[{{$key}}]" value="{{$value}}" placeholder="{{$value}}">
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     @endif
-                                @endforeach
                                     <div class="form-group">
                                         <button class="btn btn-default">Send</button>
                                     </div>
                                 </form>
-                            @endif
                         </div>
                     </div>
                 </div>
