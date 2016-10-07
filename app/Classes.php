@@ -20,4 +20,14 @@ class Classes extends Model
      * @var string
      */
     const TYPE = 'App\Classes';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public $fillable =[
+        'class',
+        'name',
+    ];
 }

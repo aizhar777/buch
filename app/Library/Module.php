@@ -30,12 +30,19 @@ abstract class Module implements ModuleInterface
                             </ul>';
     protected $_content = '<div class="x_content">%s</div>';
 
+    protected $_sidebarMenu = '<ul class="nav side-menu"><li>
+                        <a><i class="fa %1$s"></i> %2$s <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            %3$s
+                        </ul></li></ul>';
+
     /**
      * Module constructor.
      *
      */
     public function __construct()
-    {}
+    {
+    }
 
     protected $with_div = 12;
 
@@ -113,4 +120,38 @@ abstract class Module implements ModuleInterface
      * @return string
      */
     abstract protected function getContent();
+
+    /**
+     * Menu sidebar dropdown
+     *
+     * @return string|null
+     */
+    public function menuSidebar()
+    {
+        if($this->getMenuSidebar() == null) return null;
+
+        return sprintf($this->_sidebarMenu, $this->getMenuSidebarIcon(), $this->name, $this->getMenuSidebar());
+    }
+
+    /**
+     * Menu sidebar dropdown
+     *
+     * @example Return the links kit "<li><a href='/#link'>link</a><a href='/#link2'>link2</a></li>"
+     * @return string|null
+     */
+    abstract public function getMenuSidebar();
+
+    /**
+     * Menu sidebar dropdown icon
+     * Font Awesome Icon
+     *
+     * @example fa-list
+     * @return string
+     */
+    public function getMenuSidebarIcon()
+    {
+        return 'fa-list';
+    }
+
+
 }

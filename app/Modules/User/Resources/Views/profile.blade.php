@@ -1,10 +1,12 @@
 @extends('layouts.main')
 
 @section('content')
+
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="">
             <div class="page-title">
+
                 <div class="title_left">
                     <h3>Profile: {{$user->name or 'No name'}} {{$user->email or ''}}</h3>
                 </div>
@@ -24,6 +26,9 @@
             <div class="clearfix"></div>
 
             <div class="row">
+
+                @include('block.flash_messages')
+
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
@@ -64,16 +69,16 @@
                             @if(!empty($fields))
                                 <h4>Additional Information:</h4>
                                 @foreach($fields as $key => $value)
-                                    @if(is_array($value))
+                                    @if(is_array($value['data']))
                                         <select name="{{$key}}" id="{{$key}}">
                                             <option value="">Select {{$key}}</option>
-                                            @foreach($value as $k => $v)
+                                            @foreach($value['data'] as $k => $v)
                                                 <option value="{{$k}}">{{$v}}</option>
                                             @endforeach
                                         </select>
                                     @else
                                         <ul>
-                                            <li><b>{{$key}}:</b> {{$value}}</li>
+                                            <li><b>{{$value['name']}}:</b> {{$value['data']}}</li>
                                         </ul>
                                     @endif
                                 @endforeach

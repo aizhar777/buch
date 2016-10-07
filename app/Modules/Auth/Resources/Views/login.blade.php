@@ -12,6 +12,8 @@
 
         <div class="login_wrapper">
 
+            @include('block.flash_messages')
+
             <section class="login_content">
                 <form method="POST" action="{{ url('/auth/signin') }}">
                     {{ csrf_field() }}

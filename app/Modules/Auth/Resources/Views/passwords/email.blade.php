@@ -13,6 +13,8 @@
 
         <div class="login_wrapper">
 
+            @include('block.flash_messages')
+
             <section class="login_content">
                 @if (session('status'))
                     <div class="alert alert-success">

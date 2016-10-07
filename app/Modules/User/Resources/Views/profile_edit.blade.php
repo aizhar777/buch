@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="">
@@ -24,6 +25,8 @@
             <div class="clearfix"></div>
 
             <div class="row">
+
+                @include('block.flash_messages')
 
                 @if (count($errors) > 0)
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -86,20 +89,20 @@
 
                                     @if(!empty($fields))
                                         @foreach($fields as $key => $value)
-                                            @if(is_array($value))
+                                            @if(is_array($value['data']))
                                                 <div class="form-group">
                                                     <label>{{$key}}</label>
                                                     <select name="fields[{{$key}}]" id="{{$key}}">
                                                         <option value="*">Select {{$key}}</option>
-                                                        @foreach($value as $k => $v)
+                                                        @foreach($value['data'] as $k => $v)
                                                             <option value="{{$k}}">{{$v}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             @else
                                                 <div class="form-group">
-                                                    <label>{{$key}}</label>
-                                                    <input type="text" name="fields[{{$key}}]" value="{{$value}}" placeholder="{{$value}}">
+                                                    <label>{{$value['name']}}</label>
+                                                    <input type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}">
                                                 </div>
                                             @endif
                                         @endforeach

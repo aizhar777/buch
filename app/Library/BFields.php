@@ -54,9 +54,14 @@ class BFields implements PluginInterface
         if($fieldMap->count() != 0){
             $fields = [];
             foreach ($fieldMap as $fParam){
+
                 $field = $fParam->fields()->where('accessory_id', $id)->first();
+
                 if($field != null) {
-                    $fields[$field->slug] = $field->value;
+                    $fields[$field->slug] = [
+                        'name' => $field->name,
+                        'data' => $field->value,
+                    ];
                 }else{
                     $defaultValue = null;
                     if($fParam->is_many_values){
@@ -64,7 +69,10 @@ class BFields implements PluginInterface
                     }else{
                         $defaultValue = $fParam->default_value;
                     }
-                    $fields[$fParam->slug] = $defaultValue;
+                    $fields[$fParam->slug] = [
+                        'name' => $fParam->name,
+                        'data' => $defaultValue,
+                    ];
                 }
             }
             return $fields;
@@ -84,11 +92,15 @@ class BFields implements PluginInterface
     {
         $fieldMap = $this->getAllFieldMap($model::TYPE);
 
+        $data = $request->get('fields');
+
+
         foreach ($fieldMap as $fParam){
             $field = $fParam->fields()->where('accessory_id', $model->id)->first();
             if($field != null) {
-                $data = $request->get('fields');
+
                 if(!empty($data[$field->slug])){
+
                     if($fParam->is_many_values){
 
                         $defaultValue = explode("|", $fParam->default_value);

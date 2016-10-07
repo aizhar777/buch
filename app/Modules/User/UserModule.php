@@ -48,4 +48,16 @@ class UserModule extends Module
         return $tableOpen . $tBody . $tbClose;
     }
 
+    /**
+     * Menu sidebar dropdown
+     *
+     * @example Return the links kit "<li><a href='/#link'>link</a><a href='/#link2'>link2</a></li>"
+     * @return string|null
+     */
+    public function getMenuSidebar()
+    {
+        return null;
+    }
+
+
 }

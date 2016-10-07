@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+    @include('block.flash_messages')
+
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="">

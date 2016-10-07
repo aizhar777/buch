@@ -14,7 +14,14 @@ interface ModuleInterface
     /**
      * Widget method
      *
-     * @return string
+     * @return string|null
     */
     public function widget();
+
+    /**
+     * Menu sidebar dropdown
+     *
+     * @return string|null
+    */
+    public function menuSidebar();
 }

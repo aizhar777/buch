@@ -30,21 +30,32 @@
                     <li>
                         <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Dashboard2</a></li>
-                            <li><a href="#">Dashboard3</a></li>
+                            <li><a href="/home">Dashboard</a></li>
                         </ul>
                     </li>
                 </ul>
-                <ul class="nav side-menu">
-                    <li>
-                        <a><i class="fa fa-home"></i> Fields <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="#">List</a></li>
-                            <li><a href="#">Create</a></li>
-                        </ul>
-                    </li>
-                </ul>
+            </div>
+
+            <div class="menu_section">
+                <h3>Modules</h3>
+
+
+                @if(\Module::count() > 0)
+                    @foreach(\Module::all() as $module)
+                        @if ($module['enabled'])
+                            <?php
+                            $name = $module['name'];
+                            $classModule = config('modules.namespace').$name.'\\'.$name.'Module';
+                            if(class_exists($classModule)){
+                                $mod = new $classModule();
+                                if(!empty($mod->menuSidebar())){
+                                    echo $mod->menuSidebar();
+                                }
+                            }
+                            ?>
+                        @endif
+                    @endforeach
+                @endif
             </div>
 
         </div>

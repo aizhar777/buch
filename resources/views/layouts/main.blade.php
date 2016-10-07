@@ -32,14 +32,6 @@
 <div class="container body">
     <div class="main_container">
 
-        <div>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    @include('flash::message')
-                </div>
-            </div>
-        </div>
-
         @include('block.sidebar')
 
         @include('block.top_menu_bar')
