@@ -11,10 +11,8 @@
 |
 */
 
-Route::group(['prefix' => 'fields', 'middleware' => ['debug', 'auth']], function () {
-
-    Route::get('/', 'IndexController@show')->name('field.list');
-    Route::get('/add', 'IndexController@add')->name('fields.add');
-    Route::post('/create', 'DataController@create')->name('fields.create');
-
+Route::group(['prefix' => 'clients'], function() {
+    Route::get('/', function() {
+        dd('This is the Clients module index page. Build something great!');
+    });
 });

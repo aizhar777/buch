@@ -5,9 +5,6 @@ namespace App\Modules\Fields\Http\Controllers;
 use App\Classes;
 use App\FieldParam;
 use App\Library\Traits\NoAccess;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class IndexController extends Controller

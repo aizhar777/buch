@@ -93,9 +93,9 @@
                                     <label for="field_is_required">Type</label>
                                     <select name="accessory_type" id="field_is_required" class="form-control" required>
                                         @if(!empty($types) and $types->count() > 0)
-                                            <option value="none" selected>Choose..</option>
+                                            <option value="none" selected="selected">Choose..</option>
                                             @foreach($types as $type)
-                                                <option value="{{$type->class}}" selected>{{$type->name}}</option>
+                                                <option value="{{$type->class}}">{{$type->name}}</option>
                                             @endforeach
                                         @else
                                             <option>Error, try again later</option>

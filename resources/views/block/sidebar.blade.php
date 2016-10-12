@@ -36,14 +36,14 @@
                 </ul>
             </div>
 
-            <div class="menu_section">
-                <h3>Modules</h3>
+            @if(\Module::count() > 0)
+                <div class="menu_section">
+                    <h3>Modules</h3>
 
-
-                @if(\Module::count() > 0)
                     @foreach(\Module::all() as $module)
                         @if ($module['enabled'])
                             <?php
+
                             $name = $module['name'];
                             $classModule = config('modules.namespace').$name.'\\'.$name.'Module';
                             if(class_exists($classModule)){
@@ -52,11 +52,12 @@
                                     echo $mod->menuSidebar();
                                 }
                             }
+
                             ?>
                         @endif
                     @endforeach
-                @endif
-            </div>
+                </div>
+            @endif
 
         </div>
         <!-- /sidebar menu -->

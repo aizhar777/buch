@@ -55,23 +55,39 @@ class BFields implements PluginInterface
             $fields = [];
             foreach ($fieldMap as $fParam){
 
+                $is_many = false;
+                $defaultValue = null;
                 $field = $fParam->fields()->where('accessory_id', $id)->first();
 
                 if($field != null) {
+                    if($fParam->is_many_values){
+                        $is_many = true;
+                        $defaultValue = explode("|", $fParam->default_value);
+                    }else{
+                        $defaultValue = $field->default_value;
+                    }
                     $fields[$field->slug] = [
                         'name' => $field->name,
                         'data' => $field->value,
+                        'default' => $defaultValue,
+                        'is_many' => $is_many,
+                        'is_required' => $fParam->is_required,
                     ];
                 }else{
                     $defaultValue = null;
                     if($fParam->is_many_values){
+                        $is_many = true;
                         $defaultValue = explode("|", $fParam->default_value);
+                        $value = $defaultValue[0];
                     }else{
-                        $defaultValue = $fParam->default_value;
+                        $defaultValue = $value = $fParam->default_value;
                     }
                     $fields[$fParam->slug] = [
                         'name' => $fParam->name,
-                        'data' => $defaultValue,
+                        'data' => $value,
+                        'default' => $defaultValue,
+                        'is_many' => $is_many,
+                        'is_required' => $fParam->is_required,
                     ];
                 }
             }
@@ -104,7 +120,7 @@ class BFields implements PluginInterface
                     if($fParam->is_many_values){
 
                         $defaultValue = explode("|", $fParam->default_value);
-                        $validator = Validator::make($request->get('fields'), [
+                        $validator = \Validator::make($request->get('fields'), [
                             $fParam->slug => 'required|in:'.implode(',',$defaultValue)
                         ]);
 

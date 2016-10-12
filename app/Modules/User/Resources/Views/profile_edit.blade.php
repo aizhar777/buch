@@ -57,9 +57,6 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="#">Add field</a>
-                                        </li>
-                                        <li>
                                             <a href="{{route('user.edit',$user->id)}}">Edit</a>
                                         </li>
                                         <li>
@@ -79,30 +76,30 @@
 
                                     <div class="form-group">
                                         <label>You'r name</label>
-                                        <input type="text" name="name" value="{{$user->name}}" placeholder="Name">
+                                        <input class="form-control" type="text" name="name" value="{{$user->name}}" placeholder="Name">
                                     </div>
 
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
+                                        <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
                                     </div>
 
                                     @if(!empty($fields))
                                         @foreach($fields as $key => $value)
-                                            @if(is_array($value['data']))
+                                            @if($value['is_many'])
                                                 <div class="form-group">
                                                     <label>{{$key}}</label>
-                                                    <select name="fields[{{$key}}]" id="{{$key}}">
+                                                    <select class="form-control" name="fields[{{$key}}]" id="{{$key}}" @if($value['is_required']) required @endif >
                                                         <option value="*">Select {{$key}}</option>
-                                                        @foreach($value['data'] as $k => $v)
-                                                            <option value="{{$k}}">{{$v}}</option>
+                                                        @foreach($value['default'] as $k => $v)
+                                                            <option value="{{$v}}" @if($v == $value['data']) selected="selected" @endif >{{$v}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             @else
                                                 <div class="form-group">
                                                     <label>{{$value['name']}}</label>
-                                                    <input type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}">
+                                                    <input class="form-control" type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}" @if($value['is_required']) required @endif >
                                                 </div>
                                             @endif
                                         @endforeach

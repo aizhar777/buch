@@ -46,9 +46,6 @@
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="#">Add field</a>
-                                        </li>
-                                        <li>
                                             <a href="{{route('user.edit',$user->id)}}">Edit</a>
                                         </li>
                                         <li>
