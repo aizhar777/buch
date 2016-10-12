@@ -95,7 +95,6 @@ class BFields implements PluginInterface
         }
 
         return null;
-
     }
 
     /**

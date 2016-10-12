@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2016-09-11.
+    * Generated on 2016-10-12.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -56,8 +56,6 @@ namespace PHPSTORM_META {
             'command.make.module.provider' instanceof \Caffeinated\Modules\Console\Generators\MakeProviderCommand,
             'command.make.module.request' instanceof \Caffeinated\Modules\Console\Generators\MakeRequestCommand,
             'command.make.module.seeder' instanceof \Caffeinated\Modules\Console\Generators\MakeSeederCommand,
-            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
-            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'Caffeinated\Modules\Contracts\Repository' instanceof \Caffeinated\Modules\Repositories\LocalRepository,
             'modules' instanceof \Caffeinated\Modules\Modules,
             'shinobi' instanceof \Caffeinated\Shinobi\Shinobi,
@@ -114,6 +112,8 @@ namespace PHPSTORM_META {
             'command.serve' instanceof \Illuminate\Foundation\Console\ServeCommand,
             'command.test.make' instanceof \Illuminate\Foundation\Console\TestMakeCommand,
             'command.vendor.publish' instanceof \Illuminate\Foundation\Console\VendorPublishCommand,
+            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
+            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'command.migrate' instanceof \Illuminate\Database\Console\Migrations\MigrateCommand,
             'command.migrate.rollback' instanceof \Illuminate\Database\Console\Migrations\RollbackCommand,
@@ -195,8 +195,6 @@ namespace PHPSTORM_META {
             'command.make.module.provider' instanceof \Caffeinated\Modules\Console\Generators\MakeProviderCommand,
             'command.make.module.request' instanceof \Caffeinated\Modules\Console\Generators\MakeRequestCommand,
             'command.make.module.seeder' instanceof \Caffeinated\Modules\Console\Generators\MakeSeederCommand,
-            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
-            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'Caffeinated\Modules\Contracts\Repository' instanceof \Caffeinated\Modules\Repositories\LocalRepository,
             'modules' instanceof \Caffeinated\Modules\Modules,
             'shinobi' instanceof \Caffeinated\Shinobi\Shinobi,
@@ -253,6 +251,8 @@ namespace PHPSTORM_META {
             'command.serve' instanceof \Illuminate\Foundation\Console\ServeCommand,
             'command.test.make' instanceof \Illuminate\Foundation\Console\TestMakeCommand,
             'command.vendor.publish' instanceof \Illuminate\Foundation\Console\VendorPublishCommand,
+            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
+            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'command.migrate' instanceof \Illuminate\Database\Console\Migrations\MigrateCommand,
             'command.migrate.rollback' instanceof \Illuminate\Database\Console\Migrations\RollbackCommand,
@@ -334,8 +334,6 @@ namespace PHPSTORM_META {
             'command.make.module.provider' instanceof \Caffeinated\Modules\Console\Generators\MakeProviderCommand,
             'command.make.module.request' instanceof \Caffeinated\Modules\Console\Generators\MakeRequestCommand,
             'command.make.module.seeder' instanceof \Caffeinated\Modules\Console\Generators\MakeSeederCommand,
-            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
-            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'Caffeinated\Modules\Contracts\Repository' instanceof \Caffeinated\Modules\Repositories\LocalRepository,
             'modules' instanceof \Caffeinated\Modules\Modules,
             'shinobi' instanceof \Caffeinated\Shinobi\Shinobi,
@@ -392,6 +390,8 @@ namespace PHPSTORM_META {
             'command.serve' instanceof \Illuminate\Foundation\Console\ServeCommand,
             'command.test.make' instanceof \Illuminate\Foundation\Console\TestMakeCommand,
             'command.vendor.publish' instanceof \Illuminate\Foundation\Console\VendorPublishCommand,
+            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
+            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'command.migrate' instanceof \Illuminate\Database\Console\Migrations\MigrateCommand,
             'command.migrate.rollback' instanceof \Illuminate\Database\Console\Migrations\RollbackCommand,
@@ -473,8 +473,6 @@ namespace PHPSTORM_META {
             'command.make.module.provider' instanceof \Caffeinated\Modules\Console\Generators\MakeProviderCommand,
             'command.make.module.request' instanceof \Caffeinated\Modules\Console\Generators\MakeRequestCommand,
             'command.make.module.seeder' instanceof \Caffeinated\Modules\Console\Generators\MakeSeederCommand,
-            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
-            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'Caffeinated\Modules\Contracts\Repository' instanceof \Caffeinated\Modules\Repositories\LocalRepository,
             'modules' instanceof \Caffeinated\Modules\Modules,
             'shinobi' instanceof \Caffeinated\Shinobi\Shinobi,
@@ -531,6 +529,8 @@ namespace PHPSTORM_META {
             'command.serve' instanceof \Illuminate\Foundation\Console\ServeCommand,
             'command.test.make' instanceof \Illuminate\Foundation\Console\TestMakeCommand,
             'command.vendor.publish' instanceof \Illuminate\Foundation\Console\VendorPublishCommand,
+            'migration.repository' instanceof \Illuminate\Database\Migrations\DatabaseMigrationRepository,
+            'migrator' instanceof \Illuminate\Database\Migrations\Migrator,
             'migration.creator' instanceof \Illuminate\Database\Migrations\MigrationCreator,
             'command.migrate' instanceof \Illuminate\Database\Console\Migrations\MigrateCommand,
             'command.migrate.rollback' instanceof \Illuminate\Database\Console\Migrations\RollbackCommand,

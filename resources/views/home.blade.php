@@ -2,8 +2,6 @@
 
 @section('content')
 
-    @include('block.flash_messages')
-
     <!-- page content -->
     <div class="right_col" role="main">
         <div class="">
@@ -27,6 +25,7 @@
 
             <div class="row">
 
+                @include('block.flash_messages')
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
