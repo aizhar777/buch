@@ -19,4 +19,24 @@ class Client extends Model
      * @var string
      */
     const TYPE = 'App\Client';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public $fillable = [
+        'name',
+        'email',
+        'phone',
+        'curator',
+    ];
+
+    public function requisites()
+    {
+        return $this->morphMany('App\Requisite', 'relation');
+    }
+
+
+
 }

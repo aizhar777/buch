@@ -19,4 +19,24 @@ class Requisite extends Model
      * @var string
      */
     const TYPE = 'App\Requisite';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public $fillable = [
+        'legal_name',
+        'bank',
+        'iik',
+        'bin',
+        'cbe',
+        'relation_id',
+        'relation_type',
+    ];
+
+    public function relation()
+    {
+        return $this->morphTo();
+    }
 }

@@ -7,7 +7,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3> </h3>
+                    <h3>Clients</h3>
                 </div>
 
                 <div class="title_right">
@@ -33,7 +33,7 @@
                     <div class="x_panel">
                         <div class="x_title">
 
-                            <h2>Fields list</h2>
+                            <h2>List</h2>
 
                             <ul class="nav navbar-right panel_toolbox">
                                 <li>
@@ -51,10 +51,7 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="{{route('fields.add')}}">Add field</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Delete</a>
+                                            <a href="{{route('clients.create')}}">Add client</a>
                                         </li>
                                     </ul>
 
@@ -71,58 +68,42 @@
 
                         <div class="x_content">
 
-                            @if(!empty($fields) and $fields->count() > 0)
+                            @if(!empty($clients) and $clients->count() > 0)
                                 <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th>#ID</th>
-                                            <th>Name</th>
-                                            <th>Slug</th>
-                                            <th>Description</th>
-                                            <th>Default value</th>
-                                            <th>Is many values</th>
-                                            <th>Is required</th>
-                                            <th>Date</th>
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>Name</th>
+                                        <th>E-Mail</th>
+                                        <th>Phone</th>
+                                        <th>Curator</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($fields as $field)
+                                    @foreach($clients as $client)
                                         <tr>
-                                            <th>{{$field->id}}</th>
-                                            <th>{{$field->name}}</th>
-                                            <th>{{$field->slug}}</th>
-                                            <th>{{$field->description}}</th>
-                                            <th>{{$field->default_value}}</th>
-                                            <th>
-                                                @if($field->is_many_values)
-                                                    yes
-                                                @else
-                                                    no
-                                                @endif
-                                            </th>
-                                            <th>
-                                                @if($field->is_required)
-                                                    yes
-                                                @else
-                                                    no
-                                                @endif
-                                            </th>
-                                            <th>{{date('d.m.Y H:i', strtotime($field->created_at))}}</th>
+                                            <th>{{$client->id}}</th>
+                                            <th>{{$client->name}}</th>
+                                            <th>{{$client->email}}</th>
+                                            <th>{{$client->phone}}</th>
+                                            <th>{{$client->curator}}</th>
+                                            <th>{{date('d.m.Y H:i', strtotime($client->created_at))}}</th>
                                             <th>
                                                 <div class="btn-group">
-                                                    <a class="btn btn-small btn-primary btn-round" href="{{route('fields.edit', ['id'=> $field->id])}}"> Edit</a>
-                                                    <a class="btn btn-small btn-primary btn-round" onclick="event.preventDefault();document.getElementById('fields-{{$field->id}}-param-delete-form').submit();"> delete</a>
+                                                    <a class="btn btn-small btn-primary btn-round" href="{{route('clients.edit', ['id'=> $client->id])}}"> Edit</a>
+                                                    <a class="btn btn-small btn-primary btn-round" onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();"> delete</a>
                                                 </div>
-                                                @include('forms.fields_delete_form', ['id' => $field->id])
+                                                @include('forms.clients_delete_form', ['id' => $client->id])
                                             </th>
                                         </tr>
-                                        @endforeach
+                                    @endforeach
                                     </tbody>
                                 </table>
                             @else
                                 <div class="alert alert-info">
-                                    <h4>Fields not found</h4>
+                                    <h4>Clients not found</h4>
                                 </div>
                             @endif
                         </div>

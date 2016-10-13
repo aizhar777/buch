@@ -53,7 +53,9 @@ abstract class Module implements ModuleInterface
      */
     public function widget()
     {
-        return $this->getWidget();
+        if($this->getContent() !== null)
+            return $this->getWidget();
+        return null;
     }
 
     /**

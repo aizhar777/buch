@@ -5,9 +5,11 @@ namespace App\Library\Traits;
 
 trait NoAccess
 {
-    public function noAccess()
+    public function noAccess($msg = null)
     {
-        //TODO: сделать вывод что нет доступа
-        abort(403);
+        $message = 'Forbidden';
+        if($msg !== null) $message .= ': '. $msg;
+        \Flash::error($message);
+        return abort(403);
     }
 }

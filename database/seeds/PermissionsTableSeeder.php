@@ -14,12 +14,6 @@ class PermissionsTableSeeder extends Seeder
     {
         # Clients
         Permission::create([
-            'name' => 'permission.clients.view',
-            'slug' => 'view.clients',
-            'description' => '',
-        ]);
-
-        Permission::create([
             'name' => 'permission.client.view',
             'slug' => 'view.client',
             'description' => '',
@@ -44,11 +38,6 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         # Users
-        Permission::create([
-            'name' => 'permission.users.show',
-            'slug' => 'view.users',
-            'description' => '',
-        ]);
 
         Permission::create([
             'name' => 'permission.user.show',
@@ -71,6 +60,57 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
             'name' => 'permission.user.delete',
             'slug' => 'delete.user',
+            'description' => '',
+        ]);
+
+        # FieldParam
+        Permission::create([
+            'name' => 'permission.fieldParam.show',
+            'slug' => 'view.fieldParam',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.fieldParam.create',
+            'slug' => 'create.fieldParam',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.fieldParam.edit',
+            'slug' => 'edit.fieldParam',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.fieldParam.delete',
+            'slug' => 'delete.fieldParam',
+            'description' => '',
+        ]);
+
+        # Fields
+
+        Permission::create([
+            'name' => 'permission.fields.show',
+            'slug' => 'view.fields',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.fields.create',
+            'slug' => 'create.fields',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.fields.edit',
+            'slug' => 'edit.fields',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.fields.delete',
+            'slug' => 'delete.fields',
             'description' => '',
         ]);
 

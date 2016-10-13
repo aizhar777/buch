@@ -2,9 +2,10 @@
 
 namespace App\Modules\Fields\Http\Requests;
 
+
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateFieldRequest extends FormRequest
+class EditFieldsMapRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class CreateFieldRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('create.fieldParam'))
+        if(!\Auth::user()->can('edit.fieldParam'))
             return false;
         return true;
     }

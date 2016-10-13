@@ -62,10 +62,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get all of the post's comments.
+     * Get all of the field's.
      */
     public function fields()
     {
         return $this->morphMany('App\Field', 'accessory');
+    }
+
+    /**
+     * Get all of the requisite's.
+     */
+    public function requisites()
+    {
+        return $this->morphMany('App\Requisite', 'relation');
     }
 }
