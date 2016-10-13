@@ -21,7 +21,7 @@ Route::group(['prefix' => 'clients', 'middleware' => ['debug', 'auth']], functio
     Route::get('/create', 'IndexController@create')
         ->name('clients.create');
 
-    Route::post('/create', 'IndexController@create')
+    Route::post('/create', 'DataController@create')
         ->name('clients.data.create');
 
 
@@ -29,12 +29,12 @@ Route::group(['prefix' => 'clients', 'middleware' => ['debug', 'auth']], functio
         ->where(['id' => '[0-9]+'])
         ->name('clients.edit');
 
-    Route::put('/edit/{id}', 'IndexController@edit')
+    Route::put('/edit/{id}', 'DataController@edit')
         ->where(['id' => '[0-9]+'])
         ->name('clients.data.edit');
 
 
-    Route::delete('/delete/{id}', 'IndexController@delete')
+    Route::delete('/delete/{id}', 'DataController@delete')
         ->where(['id' => '[0-9]+'])
         ->name('clients.delete');
 

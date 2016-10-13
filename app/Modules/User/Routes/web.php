@@ -31,6 +31,7 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
         ->where([
             'id' => '[0-9]+'
         ])->name('user.edit.post');
+
     Route::get('/edit/{id}', 'IndexController@userEdit')
         ->where([
             'id' => '[0-9]+'

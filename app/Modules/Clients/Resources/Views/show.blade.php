@@ -88,10 +88,17 @@
                                             <th>{{$client->name}}</th>
                                             <th>{{$client->email}}</th>
                                             <th>{{$client->phone}}</th>
-                                            <th>{{$client->curator}}</th>
+                                            <th>
+                                                @if($client->supervise)
+                                                    <a href="{{route('user.profile',['id' => $client->supervise->id])}}">{{$client->supervise->name}}</a>
+                                                @else
+                                                    none
+                                                @endif
+                                            </th>
                                             <th>{{date('d.m.Y H:i', strtotime($client->created_at))}}</th>
                                             <th>
                                                 <div class="btn-group">
+                                                    <a class="btn btn-small btn-primary btn-round" href="{{route('clients', ['id'=> $client->id])}}"> View</a>
                                                     <a class="btn btn-small btn-primary btn-round" href="{{route('clients.edit', ['id'=> $client->id])}}"> Edit</a>
                                                     <a class="btn btn-small btn-primary btn-round" onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();"> delete</a>
                                                 </div>

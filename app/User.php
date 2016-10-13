@@ -76,4 +76,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->morphMany('App\Requisite', 'relation');
     }
+
+    /**
+     * Get all of the requisite's.
+     */
+    public function oversees()
+    {
+        return $this->hasMany('App\Client','curator','id');
+    }
 }

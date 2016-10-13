@@ -14,6 +14,11 @@ class PermissionsTableSeeder extends Seeder
     {
         # Clients
         Permission::create([
+            'name' => 'permission.clients.view',
+            'slug' => 'view.clients',
+            'description' => '',
+        ]);
+        Permission::create([
             'name' => 'permission.client.view',
             'slug' => 'view.client',
             'description' => '',
@@ -37,7 +42,43 @@ class PermissionsTableSeeder extends Seeder
             'description' => '',
         ]);
 
+        # Requisite
+        Permission::create([
+            'name' => 'permission.requisites.view',
+            'slug' => 'view.requisites',
+            'description' => '',
+        ]);
+        Permission::create([
+            'name' => 'permission.requisite.view',
+            'slug' => 'view.requisite',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.requisite.create',
+            'slug' => 'create.requisite',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.requisite.edit',
+            'slug' => 'edit.requisite',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.requisite.delete',
+            'slug' => 'delete.requisite',
+            'description' => '',
+        ]);
+
         # Users
+
+        Permission::create([
+            'name' => 'permission.users.show',
+            'slug' => 'view.users',
+            'description' => '',
+        ]);
 
         Permission::create([
             'name' => 'permission.user.show',
@@ -69,6 +110,11 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'view.fieldParam',
             'description' => '',
         ]);
+        Permission::create([
+            'name' => 'permission.fieldParams.show',
+            'slug' => 'view.fieldParams',
+            'description' => '',
+        ]);
 
         Permission::create([
             'name' => 'permission.fieldParam.create',
@@ -88,7 +134,7 @@ class PermissionsTableSeeder extends Seeder
             'description' => '',
         ]);
 
-        # Fields
+        # Field
 
         Permission::create([
             'name' => 'permission.fields.show',
@@ -97,20 +143,26 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'permission.fields.create',
-            'slug' => 'create.fields',
+            'name' => 'permission.field.show',
+            'slug' => 'view.field',
             'description' => '',
         ]);
 
         Permission::create([
-            'name' => 'permission.fields.edit',
-            'slug' => 'edit.fields',
+            'name' => 'permission.field.create',
+            'slug' => 'create.field',
             'description' => '',
         ]);
 
         Permission::create([
-            'name' => 'permission.fields.delete',
-            'slug' => 'delete.fields',
+            'name' => 'permission.field.edit',
+            'slug' => 'edit.field',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.field.delete',
+            'slug' => 'delete.field',
             'description' => '',
         ]);
 

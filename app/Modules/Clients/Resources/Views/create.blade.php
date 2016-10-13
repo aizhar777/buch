@@ -42,6 +42,10 @@
 
                     @include('block.flash_messages')
 
+
+                    <form action="{{route('clients.data.create')}}" method="post" class="form-horizontal form-label-left">
+                        {{csrf_field()}}
+
                     <div class="x_panel">
                         <div class="x_title">
 
@@ -79,10 +83,6 @@
                         </div>
 
                         <div class="x_content">
-                            <form action="{{route('clients.data.create')}}" method="post" class="form-horizontal form-label-left">
-                                {{csrf_field()}}
-
-                                <h4>Client Data</h4>
 
                                 <div class="form-group">
                                     <label for="client_name" class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
@@ -109,19 +109,36 @@
                                     <label for="client_curator" class="control-label col-md-3 col-sm-3 col-xs-12">Client curator</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
                                         <select id="client_curator" name="curator" class="form-control">
-                                            <option value="null">Choose option</option>
+                                            <option value="null">Choose curator</option>
                                             @if(!empty($curators))
                                                 @foreach($curators as $curator)
-                                                    <option value="{{$curator->id}}" @if(old('curator') == $curator->id) selected @endif >{{$curator->name}}</option>
+                                                    <option value="{{$curator->id}}" @if(old('curator') == $curator->id) selected @endif >{{$curator->id}}# {{$curator->name}} ({{$curator->email}})</option>
                                                 @endforeach
                                             @endif
                                         </select>
                                     </div>
                                 </div>
+                        </div>
+                    </div>
 
-                                <div class="ln_solid"></div>
+                    <div class="x_panel">
+                        <div class="x_title">
 
-                                <h4>Clients Requisite</h4>
+                            <h2>Create requisite form</h2>
+
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content">
 
                                 <div class="form-group">
                                     <label for="requisite_legal_name" class="control-label col-md-3 col-sm-3 col-xs-12">Legal name</label>
@@ -159,15 +176,16 @@
                                 </div>
 
 
-                                <div class="ln_solid"></div>
-
-                                <div class="form-group">
-                                    <button class="btn btn-large btn-primary" type="submit">Create</button>
-                                </div>
-
-                            </form>
                         </div>
                     </div>
+
+                        <div class="ln_solid"></div>
+
+                        <div class="form-group">
+                            <button class="btn btn-large btn-primary" type="submit">Create</button>
+                        </div>
+
+                    </form>
                 </div>
 
             </div>

@@ -13,9 +13,11 @@ class CreateClientAndRequisiteRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('create.client'))
+        $user = \Auth::user();
+        if(!$user->can('create.client'))
             return false;
-        //TODO: Check permissions to create requisite
+        if(!$user->can('create.requisite'))
+            return false;
         return true;
     }
 

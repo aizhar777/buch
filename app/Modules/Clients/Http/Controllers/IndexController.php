@@ -10,9 +10,6 @@ class IndexController extends Controller
 {
     public function view($id = null)
     {
-        if(!\Auth::user()->can('view.client'))
-            return $this->noAccess('Insufficient permissions to view');
-
         $view = null;
 
         if($id !== null){
@@ -26,6 +23,9 @@ class IndexController extends Controller
 
     public function viewAll()
     {
+        if(!\Auth::user()->can('view.clients'))
+            return $this->noAccess('Insufficient permissions to view');
+
         $clients = Client::all()->take(40);
 
         return view('clients::show',[
@@ -35,6 +35,9 @@ class IndexController extends Controller
 
     public function viewOne($id)
     {
+        if(!\Auth::user()->can('view.client'))
+            return $this->noAccess('Insufficient permissions to view');
+
         $client = Client::find($id)->firstOrFail();
 
         return view('clients::showClient',[

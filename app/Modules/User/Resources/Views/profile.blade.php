@@ -8,7 +8,11 @@
             <div class="page-title">
 
                 <div class="title_left">
-                    <h3>Profile: {{$user->name or 'No name'}} {{$user->email or ''}}</h3>
+                    @role('admin')
+                        <h3>Administrtor: {{$user->name or 'No name'}} {{$user->email or ''}}</h3>
+                    @else
+                        <h3>Profile: {{$user->name or 'No name'}} {{$user->email or ''}}</h3>
+                    @endrole
                 </div>
 
                 <div class="title_right">
