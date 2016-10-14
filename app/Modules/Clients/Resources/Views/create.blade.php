@@ -109,7 +109,7 @@
                                     <label for="client_curator" class="control-label col-md-3 col-sm-3 col-xs-12">Client curator</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
                                         <select id="client_curator" name="curator" class="form-control">
-                                            <option value="null">Choose curator</option>
+                                            <option>Choose curator</option>
                                             @if(!empty($curators))
                                                 @foreach($curators as $curator)
                                                     <option value="{{$curator->id}}" @if(old('curator') == $curator->id) selected @endif >{{$curator->id}}# {{$curator->name}} ({{$curator->email}})</option>
