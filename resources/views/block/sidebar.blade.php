@@ -24,6 +24,7 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
+            <!-- General DropDown menu
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
@@ -34,7 +35,7 @@
                         </ul>
                     </li>
                 </ul>
-            </div>
+            </div>-->
 
             @if(\Module::count() > 0)
                 <div class="menu_section">

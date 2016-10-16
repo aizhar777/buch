@@ -19,7 +19,12 @@ class CreateTablePpc extends Migration
             $table->text('description');
             $table->timestamps();
 
-            $table->index('code');
+            try {
+                \DB::statement('ALTER TABLE ppc ADD FULLTEXT search(code, description)');
+            }catch (\Exception $e){
+                $table->index('code');
+            }
+
         });
     }
 

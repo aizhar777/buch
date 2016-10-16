@@ -12,6 +12,36 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+        # Products
+        Permission::create([
+            'name' => 'permission.products.view',
+            'slug' => 'view.products',
+            'description' => '',
+        ]);
+        Permission::create([
+            'name' => 'permission.product.view',
+            'slug' => 'view.product',
+            'description' => '',
+        ]);
+        
+        Permission::create([
+            'name' => 'permission.product.create',
+            'slug' => 'create.product',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.product.edit',
+            'slug' => 'edit.product',
+            'description' => '',
+        ]);
+
+        Permission::create([
+            'name' => 'permission.product.delete',
+            'slug' => 'delete.product',
+            'description' => '',
+        ]);
+
         # Clients
         Permission::create([
             'name' => 'permission.clients.view',
@@ -23,7 +53,7 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'view.client',
             'description' => '',
         ]);
-        
+
         Permission::create([
             'name' => 'permission.client.create',
             'slug' => 'create.client',
