@@ -37,6 +37,16 @@ class FieldParam extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_many_values' => 'boolean',
+        'is_required' => 'boolean',
+    ];
+
+    /**
      * Get the comments for the blog post.
      */
     public function fields()

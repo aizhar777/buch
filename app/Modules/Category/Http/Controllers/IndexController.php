@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Modules\Products\Http\Controllers;
+namespace App\Modules\Category\Http\Controllers;
 
+use App\Classes;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-
     public function view($id = null)
     {
         if($id === null)
@@ -19,21 +19,24 @@ class IndexController extends Controller
 
     public function viewAll()
     {
-        return view('products::show');
+        return view('category::show');
     }
 
     public function viewOne($id)
     {
-        return view('products::show_one');
+        return view('category::show_one');
     }
 
     public function create()
     {
-        return view('products::create');
+        $types = Classes::all();
+        return view('category::create',[
+            'types' => $types
+        ]);
     }
 
     public function edit($id)
     {
-        return view('products::edit');
+        return view('category::edit');
     }
 }
