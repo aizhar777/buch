@@ -14,7 +14,8 @@ class EditProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        //TODO: check permissions
+        return true;
     }
 
     /**
@@ -25,7 +26,14 @@ class EditProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'cost' => 'required|numeric',
+            'is_service' => 'required|boolean',
+            'balance' => 'required|integer|min:0',
+            'stock' => 'required|exists:categories,id',
+            'subdivision' => 'required|exists:categories,id',
         ];
     }
 }

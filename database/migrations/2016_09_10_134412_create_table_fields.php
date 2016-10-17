@@ -25,16 +25,6 @@ class CreateTableFields extends Migration
             $table->timestamps();
 
             $table->index('accessory_id');
-
-            $table->foreign('accessory_type')
-                ->references('class')->on('classes')
-                ->onDelete('cascade')
-                ->onUpdate('restrict');
-
-            $table->foreign('param_id')
-                ->references('id')->on('field_params')
-                ->onDelete('cascade')
-                ->onUpdate('restrict');
         });
     }
 

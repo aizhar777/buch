@@ -140,7 +140,7 @@ class Category extends Node
     public static function checkAndOrRebuild()
     {
         if(!self::isValidNestedSet()){
-            self::rebuild();
+            self::rebuild(true);
             return null;
         }
         return true;

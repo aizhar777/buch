@@ -2,7 +2,9 @@
 
 namespace App\Modules\Products\Http\Controllers;
 
+use App\Client;
 use App\Modules\Products\Http\Requests\CreateProductRequest;
+use App\Modules\Products\Http\Requests\EditProductRequest;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -28,13 +30,28 @@ class DataController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit($id, EditProductRequest $request)
     {
-
+        $product = Product::updateById($id, $request);
+        if($product){
+            \Flash::success('Product save!');
+            return redirect()->route('products');
+        }else{
+            \Flash::error('Error: Product not saved!');
+            return redirect()->route('products.edit',['id' => $id]);
+        }
     }
 
     public function delete($id)
     {
+        //todo: check permission
+        if(Product::deleteById($id)){
+            \Flash::success('Successfully deleted!');
+            return redirect()->route('products');
+        }else{
+            \Flash::error('Could not delete');
+            return redirect()->route('products',['id' => $id]);
+        }
 
     }
 }

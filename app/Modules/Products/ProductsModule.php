@@ -58,11 +58,11 @@ class ProductsModule extends Module
             foreach ($products as $product) {
                 $date = date('d-m-Y H:s', strtotime($product->created_at));
 
-                $stock = $product->id . 'stock';
+                $stock = $product->stock_id . ' stock';
                 if($product->stock)
                     $stock = $product->stock->name;
 
-                $subdivision = $product->id . 'subdivision';
+                $subdivision = $product->subdivision_id . ' subdivision';
                 if($product->subdivision)
                     $subdivision = $product->subdivision->name;
 

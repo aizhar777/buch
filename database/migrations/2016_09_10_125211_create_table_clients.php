@@ -20,11 +20,6 @@ class CreateTableClients extends Migration
             $table->string('phone', 100)->nullable();
             $table->integer('curator')->unsigned()->nullable();
             $table->timestamps();
-
-            $table->foreign('curator')
-                ->references('id')->on('users')
-                ->onDelete('SET NULL')
-                ->onUpdate('no action');
         });
     }
 

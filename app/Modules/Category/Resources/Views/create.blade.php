@@ -83,7 +83,7 @@
                                 <div class="form-group">
                                     <label for="category_subcategory" class="control-label col-md-3 col-sm-3 col-xs-12">Create a subcategory</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input name="subcategory"  id="category_subcategory" type="checkbox" @if(!empty(old('subcategory'))) selected @endif >
+                                        <input name="subcategory"  id="category_subcategory" type="checkbox" @if(!empty(old('subcategory'))) checked @endif >
                                     </div>
                                 </div>
 

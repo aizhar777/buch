@@ -84,4 +84,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany('App\Client','curator','id');
     }
+
+    public function subdivisions()
+    {
+        return $this->hasMany('App\Subdivision');
+    }
+
+    public function stock()
+    {
+        return $this->hasMany('App\Stock');
+    }
+
 }

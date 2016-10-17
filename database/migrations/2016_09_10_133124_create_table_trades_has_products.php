@@ -19,12 +19,6 @@ class CreateTableTradesHasProducts extends Migration
             $table->integer('products_id')->unsigned();
             $table->integer('quantity');
             $table->nullableTimestamps();
-
-            $table->foreign('trades_id')
-                ->references('id')->on('trades');
-
-            $table->foreign('products_id')
-                ->references('id')->on('products');
         });
     }
 

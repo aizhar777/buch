@@ -23,11 +23,6 @@ class CreateTableCategories extends Migration
             $table->integer('depth')->unsigned()->nullable()->default(0)->index();
             $table->string('cat_type')->nullable();
             $table->timestamps();
-
-            $table->foreign('cat_type')
-                ->references('class')->on('classes')
-                ->onDelete('set null')
-                ->onUpdate('no action');
         });
     }
 

@@ -24,11 +24,6 @@ class CreateTableTypes extends Migration
             $table->timestamps();
 
             $table->index('class_id');
-
-            $table->foreign('class_type')
-                ->references('class')->on('classes')
-                ->onDelete('cascade')
-                ->onUpdate('restrict');
         });
     }
 

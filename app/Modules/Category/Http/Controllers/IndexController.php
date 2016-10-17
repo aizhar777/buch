@@ -20,12 +20,18 @@ class IndexController extends Controller
 
     public function viewAll()
     {
-        return view('category::show');
+        $cats = Category::all();
+        return view('category::show',[
+            'categories' => $cats
+        ]);
     }
 
     public function viewOne($id)
     {
-        return view('category::show_one');
+        $cat = Category::whereId($id)->firstOrFail();
+        return view('category::show_one',[
+            'category' => $cat
+        ]);
     }
 
     public function create()
@@ -40,6 +46,13 @@ class IndexController extends Controller
 
     public function edit($id)
     {
-        return view('category::edit');
+        $cats = Category::all()->toHierarchy();
+        $cat = Category::whereId($id)->firstOrFail();
+        $types = Classes::all();
+        return view('category::edit',[
+            'types' => $types,
+            'cats' => $cats,
+            'category' => $cat
+        ]);
     }
 }

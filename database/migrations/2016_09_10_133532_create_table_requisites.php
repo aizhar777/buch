@@ -25,11 +25,6 @@ class CreateTableRequisites extends Migration
             $table->timestamps();
 
             $table->index('relation_id');
-
-            $table->foreign('relation_type')
-                ->references('class')->on('classes')
-                ->onDelete('set null')
-                ->onUpdate('no action');
         });
     }
 

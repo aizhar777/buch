@@ -3,8 +3,9 @@
 namespace App\Modules\Category\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class EditCategoryRequest extends Request
+class EditCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,8 @@ class EditCategoryRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        //Todo: check permissions
+        return true;
     }
 
     /**
@@ -24,7 +26,10 @@ class EditCategoryRequest extends Request
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'parent_id' => 'required_with:subcategory|exists:categories,id',
+            'description' => '',
+            'cat_type' => 'required|exists:classes,class',
         ];
     }
 }

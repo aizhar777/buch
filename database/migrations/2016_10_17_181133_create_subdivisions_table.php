@@ -21,11 +21,6 @@ class CreateSubdivisionsTable extends Migration
             $table->integer('responsible', false, true)->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
-
-            $table->foreign('responsible')
-                ->references('id')->on('users')
-                ->onDelete('SET NULL')
-                ->onUpdate('restrict');
         });
 
 

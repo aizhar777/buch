@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Modules\Products\Http\Requests\CreateProductRequest;
+use App\Modules\Products\Http\Requests\EditProductRequest;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -62,25 +63,17 @@ class Product extends Model
         'is_service',
         'balance',
         'stock_id',
-        'stock_type',
         'subdivision_id',
-        'subdivision_type',
     ];
 
-    /**
-     * Get all of the owning commentable models.
-     */
-    public function subdivision()
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get all of the owning commentable models.
-     */
     public function stock()
     {
-        return $this->morphTo();
+        return $this->belongsTo('App\Stock', 'stock_id', 'id');
+    }
+
+    public function subdivision()
+    {
+        return $this->belongsTo('App\Subdivision', 'subdivision_id', 'id');
     }
 
     /**
@@ -91,10 +84,8 @@ class Product extends Model
      */
     public static function createNew(CreateProductRequest $request)
     {
-        $stock = Category::whereId($request->get('stock'))->firstOrFail();
-        $subdivision = Category::whereId($request->get('subdivision'))->firstOrFail();
-        //var_dump($stock->toArray());
-        //dd($subdivision->toArray());
+        $stock =  Stock::find($request->get('stock'))->firstOrFail();
+        $subdivision = Subdivision::find($request->get('subdivision'))->firstOrFail();
 
         $product = self::create([
             'name' => $request->get('name'),
@@ -104,13 +95,48 @@ class Product extends Model
             'is_service' => $request->get('is_service'),
             'balance' => $request->get('balance'),
             'stock_id' => $stock->id,
-            'stock_type' => $stock->cat_type,
             'subdivision_id' => $subdivision->id,
-            'subdivision_type' => $subdivision->cat_type,
         ]);
 
         if($product instanceof Product)
             return $product;
+        return false;
+    }
+
+    /**
+     * Create new product
+     *
+     * @param CreateProductRequest $request
+     * @return bool|static
+     */
+    public static function updateById($id, EditProductRequest $request)
+    {
+        $stock =  Stock::find($request->get('stock'))->firstOrFail();
+        $subdivision = Subdivision::find($request->get('subdivision'))->firstOrFail();
+
+        $product = self::find($id)->firstOrFail();
+
+        $updatedProduct = $product->update([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'price' => $request->get('price'),
+            'cost' => $request->get('cost'),
+            'is_service' => $request->get('is_service'),
+            'balance' => $request->get('balance'),
+            'stock_id' => $stock->id,
+            'subdivision_id' => $subdivision->id,
+        ]);
+
+        if($product instanceof Product)
+            return $product;
+        return false;
+    }
+
+    public static function deleteById($id)
+    {
+        $product = self::find($id)->firstOrFail();
+        if($product->delete())
+            return true;
         return false;
     }
 }

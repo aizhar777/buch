@@ -20,11 +20,6 @@ class CreateTableLog extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->text('params')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('no action')
-                ->onUpdate('no action');
         });
     }
 

@@ -22,21 +22,6 @@ class CreateTableTrades extends Migration
             $table->boolean('payment_is_completed')->default(0);
             $table->integer('completed_by_user')->unsigned()->nullable();
             $table->timestamps();
-
-            $table->foreign('status')
-                ->references('id')->on('trade_statuses')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('ppc')
-                ->references('id')->on('ppc')
-                ->onDelete('set null')
-                ->onUpdate('no action');
-
-            $table->foreign('client_id')
-                ->references('id')->on('clients')
-                ->onDelete('cascade')
-                ->onUpdate('restrict');
         });
     }
 

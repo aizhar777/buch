@@ -4,6 +4,8 @@ namespace App\Modules\Products\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use App\Stock;
+use App\Subdivision;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,26 +23,39 @@ class IndexController extends Controller
 
     public function viewAll()
     {
-        return view('products::show');
+        $products = Product::all()->take(10);
+        return view('products::show',[
+            'products' => $products,
+        ]);
     }
 
     public function viewOne($id)
     {
-        return view('products::show_one');
+        $product = Product::where('id', $id)->firstOrFail();
+        return view('products::show_one',[
+            'product' => $product
+        ]);
     }
 
     public function create()
     {
-        $stocks = Category::where('cat_type','=', Product::TYPE_STOCK)->firstOrFail();
-        $subs = Category::where('cat_type','=', Product::TYPE_SUBDIVISION)->firstOrFail();
+        $stocks = Stock::all();
+        $subs = Subdivision::all();
         return view('products::create',[
-            'stocks' => $stocks->children()->get(),
-            'subdivisions' => $subs->children()->get(),
+            'stocks' => $stocks,
+            'subdivisions' => $subs,
         ]);
     }
 
     public function edit($id)
     {
-        return view('products::edit');
+        $product = Product::where('id', $id)->firstOrFail();
+        $stocks = Stock::all();
+        $subs = Subdivision::all();
+        return view('products::edit',[
+            'product' => $product,
+            'stocks' => $stocks,
+            'subdivisions' => $subs,
+        ]);
     }
 }
