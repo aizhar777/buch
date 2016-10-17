@@ -7,7 +7,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Add new client</h3>
+                    <h3>Add new product</h3>
                 </div>
 
                 <div class="title_right">
@@ -98,12 +98,12 @@
 
                                     <label for="product_price" class="control-label col-md-3 col-sm-3 col-xs-12">Price</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input name="price" min="1" id="product_price" type="number" class="form-control" placeholder="Product price" value="{{old('price')}}">
+                                        <input name="price" id="product_price" type="text" class="form-control" placeholder="Product price" value="{{old('price')}}">
                                     </div>
-
+                                    <hr>
                                     <label for="product_cost" class="control-label col-md-3 col-sm-3 col-xs-12">Cost</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input name="cost" min="1" id="product_cost" type="number" class="form-control" placeholder="Product price" value="{{old('cost')}}">
+                                        <input name="cost" id="product_cost" type="text" class="form-control" placeholder="Product price" value="{{old('cost')}}">
                                     </div>
 
                                 </div>
@@ -134,7 +134,7 @@
                                             <option>Choose stock</option>
                                             @if(!empty($stocks))
                                                 @foreach($stocks as $stock)
-                                                    <option value="{{$stock->id}}" @if(old('stock') == $stock->id) selected @endif >{{$stock->id}}# {{$stock->name}}</option>
+                                                    <option value="{{$stock->id}}" @if(old('stock') == $stock->id) selected @endif >{{$stock->name}}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -145,10 +145,10 @@
                                     <label for="product_subdivision" class="control-label col-md-3 col-sm-3 col-xs-12">Product subdivision</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
                                         <select id="product_subdivision" name="subdivision" class="form-control">
-                                            <option>Choose stock</option>
+                                            <option>Choose subdivision</option>
                                             @if(!empty($subdivisions))
                                                 @foreach($subdivisions as $subdivision)
-                                                    <option value="{{$subdivision->id}}" @if(old('subdivision') == $subdivision->id) selected @endif >{{$subdivision->id}}# {{$subdivision->name}}</option>
+                                                    <option value="{{$subdivision->id}}" @if(old('subdivision') == $subdivision->id) selected @endif >{{$subdivision->name}}</option>
                                                 @endforeach
                                             @endif
                                         </select>

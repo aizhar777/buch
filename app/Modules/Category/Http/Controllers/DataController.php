@@ -13,7 +13,7 @@ class DataController extends Controller
 {
     public function create(CreateCategoryRequest $request)
     {
-        $category = Category::addNewCategory($request);
+        $category = Category::createCategory($request);
         if($category instanceof Category){
             \Flash::success('New category created!');
             return redirect()->route('category');

@@ -2,6 +2,8 @@
 
 namespace App\Modules\Products\Http\Controllers;
 
+use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -29,7 +31,12 @@ class IndexController extends Controller
 
     public function create()
     {
-        return view('products::create');
+        $stocks = Category::where('cat_type','=', Product::TYPE_STOCK)->firstOrFail();
+        $subs = Category::where('cat_type','=', Product::TYPE_SUBDIVISION)->firstOrFail();
+        return view('products::create',[
+            'stocks' => $stocks->children()->get(),
+            'subdivisions' => $subs->children()->get(),
+        ]);
     }
 
     public function edit($id)

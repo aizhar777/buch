@@ -30,9 +30,10 @@ Route::get('/dashboard', 'HomeController@index')
 
 #---- TEST -----#
 Route::get('/test', function () {
-    $mod = new App\Modules\User\UserModule();
+    $product = \App\Product::first();
 
-    //$users = App\User::all(['name','email','created_at'])->take(10);
-    //$mod = new App\Modules\User\UserModule();
-    //return $mod->widget();
+    dd($product);
+    dd($product->subdivision());
+    //$electronics = \App\Category::where('cat_type', '=', 'App\Product\Subdivision')->first();
+    //$electronics->makeTree($children); // => true
 });

@@ -27,6 +27,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'parent_id' => 'required_with:subcategory|exists:categories,id',
             'description' => '',
             'cat_type' => 'required|exists:classes,class',
         ];

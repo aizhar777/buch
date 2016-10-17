@@ -16,10 +16,11 @@ class CreateTableCategories extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
+            $table->integer('parent_id')->nullable()->index();
             $table->text('description')->nullable();
-            $table->integer('left_key')->unsigned()->default(0);
-            $table->integer('right_key')->unsigned()->default(0);
-            $table->integer('level')->unsigned()->default(0);
+            $table->integer('lft')->unsigned()->nullable()->default(0)->index();
+            $table->integer('rgt')->unsigned()->nullable()->default(0)->index();
+            $table->integer('depth')->unsigned()->nullable()->default(0)->index();
             $table->string('cat_type')->nullable();
             $table->timestamps();
 
@@ -27,12 +28,6 @@ class CreateTableCategories extends Migration
                 ->references('class')->on('classes')
                 ->onDelete('set null')
                 ->onUpdate('no action');
-
-            $table->index([
-                'left_key',
-                'right_key',
-                'level'
-            ],'left_key');
         });
     }
 

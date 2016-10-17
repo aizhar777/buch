@@ -169,7 +169,8 @@ return [
         Caffeinated\Modules\ModulesServiceProvider::class, //https://github.com/caffeinated/modules
         Caffeinated\Shinobi\ShinobiServiceProvider::class, //https://github.com/caffeinated/shinobi
         Caffeinated\Flash\FlashServiceProvider::class,     //https://github.com/caffeinated/flash
-        Barryvdh\Debugbar\ServiceProvider::class, //https://github.com/barryvdh/laravel-debugbar
+        Barryvdh\Debugbar\ServiceProvider::class,          //https://github.com/barryvdh/laravel-debugbar
+        Baum\Providers\BaumServiceProvider::class,         //https://github.com/etrepat/baum
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         //
 

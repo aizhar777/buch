@@ -81,6 +81,27 @@
                             <div class="x_content">
 
                                 <div class="form-group">
+                                    <label for="category_subcategory" class="control-label col-md-3 col-sm-3 col-xs-12">Create a subcategory</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <input name="subcategory"  id="category_subcategory" type="checkbox" @if(!empty(old('subcategory'))) selected @endif >
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="wrapper_category_parent">
+                                    <label for="category_parent" class="control-label col-md-3 col-sm-3 col-xs-12">Category parent</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select id="category_parent" name="parent_id" class="form-control">
+                                            <option value="">Choose parent</option>
+                                            @if(!empty($cats))
+                                                @foreach($cats as $cat)
+                                                    {!! $cat->renderNodeAsOption($cat, old('parent_id')) !!}
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="category_name" class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
                                         <input name="name"  id="category_name" type="text" class="form-control" placeholder="Category Name" value="{{old('name')}}">

@@ -30,4 +30,9 @@ class Classes extends Model
         'class',
         'name',
     ];
+
+    public function categories()
+    {
+        return $this->hasMany('App\Category', 'class', 'cat_type');
+    }
 }

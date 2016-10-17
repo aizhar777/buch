@@ -18,6 +18,8 @@ class ClassesTableSeeder extends Seeder
             'App\FieldParam' => 'FieldParam',
             'App\Log' => 'Log',
             'App\Product' => 'Product',
+            'App\Product\Stock' => 'Product Stock',
+            'App\Product\Subdivision' => 'Product Subdivision',
             'App\Requisite' => 'Requisite',
             'App\Setting' => 'Setting',
             'App\Trade' => 'Trade',

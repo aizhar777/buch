@@ -54,5 +54,6 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{url('js/custom.min.js')}}"></script>
+<script src="{{url('js/dev.js')}}"></script>
 </body>
 </html>

@@ -57,16 +57,30 @@ class ProductsModule extends Module
         if($products->count() > 0) {
             foreach ($products as $product) {
                 $date = date('d-m-Y H:s', strtotime($product->created_at));
+
+                $stock = $product->id . 'stock';
+                if($product->stock)
+                    $stock = $product->stock->name;
+
+                $subdivision = $product->id . 'subdivision';
+                if($product->subdivision)
+                    $subdivision = $product->subdivision->name;
+
+                $is_service = 'no';
+                if ($product->is_service)
+                    $is_service = 'yes';
+
                 $tBody .= "
                 <tr> 
                     <th>{$product->id}</th> 
+                    <td>{$product->name}</td> 
                     <td>{$product->description}</td> 
                     <td>{$product->price}</td> 
                     <td>{$product->cost}</td> 
-                    <td>{$product->is_service}</td> 
+                    <td>$is_service</td> 
                     <td>{$product->balance}</td> 
-                    <td>{$product->stock_id}</td> 
-                    <td>{$product->subdivision_id}</td> 
+                    <td>$stock</td> 
+                    <td>$subdivision</td> 
                     <td>$date</td> 
                 </tr>
             ";

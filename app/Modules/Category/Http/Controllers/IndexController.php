@@ -2,6 +2,7 @@
 
 namespace App\Modules\Category\Http\Controllers;
 
+use App\Category;
 use App\Classes;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,11 @@ class IndexController extends Controller
 
     public function create()
     {
+        $cats = Category::all()->toHierarchy();
         $types = Classes::all();
         return view('category::create',[
-            'types' => $types
+            'types' => $types,
+            'cats' => $cats
         ]);
     }
 
