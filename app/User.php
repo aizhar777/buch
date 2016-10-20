@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Caffeinated\Shinobi\Traits\ShinobiTrait;
 use Illuminate\Auth\Authenticatable;
@@ -93,6 +94,37 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function stock()
     {
         return $this->hasMany('App\Stock');
+    }
+
+    public function photos()
+    {
+        return $this->morphMany('App\Image', 'imageable');
+    }
+
+    public function createImage(Request $request)
+    {
+        if(!$request->hasFile('user_image'))
+            return false;
+
+        $file = $request->file('user_image');
+        $destinationPath = base_path() . '/public/upload/images/';
+        $image_name = time() . "_". $this->table . "_" . $file->getClientOriginalName();
+        $userPhoto = $file->move($destinationPath , $image_name);
+
+        $image = Image::create([
+            'name' => 'User Image',
+            'src' => $image_name,
+            'alt' => 'User Image',
+            'imageable_id' => $this->id,
+            'imageable_type' => self::TYPE,
+        ]);
+
+        if($image instanceof Image){
+            return true;
+        }else{
+            unlink($userPhoto->getPath());
+            return false;
+        }
     }
 
 }

@@ -34,11 +34,13 @@
                 @include('block.flash_messages')
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
+
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>User Data</h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
                                 <li class="dropdown">
                                     <a href="#"
@@ -46,7 +48,7 @@
                                        data-toggle="dropdown"
                                        role="button"
                                        aria-expanded="false">
-                                        <i class="fa fa-wrench"></i>
+                                        <i class="fa fa-cogs"></i>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
@@ -57,35 +59,87 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <ul>
-                                <li><b>Name:</b> {{$user->name or 'No name'}}</li>
-                                <li><b>Email:</b> {{$user->email or 'No Email'}}</li>
-                            </ul>
-                            @if(!empty($fields))
-                                <h4>Additional Information:</h4>
-                                @foreach($fields as $key => $value)
-                                    @if(is_array($value['data']))
-                                        <select name="{{$key}}" id="{{$key}}">
-                                            <option value="">Select {{$key}}</option>
-                                            @foreach($value['data'] as $k => $v)
-                                                <option value="{{$k}}">{{$v}}</option>
-                                            @endforeach
-                                        </select>
-                                    @else
-                                        <ul>
-                                            <li><b>{{$value['name']}}:</b> {{$value['data']}}</li>
-                                        </ul>
+                            <!-- =============================================================================== -->
+
+
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+
+                                <div class="profile_img">
+                                    <div id="crop-avatar">
+                                        <!-- Current avatar -->
+                                        <img class="img-responsive avatar-view" src="/upload/images/{{ $photo->src or 'user.png'}}" alt="Avatar" title="Change the avatar">
+                                    </div>
+                                </div>
+                                <h3>{{$user->name or 'No name'}}</h3>
+
+                                <ul class="list-unstyled user_data">
+                                    <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
+                                    </li>
+
+                                    <li>
+                                        <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
+                                    </li>
+
+                                    <li>
+                                        <i class="fa fa-email user-profile-icon"></i> {{$user->email or 'No Email'}}
+                                    </li>
+
+
+                                @if(!empty($fields))
+                                    @foreach($fields as $key => $value)
+                                        @if(is_array($value['data']))
+                                            @if(!$value['is_hidden'])
+                                                <li>
+                                                    <p>{{$value['name']}}:</p>
+                                                    @foreach($value['data'] as $v) {{$v}} @endforeach
+                                                </li>
+                                            @endif
+                                        @else
+                                            @if(!$value['is_hidden'])
+                                                <li>
+                                                    <p>{{$value['name']}}</p>
+                                                    {{$value['data']}}
+                                                </li>
+                                            @endif
+                                        @endif
+                                        @endforeach
                                     @endif
-                                @endforeach
-                            @endif
+
+                                    <li class="m-top-xs">
+                                        <i class="fa fa-external-link user-profile-icon"></i>
+                                        <a href="#" target="_blank">www.site.com</a>
+                                    </li>
+                                </ul>
+
+                                <a href="{{route('user.edit',$user->id)}}" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i> Edit Profile</a>
+                                <br />
+                                <!-- end of skills -->
+                            </div>
+
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+
+                                <div class="profile_title">
+                                    <div class="col-md-6">
+                                        <h2>User Activity Report</h2>
+                                    </div>
+                                    <div class="col-md-6">
+                                        Other data
+                                    </div>
+                                </div>
+
+                                Other
+                            </div>
+
+
+                            <!-- =============================================================================== -->
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

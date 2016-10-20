@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     showOrHideParentCategory();
 
@@ -7,7 +12,7 @@ $(document).ready(function(){
     });
 
     function showOrHideParentCategory() {
-        if(document.getElementById('category_subcategory').checked) {
+        if($('#category_subcategory').prop('checked')) {
             $('#wrapper_category_parent').show();
         } else {
             $('#wrapper_category_parent').hide();

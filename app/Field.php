@@ -21,6 +21,13 @@ class Field extends Model
     const TYPE = 'App\Field';
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = ['is_hidden' => 'boolean'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -33,6 +40,7 @@ class Field extends Model
         'default_value',
         'accessory_id' ,
         'accessory_type',
+        'is_hidden',
     ];
 
 

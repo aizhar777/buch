@@ -42,77 +42,112 @@
 
                     @include('block.flash_messages')
 
-                        <div class="x_panel">
-                            <div class="x_title">
+                    <div class="x_panel">
+                        <div class="x_title">
 
-                                <h2>Client: {{$client->name or 'Error'}}</h2>
+                            <h2>Client: {{$client->name or 'Error'}}</h2>
 
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
 
-                                        <a href="#"
-                                           class="dropdown-toggle"
-                                           data-toggle="dropdown"
-                                           role="button"
-                                           aria-expanded="false">
-                                            <i class="fa fa-wrench"></i>
-                                        </a>
+                                    <a href="#"
+                                       class="dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       role="button"
+                                       aria-expanded="false">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
 
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="{{route('clients')}}">All clients</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('clients.edit',['id' => $client->id])}}">Edit</a>
-                                            </li>
-                                            <li>
-                                                <a onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();">Delete</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                @include('forms.clients_delete_form', ['id' => $client->id])
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{route('clients')}}">All clients</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('clients.edit',['id' => $client->id])}}">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();">Delete</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            @include('forms.clients_delete_form', ['id' => $client->id])
 
-                                <div class="clearfix"></div>
-                            </div>
-
-                            <div class="x_content">
-                                <h4>Client data:</h4>
-                                <div><b>Name:</b> {{$client->name}}</div>
-                                <div><b>E-Mail:</b> {{$client->email}}</div>
-                                <div><b>Phone:</b> {{$client->phone}}</div>
-                                <div>
-                                    <b>Curator:</b>
-                                    @if($client->supervise)
-                                        <a href="{{route('user.profile',['id' => $client->supervise->id])}}">{{$client->supervise->name}}</a>
-                                    @else
-                                        none
-                                    @endif
-                                </div>
-
-                                @if(!empty($fields))
-                                    <h4>Additional Information:</h4>
-                                    @foreach($fields as $key => $value)
-                                        @if(is_array($value['data']))
-                                            <select name="{{$key}}" id="{{$key}}">
-                                                <option value="">Select {{$key}}</option>
-                                                @foreach($value['data'] as $k => $v)
-                                                    <option value="{{$k}}">{{$v}}</option>
-                                                @endforeach
-                                            </select>
-                                        @else
-                                            <ul>
-                                                <li><b>{{$value['name']}}:</b> {{$value['data']}}</li>
-                                            </ul>
-                                        @endif
-                                    @endforeach
-                                @endif
-
-                            </div>
+                            <div class="clearfix"></div>
                         </div>
+
+                        <div class="x_content">
+                            <h4>Client data:</h4>
+                            <div><b>Name:</b> {{$client->name}}</div>
+                            <div><b>E-Mail:</b> {{$client->email}}</div>
+                            <div><b>Phone:</b> {{$client->phone}}</div>
+                            <div>
+                                <b>Curator:</b>
+                                @if($client->supervise)
+                                    <a href="{{route('user.profile',['id' => $client->supervise->id])}}">{{$client->supervise->name}}</a>
+                                @else
+                                    none
+                                @endif
+                            </div>
+
+                            @if(!empty($fields))
+                                <h4>Additional Information:</h4>
+                                @foreach($fields as $key => $value)
+                                    @if(is_array($value['data']))
+                                        <select name="{{$key}}" id="{{$key}}">
+                                            <option value="">Select {{$key}}</option>
+                                            @foreach($value['data'] as $k => $v)
+                                                <option value="{{$k}}">{{$v}}</option>
+                                            @endforeach
+                                        </select>
+                                    @else
+                                        <ul>
+                                            <li><b>{{$value['name']}}:</b> {{$value['data']}}</li>
+                                        </ul>
+                                    @endif
+                                @endforeach
+                            @endif
+
+                            @if($client->requisites && $client->requisites->count() > 0)
+                                <div class="ln_solid"></div>
+                                <h4>Client requisite</h4>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>Legal name</th>
+                                        <th>Bank</th>
+                                        <th>IIK</th>
+                                        <th>BIN</th>
+                                        <th>CBE</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($client->requisites as $requisite)
+                                        <tr>
+                                            <th>{{$requisite->id}}</th>
+                                            <th>{{$requisite->legal_name}}</th>
+                                            <th>{{$requisite->bank}}</th>
+                                            <th>{{$requisite->iik}}</th>
+                                            <th>{{$requisite->bin}}</th>
+                                            <th>{{$requisite->cbe}}</th>
+                                            <th>{{date('d.m.Y H:i', strtotime($requisite->created_at))}}</th>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="alert alert-warning">
+                                    The client <strong>no requisites!</strong>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
 
                 </div>
 

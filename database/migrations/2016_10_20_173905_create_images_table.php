@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableSettings extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateTableSettings extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->string('slug');
+        Schema::create('images', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('value');
-            $table->boolean('is_bool')->default(0);
-            $table->text('description')->nullable();
+            $table->string('src');
+            $table->string('alt')->nullable();
+            $table->integer('imageable_id', false, true);
+            $table->string('imageable_type');
             $table->timestamps();
 
-            $table->primary('slug');
-            $table->index('name');
+            $table->index('imageable_id');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateTableSettings extends Migration
      */
     public function down()
     {
-        Schema::drop('settings');
+        Schema::dropIfExists('images');
     }
 }

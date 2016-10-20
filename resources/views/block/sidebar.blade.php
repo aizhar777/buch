@@ -11,7 +11,11 @@
         <!-- menu profile quick info -->
         <div class="profile" style="margin-bottom: 35px">
             <div class="profile_pic">
-                <img src="/images/user.png" alt="..." class="img-circle profile_img">
+                @if(count($user->photos))
+                    <img src="/upload/images/{{$user->photos()->first()->src or 'user.png'}}" alt="..." class="img-circle profile_img">
+                @else
+                    <img src="/images/user.png" alt="..." class="img-circle profile_img">
+                @endif
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>

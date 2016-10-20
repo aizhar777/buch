@@ -21,6 +21,8 @@ class DataController extends Controller
             $user->email = $request->get('email');
             $user->saveOrFail();
 
+            $user->createImage($request);
+
             $bFields = BFields::getInstance();
             $bFields->updateOrCreate($user, $request);
             return redirect()->route('user.profile',$user->id);

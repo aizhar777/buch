@@ -44,6 +44,7 @@ class EditUserRequest extends FormRequest
                 'regex:/^[a-zA-Zа-яёА-ЯЁ\s\-]+$/u',
             ],
             'email:'.$pattern,
+            'user_image' => 'sometimes|image|max:8192',
         ];
     }
 }

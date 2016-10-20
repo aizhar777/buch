@@ -26,6 +26,31 @@ class BFields implements PluginInterface
         return self::$_instance;
     }
 
+    /**
+     * @param $id
+     * @param $type
+     * @return mixed
+     */
+    protected function getAllField($id, $type)
+    {
+        return Field::where('accessory_id','=',"$id AND accessory_type= $type")->get();
+    }
+
+    /**
+     * @param $type
+     * @return mixed
+     */
+    protected function getAllFieldMap($type)
+    {
+        return FieldParam::where('accessory_type',$type)->get();
+    }
+
+    /**
+     * Create Field param
+     *
+     * @param array $params
+     * @return FieldParam
+     */
     public function createMapField(array $params)
     {
         //TODO: Validate $params
@@ -72,6 +97,7 @@ class BFields implements PluginInterface
                         'default' => $defaultValue,
                         'is_many' => $is_many,
                         'is_required' => $fParam->is_required,
+                        'is_hidden' => $fParam->is_hidden,
                     ];
                 }else{
                     $defaultValue = null;
@@ -88,6 +114,7 @@ class BFields implements PluginInterface
                         'default' => $defaultValue,
                         'is_many' => $is_many,
                         'is_required' => $fParam->is_required,
+                        'is_hidden' => $fParam->is_hidden,
                     ];
                 }
             }
@@ -109,64 +136,92 @@ class BFields implements PluginInterface
 
         $data = $request->get('fields');
 
-
         foreach ($fieldMap as $fParam){
-            $field = $fParam->fields()->where('accessory_id', $model->id)->first();
-            if($field != null) {
-
-                if(!empty($data[$field->slug])){
-
-                    if($fParam->is_many_values){
-
-                        $defaultValue = explode("|", $fParam->default_value);
-                        $validator = \Validator::make($request->get('fields'), [
-                            $fParam->slug => 'required|in:'.implode(',',$defaultValue)
-                        ]);
-
-                        if ($validator->fails()) {
-                            //TODO: if validate fails
-                            continue;
-                        }
-
-                        $field->value = $data[$field->slug];
-
-                    }else{
-
-                        $field->value = $data[$field->slug];
-                    }
-                    $field->save();
+            if($fParam->is_hidden) {
+                continue;
+                $slug = $fParam->slug;
+                if(method_exists($this, $slug)){
+                    $this->$slug($fParam, $model, $request);
                 }
-            }else{
-
-                Field::create([
-                    'name' => $fParam->name,
-                    'slug' => $fParam->slug,
-                    'value' => $data[$fParam->slug],
-                    'default_value' => $fParam->default_value,
-                    'param_id' => $fParam->id,
-                    'accessory_id' => $model->id,
-                    'accessory_type' => $model::TYPE,
-                ]);
             }
+
+            $this->createOrUpdate($fParam, $model, $data);
         }
     }
 
     /**
-     * @param $id
-     * @param $type
-     * @return mixed
+     * Create or update Field model
+     *
+     * @param FieldParam $param
+     * @param Model $model
+     * @param array $data
+     * @return bool
      */
-    protected function getAllField($id, $type)
+    protected function createOrUpdate(FieldParam $param, Model $model, array $data)
     {
-        return Field::where('accessory_id','=',"$id AND accessory_type= $type")->get();
+        $field = $param->fields()->where('accessory_id', $model->id)->first();
+        if($field != null) {
+            if(!empty($data[$field->slug])){
+
+                if($param->is_many_values){
+
+                    $defaultValue = explode("|", $param->default_value);
+                    $validator = \Validator::make($data, [
+                        $param->slug => 'required|in:'.implode(',',$defaultValue)
+                    ]);
+
+                    if ($validator->fails()) {
+                        return false;
+                    }
+
+                    $field->value = $data[$field->slug];
+
+                }else{
+                    $field->value = $data[$field->slug];
+                }
+
+                if($field->save())
+                    return true;
+            }
+        }else{
+            $field = Field::create([
+                'name' => $param->name,
+                'slug' => $param->slug,
+                'value' => $data[$param->slug],
+                'default_value' => $param->default_value,
+                'param_id' => $param->id,
+                'accessory_id' => $model->id,
+                'accessory_type' => $model::TYPE,
+            ]);
+            if ($field instanceof Field)
+                return true;
+        }
+
+        return false;
     }
 
     /**
-     * @param $type
-     * @return mixed
+     * Create or update User image
+     *
+     * @param FieldParam $param
+     * @param Model $model
+     * @param Request $request
+     * @return bool
      */
-    protected function getAllFieldMap($type)
+    protected function param_user_image(FieldParam $param, Model$model, Request $request)
     {
-        return FieldParam::where('accessory_type',$type)->get();
+        $value = $param->default_value;
+        if(!$request->hasFile('param_user_image'))
+            return false;
+
+        $file = $request->file('param_user_image');
+        $destinationPath = base_path() . '/public/upload/images/';
+        $image_name = time() . "_" . $file->getClientOriginalName();
+        $file->move($destinationPath , $image_name);
+        $value = $image_name;
+
+        $this->createOrUpdate($param, $model, [
+            $param->slug => $value
+        ]);
     }
 }

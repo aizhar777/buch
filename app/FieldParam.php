@@ -34,6 +34,7 @@ class FieldParam extends Model
         'accessory_type' ,
         'is_many_values',
         'is_required',
+        'is_hidden',
     ];
 
     /**
@@ -44,6 +45,7 @@ class FieldParam extends Model
     protected $casts = [
         'is_many_values' => 'boolean',
         'is_required' => 'boolean',
+        'is_hidden' => 'boolean',
     ];
 
     /**

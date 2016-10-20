@@ -22,6 +22,7 @@ class CreateTableFieldParams extends Migration
             $table->string('accessory_type');
             $table->boolean('is_many_values')->default(0);
             $table->boolean('is_required')->default(0);
+            $table->boolean('is_hidden')->default(0);
             $table->timestamps();
         });
     }

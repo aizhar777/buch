@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Http\Controllers;
 
+use App\Image;
 use App\Library\BFields;
 use App\User;
 use Illuminate\Http\Request;
@@ -67,9 +68,18 @@ class IndexController extends Controller
      */
     public function showProfile(User $user)
     {
+        if(empty($user->photos)) {
+            $images = null;
+            $pfoto = null;
+        }else{
+            $pfoto = $user->photos()->first();
+            $images = $user->photos;
+        }
         $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile',[
             'user'=> $user,
+            'photo'=> $pfoto,
+            'images'=> $images,
             'fields' => $fields
         ]);
     }

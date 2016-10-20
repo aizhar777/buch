@@ -71,7 +71,7 @@
                         </div>
                         <div class="x_content">
 
-                                <form action="{{route('user.edit.post',$user->id)}}" method="post">
+                                <form action="{{route('user.edit.post',$user->id)}}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
 
                                     <div class="form-group">
@@ -84,23 +84,32 @@
                                         <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
                                     </div>
 
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <input class="form-control" type="file" name="user_image" placeholder="Change photo">
+                                    </div>
+
                                     @if(!empty($fields))
                                         @foreach($fields as $key => $value)
                                             @if($value['is_many'])
-                                                <div class="form-group">
-                                                    <label>{{$key}}</label>
-                                                    <select class="form-control" name="fields[{{$key}}]" id="{{$key}}" @if($value['is_required']) required @endif >
-                                                        <option value="*">Select {{$key}}</option>
-                                                        @foreach($value['default'] as $k => $v)
-                                                            <option value="{{$v}}" @if($v == $value['data']) selected="selected" @endif >{{$v}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                @if(!$value['is_hidden'])
+                                                    <div class="form-group">
+                                                        <label>{{$key}}</label>
+                                                        <select class="form-control" name="fields[{{$key}}]" id="{{$key}}" @if($value['is_required']) required @endif >
+                                                            <option value="*">Select {{$key}}</option>
+                                                            @foreach($value['default'] as $k => $v)
+                                                                <option value="{{$v}}" @if($v == $value['data']) selected="selected" @endif >{{$v}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endif
                                             @else
-                                                <div class="form-group">
-                                                    <label>{{$value['name']}}</label>
-                                                    <input class="form-control" type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}" @if($value['is_required']) required @endif >
-                                                </div>
+                                                @if(!$value['is_hidden'])
+                                                    <div class="form-group">
+                                                        <label>{{$value['name']}}</label>
+                                                        <input class="form-control" type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}" @if($value['is_required']) required @endif >
+                                                    </div>
+                                                @endif
                                             @endif
                                         @endforeach
                                     @endif

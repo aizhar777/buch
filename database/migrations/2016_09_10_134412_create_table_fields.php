@@ -22,6 +22,7 @@ class CreateTableFields extends Migration
             $table->integer('accessory_id')->unsigned();
             $table->string('accessory_type', 45);
             $table->integer('param_id')->unsigned();
+            $table->boolean('is_hidden')->default(0);
             $table->timestamps();
 
             $table->index('accessory_id');

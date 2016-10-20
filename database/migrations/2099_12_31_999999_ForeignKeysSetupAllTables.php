@@ -133,6 +133,13 @@ class ForeignKeysSetupAllTables extends Migration
                 ->onDelete('set null')
                 ->onUpdate('no action');
         });
+
+        Schema::table('images', function (Blueprint $table) {
+            $table->foreign('imageable_type')
+                ->references('class')->on('classes')
+                ->onDelete('cascade')
+                ->onUpdate('restrict');
+        });
     }
 
     /**
@@ -205,6 +212,10 @@ class ForeignKeysSetupAllTables extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['stock_id']);
             $table->dropForeign(['subdivision_id']);
+        });
+
+        Schema::table('images', function (Blueprint $table) {
+            $table->dropForeign(['imageable_type']);
         });
 
 
