@@ -1,22 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: MasterPC
+ * Date: 021 21.10.16
+ * Time: 20:10
+ */
 
-namespace App\Modules\Fields;
+namespace App\Modules\Stock;
 
 
 use App\Library\Module;
 
-class FieldsModule extends Module
+class StockModule extends Module
 {
-    public $name = 'Fields';
-
-    /**
-     * @return null
-     */
-    public function widget()
-    {
-        return null;
-    }
-
+    public $name = 'Storage';
     /**
      * dropdown links
      *
@@ -25,7 +22,7 @@ class FieldsModule extends Module
      */
     protected function getDropDown()
     {
-        return '';
+        return '<a href="' . route('stock') . '">All store</a><a href="'.route('stock.create').'">Add new store</a>';
     }
 
     /**
@@ -46,10 +43,7 @@ class FieldsModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '
-        <li><a href="/fields"> List Fields</a></li>
-        <li><a href="/fields/add"> Add Fields</a></li>
-        ';
+        return '<li><a href="' . route('stock') . '">All store</a></li><li><a href="'.route('stock.create').'">Add new store</a></li>';
     }
 
     /**
@@ -61,7 +55,7 @@ class FieldsModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-list-alt';
+        return 'fa-hdd-o';
     }
 
 

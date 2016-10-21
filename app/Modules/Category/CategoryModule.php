@@ -52,7 +52,7 @@ class CategoryModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-list';
+        return 'fa-th-list';
     }
 
 }

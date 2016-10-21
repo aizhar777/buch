@@ -25,8 +25,8 @@ class SettingsTableSeeder extends Seeder
             'slug' => 'cache_lifetime',
             'name' => 'Caching',
             'description' => 'Cache lifetime in seconds',
-            'value' => 1,
-            'is_bool' => 1,
+            'value' => 3600,
+            'is_bool' => 0,
         ]);
     }
 }

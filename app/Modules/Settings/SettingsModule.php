@@ -40,4 +40,16 @@ class SettingsModule extends Module
         return '<li><a href="'.route('settings').'">All settings</a></li>';
     }
 
+    /**
+     * Menu sidebar dropdown icon
+     * Font Awesome Icon
+     *
+     * @example fa-list
+     * @return string
+     */
+    public function getMenuSidebarIcon()
+    {
+        return 'fa-cogs';
+    }
+
 }

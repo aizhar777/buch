@@ -7,7 +7,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Products</h3>
+                    <h3>Stock list</h3>
                 </div>
 
                 <div class="title_right">
@@ -15,7 +15,7 @@
 
                         <form action="" method="get">
                             <div class="input-group">
-                                <input name="query" type="text" class="form-control" placeholder="Search for products...">
+                                <input name="query" type="text" class="form-control" placeholder="Search in stock...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="submit">Search</button>
                                 </span>
@@ -54,7 +54,7 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="{{route('products.create')}}">Add product</a>
+                                            <a href="{{route('stock.create')}}">Add stock</a>
                                         </li>
                                     </ul>
 
@@ -67,46 +67,45 @@
 
                         <div class="x_content">
 
-                            @if(!empty($products) and $products->count() > 0)
+                            @if(!empty($stocks) and $stocks->count() > 0)
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
                                         <th>#ID</th>
                                         <th>Name</th>
+                                        <th>Slug</th>
                                         <th>Description</th>
-                                        <th>Price</th>
-                                        <th>Cost</th>
-                                        <th>Balance</th>
-                                        <th>Stock</th>
                                         <th>Subdivision</th>
+                                        <th>Responsible</th>
+                                        <th>address</th>
                                         <th>Date</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($products as $product)
+                                    @foreach($stocks as $stock)
                                         <tr>
-                                            <th>{{$product->id}}</th>
-                                            <th>{{$product->name}}</th>
-                                            <th>{{$product->description}}</th>
-                                            <th>{{$product->price}}</th>
-                                            <th>{{$product->cost}}</th>
+                                            <th>{{$stock->id}}</th>
+                                            <th>{{$stock->name}}</th>
+                                            <th>{{$stock->slug}}</th>
+                                            <th>{{$stock->description or 'Empty'}}</th>
+                                            <th>{{$stock->subdivision->name or $stock->subdivision_id}}</th>
                                             <th>
-                                                @if($product->is_service)
-                                                    <span class="label label-primary">Service</span>
+                                                @if(!is_null($stock->responsible))
+                                                    {{$stock->user->name}}
                                                 @else
-                                                    {{$product->balance}}
-                                                @endif</th>
-                                            <th>{{$product->stock->name or $product->stock_id}}</th>
-                                            <th>{{$product->subdivision->name or $product->subdivision_id}}</th>
-                                            <th>{{date('d.m.Y H:i', strtotime($product->created_at))}}</th>
+                                                    None
+                                                @endif
+                                            </th>
+                                            <th>{{$stock->address or 'Empty'}}</th>
+                                            <th>{{date('d.m.Y H:i', strtotime($stock->created_at))}}</th>
                                             <th>
                                                 <div class="btn-group">
-                                                    <a class="btn btn-small btn-primary btn-round" href="{{route('products', ['id'=> $product->id])}}"> View</a>
-                                                    <a class="btn btn-small btn-primary btn-round" href="{{route('products.edit', ['id'=> $product->id])}}"> Edit</a>
-                                                    <a class="btn btn-small btn-primary btn-round" onclick="event.preventDefault();document.getElementById('products-{{$product->id}}-delete-form').submit();"> delete</a>
+                                                    <a class="btn btn-small btn-primary" href="{{route('stock.show', ['id'=> $stock->id])}}"> View</a>
+                                                    <a class="btn btn-small btn-primary" href="{{route('stock.edit', ['id'=> $stock->id])}}"> Edit</a>
+                                                    <a class="btn btn-small btn-primary" onclick="event.preventDefault();document.getElementById('stock-{{$stock->id}}-delete-form').submit();"> delete</a>
                                                 </div>
-                                                @include('forms.products_delete_form', ['id' => $product->id])
+                                                @include('forms.stock_delete_form', ['id' => $stock->id])
                                             </th>
                                         </tr>
                                     @endforeach

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Modules\Products\Http\Requests;
+namespace App\Modules\Stock\Http\Requests;
 
+use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductRequest extends FormRequest
+class UpdateStockRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +27,11 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'cost' => 'required|numeric',
-            'is_service' => 'required|boolean',
-            'balance' => 'required|integer|min:0',
-            'stock' => 'required|exists:categories,id',
-            'subdivision' => 'required|exists:subdivisions,id',
+            'slug' => 'required|alpha_dash',
+            'description' => '',
+            'subdivision_id' => 'required|exists:subdivisions,id',
+            'responsible' => 'required_with:is_responsible|exists:users,id',
+            'address' => '',
         ];
     }
 }
