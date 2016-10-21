@@ -11,8 +11,14 @@
 |
 */
 
-Route::group(['prefix' => 'subdivision'], function() {
-    Route::get('/', function() {
-        dd('This is the Subdivision module index page. Build something great!');
-    });
+Route::group(['prefix' => 'subdivision', 'middleware' => ['debug', 'auth']], function() {
+
+    Route::get('/', 'IndexController@index')->name('subdivision');
+    Route::get('/create', 'IndexController@create')->name('subdivision.create');
+    Route::get('/show/{id}', 'IndexController@show')->where(['id' => '[0-9]+'])->name('subdivision.show');
+    Route::get('/edit/{id}', 'IndexController@edit')->where(['id' => '[0-9]+'])->name('subdivision.edit');
+
+    Route::post('/store', 'IndexController@store')->name('subdivision.store');
+    Route::put('/update/{id}', 'IndexController@update')->where(['id' => '[0-9]+'])->name('subdivision.update');
+    Route::delete('/destroy/{id}', 'IndexController@destroy')->where(['id' => '[0-9]+'])->name('subdivision.destroy');
 });

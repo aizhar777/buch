@@ -7,6 +7,7 @@ $(document).ready(function(){
 
     showOrHideParentCategory();
     showOrHideResponsible();
+    showOrHideResponsibleSub();
 
     $('#category_subcategory').click(function() {
         $("#wrapper_category_parent").toggle(this.checked);
@@ -15,6 +16,11 @@ $(document).ready(function(){
 
     $('#is_responsible').click(function() {
         $("#stock_responsible_wrap").toggle(this.checked);
+    });
+
+
+    $('#is_responsible_subdivision').click(function() {
+        $("#subdivision_responsible_wrap").toggle(this.checked);
     });
 
 
@@ -31,6 +37,14 @@ $(document).ready(function(){
             $('#stock_responsible_wrap').show();
         } else {
             $('#stock_responsible_wrap').hide();
+        }
+    }
+
+    function showOrHideResponsibleSub() {
+        if($('#is_responsible_subdivision').prop('checked')) {
+            $('#subdivision_responsible_wrap').show();
+        } else {
+            $('#subdivision_responsible_wrap').hide();
         }
     }
 });

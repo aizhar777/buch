@@ -3,7 +3,7 @@
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
             <a href="/home" class="site_title">
-                <i class="fa fa-cogs"></i> <span>{{config('app.name')}}</span>
+                <i class="glyphicon glyphicon-tasks"></i> <span>{{config('app.name')}}</span>
             </a>
         </div>
 

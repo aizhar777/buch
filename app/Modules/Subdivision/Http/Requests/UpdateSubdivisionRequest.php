@@ -3,8 +3,9 @@
 namespace App\Modules\Subdivision\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSubdivisionRequest extends Request
+class UpdateSubdivisionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,8 @@ class UpdateSubdivisionRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        //TODO: check permissions
+        return true;
     }
 
     /**
@@ -24,7 +26,11 @@ class UpdateSubdivisionRequest extends Request
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'slug' => 'required|alpha_dash',
+            'description' => '',
+            'responsible' => 'required_with:is_responsible|exists:users,id',
+            'address' => '',
         ];
     }
 }
