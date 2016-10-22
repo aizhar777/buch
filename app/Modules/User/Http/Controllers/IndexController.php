@@ -2,40 +2,65 @@
 
 namespace App\Modules\User\Http\Controllers;
 
-use App\Image;
 use App\Library\BFields;
 use App\User;
-use Illuminate\Http\Request;
-
-use App\Library\Traits\NoAccess;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-    use NoAccess;
-
     /**
      * User profile action
      *
      * @param null $id
-     * @return User|array
+     * @return \Response
      */
     public function userProfile($id = null)
     {
-        $user = \Auth::user();
+        $profile = \Auth::user();
 
-        if ($id !== null and $user->id != $id) {
+        if ($id !== null and $profile->id != $id) {
             $user = User::findOrFail($id);
             return $this->showUser($user);
         } else {
-            return $this->showProfile($user);
+            return $this->showProfile($profile);
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function userEdit($id)
     {
         $user = \Auth::user();
+        if($user->id == $id)
+            return $this->editAction($user);
+
+        $profile = User::whereId($id)->firstOrFail();
+        return $this->checkAndEditAction($profile);
+    }
+
+    /**
+     * Check permissions and Edit Action
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function checkAndEditAction(User $user)
+    {
+        if(!\Auth::user()->can('edit.user'))
+            return $this->noAccess();
+        return $this->editAction($user);
+    }
+
+    /**
+     * Edit user action
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editAction(User $user)
+    {
         $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile_edit',[
             'user'=> $user,
@@ -51,12 +76,9 @@ class IndexController extends Controller
      */
     public function showUser(User $user)
     {
-        if(!$user->can('view.user')) $this->noAccess();
-
-        return [
-            'self',
-            $user
-        ];
+        if(!\Auth::user()->can('show.user'))
+            return $this->noAccess();
+        return $this->showProfile($user);
     }
 
 

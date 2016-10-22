@@ -14,6 +14,7 @@ use App\Library\Module;
 class StockModule extends Module
 {
     public $name = 'Storage';
+    protected $permission = 'view.stock';
     /**
      * dropdown links
      *

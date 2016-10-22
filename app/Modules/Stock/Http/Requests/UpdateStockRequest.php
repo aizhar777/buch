@@ -14,7 +14,8 @@ class UpdateStockRequest extends FormRequest
      */
     public function authorize()
     {
-        //TODO: check permissions
+        if(!\Auth::user()->can('edit.stock'))
+            return false;
         return true;
     }
 

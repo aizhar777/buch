@@ -9,6 +9,7 @@ class CategoryModule extends Module
 {
     public $name = 'Category';
     public $with_div = 6;
+    protected $permission = 'view.category';
     /**
      * dropdown links
      *

@@ -9,7 +9,6 @@ trait NoAccess
     {
         $message = 'Forbidden';
         if($msg !== null) $message .= ': '. $msg;
-        \Flash::error($message);
-        return abort(403);
+        return view('errors.noaccess',['code' => 403, 'message' => $message]);
     }
 }

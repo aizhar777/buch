@@ -30,10 +30,5 @@ Route::get('/dashboard', 'HomeController@index')
 
 #---- TEST -----#
 Route::get('/test', function () {
-    $product = \App\Product::first();
-
-    dd($product);
-    dd($product->subdivision());
-    //$electronics = \App\Category::where('cat_type', '=', 'App\Product\Subdivision')->first();
-    //$electronics->makeTree($children); // => true
+    return view('errors.noaccess');
 });

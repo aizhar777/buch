@@ -14,7 +14,8 @@ class UpdateSubdivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        //TODO: check permissions
+        if(!\Auth::user()->can('edit.subdivision'))
+            return false;
         return true;
     }
 

@@ -43,6 +43,9 @@ class DataController extends Controller
 
     public function delete($id)
     {
+        if(!\Auth::user()->can('delete.category'))
+            return $this->noAccess('Not enough rights to delete');
+
         if (Category::deleteCategory($id)){
             \Flash::success('Category deleted!');
             return redirect()->route('category');

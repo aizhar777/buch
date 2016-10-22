@@ -14,20 +14,26 @@ class IndexController extends Controller
     public function view($id = null)
     {
         if($id === null)
-            return $this->viewAll();
-        return $this->viewOne($id);
+            return $this->index();
+        return $this->show($id);
     }
 
-    public function viewAll()
+    public function index()
     {
+        if(!\Auth::user()->can('view.category'))
+            return $this->noAccess('Not enough rights to view');
+
         $cats = Category::all();
         return view('category::show',[
             'categories' => $cats
         ]);
     }
 
-    public function viewOne($id)
+    public function show($id)
     {
+        if(!\Auth::user()->can('show.category'))
+            return $this->noAccess('Not enough rights to show');
+
         $cat = Category::whereId($id)->firstOrFail();
         return view('category::show_one',[
             'category' => $cat
@@ -36,6 +42,9 @@ class IndexController extends Controller
 
     public function create()
     {
+        if(!\Auth::user()->can('create.category'))
+            return $this->noAccess('Not enough rights to create');
+
         $cats = Category::all()->toHierarchy();
         $types = Classes::all();
         return view('category::create',[
@@ -46,6 +55,9 @@ class IndexController extends Controller
 
     public function edit($id)
     {
+        if(!\Auth::user()->can('edit.category'))
+            return $this->noAccess('Not enough rights to delete');
+
         $cats = Category::all()->toHierarchy();
         $cat = Category::whereId($id)->firstOrFail();
         $types = Classes::all();

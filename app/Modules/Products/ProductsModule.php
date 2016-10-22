@@ -16,6 +16,7 @@ class ProductsModule extends Module
 
     public $name = 'Products';
     public $with_div = 6;
+    protected $permission = 'view.product';
 
     /**
      * dropdown links

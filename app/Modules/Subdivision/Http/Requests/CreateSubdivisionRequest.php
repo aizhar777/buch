@@ -14,7 +14,8 @@ class CreateSubdivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        //TODO: check permissions
+        if(!\Auth::user()->can('create.subdivision'))
+            return false;
         return true;
     }
 

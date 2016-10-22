@@ -24,7 +24,7 @@ class IndexController extends Controller
 
     public function viewAll()
     {
-        if(!\Auth::user()->can('view.clients'))
+        if(!\Auth::user()->can('view.client'))
             return $this->noAccess('Insufficient permissions to view');
 
         $clients = Client::all()->take(40);
@@ -36,7 +36,7 @@ class IndexController extends Controller
 
     public function viewOne($id)
     {
-        if(!\Auth::user()->can('view.client'))
+        if(!\Auth::user()->can('show.client'))
             return $this->noAccess('Insufficient permissions to view');
 
         $client = Client::find($id)->firstOrFail();
@@ -51,7 +51,7 @@ class IndexController extends Controller
     public function create()
     {
         if(!\Auth::user()->can('create.client'))
-            return $this->noAccess('Insufficient permissions to view');
+            return $this->noAccess('Insufficient permissions to create');
 
         $users = User::all();
         return view('clients::create',['curators' => $users]);
@@ -60,7 +60,7 @@ class IndexController extends Controller
     public function edit($id)
     {
         if(!\Auth::user()->can('edit.client'))
-            return $this->noAccess('Insufficient permissions to view');
+            return $this->noAccess('Insufficient permissions to delete');
 
         $client = Client::find($id)->firstOrFail();
         $users = User::all();

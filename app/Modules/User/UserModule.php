@@ -10,6 +10,7 @@ class UserModule extends Module
 {
     public $name = 'Users';
     public $with_div = 6;
+    protected $permission = 'view.user';
 
     /**
      * dropdown links

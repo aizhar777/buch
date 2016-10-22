@@ -4,6 +4,7 @@ namespace App\Modules\User\Http\Requests;
 
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class EditUserRequest extends FormRequest
 {
@@ -12,14 +13,12 @@ class EditUserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(Request $request)
     {
         $user = \Auth::user();
         if($user instanceof User){
-            //TODO:check permissions
-            if (!$user->can('edit.user'))
-                return false;
-            return true;
+            if($user->id == $request->route('id') || $user->can('edit.user'))
+                return true;
         }
         return false;
     }

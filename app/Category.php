@@ -59,7 +59,7 @@ class Category extends Node
      */
     public function subdivision()
     {
-        return $this->morphMany('App\Products', 'subdivision');
+        return $this->morphMany('App\Product', 'subdivision');
     }
 
     /**
@@ -67,7 +67,7 @@ class Category extends Node
      */
     public function stock()
     {
-        return $this->morphMany('App\Products', 'stock');
+        return $this->morphMany('App\Product', 'stock');
     }
 
     public function classes()

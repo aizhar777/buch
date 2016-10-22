@@ -21,7 +21,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('view.stock'))
+            return $this->noAccess('Not enough rights to view');
+
         $stocks = Stock::all()->take(10);
         return view('stock::index',[
             'stocks' => $stocks
@@ -35,7 +37,9 @@ class IndexController extends Controller
      */
     public function create()
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('create.stock'))
+            return $this->noAccess('Not enough rights to create');
+
         $subdivisions = Subdivision::all();
         $responsibles = User::all();
         return view('stock::create',[
@@ -52,7 +56,9 @@ class IndexController extends Controller
      */
     public function show($id)
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('show.stock'))
+            return $this->noAccess('Not enough rights to view');
+
         $stock = Stock::where('id',$id)->firstOrFail();
         return view('stock::show',['stock' => $stock]);
     }
@@ -65,7 +71,9 @@ class IndexController extends Controller
      */
     public function edit($id)
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('edit.stock'))
+            return $this->noAccess('Not enough rights to esit');
+
         $stock = Stock::where('id',$id)->firstOrFail();
         $subdivisions = Subdivision::all();
         $responsibles = User::all();
@@ -123,7 +131,9 @@ class IndexController extends Controller
      */
     public function destroy($id)
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('delete.stock'))
+            return $this->noAccess('Not enough rights to delete');
+
         if(Stock::all()->count() <= 1){
             \Flash::warning('You can not delete the last storage!');
             return redirect()->back();

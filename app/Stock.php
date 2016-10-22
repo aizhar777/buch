@@ -39,7 +39,7 @@ class Stock extends Model
 
     public function products()
     {
-        return $this->hasMany('App\products', 'id', 'stock_id');
+        return $this->hasMany('App\product', 'id', 'stock_id');
     }
 
     /**

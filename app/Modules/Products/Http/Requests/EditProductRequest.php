@@ -14,7 +14,8 @@ class EditProductRequest extends FormRequest
      */
     public function authorize()
     {
-        //TODO: check permissions
+        if(!\Auth::user()->can('edit.product'))
+            return false;
         return true;
     }
 

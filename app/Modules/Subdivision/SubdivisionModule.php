@@ -7,6 +7,7 @@ use App\Library\Module;
 class SubdivisionModule extends Module
 {
     public $name = 'Subdivision';
+    protected $permission = 'view.subdivision';
     /**
      * dropdown links
      *

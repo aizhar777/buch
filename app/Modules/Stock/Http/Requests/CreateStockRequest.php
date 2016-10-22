@@ -14,7 +14,8 @@ class CreateStockRequest extends FormRequest
      */
     public function authorize()
     {
-        //TODO: check permissions
+        if(!\Auth::user()->can('create.stock'))
+            return false;
         return true;
     }
 

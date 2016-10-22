@@ -13,7 +13,8 @@ class CreateProductRequest extends FormRequest
      */
     public function authorize()
     {
-        //TODO: check permissions
+        if(!\Auth::user()->can('create.product'))
+            return false;
         return true;
     }
 

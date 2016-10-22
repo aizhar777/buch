@@ -20,7 +20,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('view.subdivision'))
+            return $this->noAccess('Not enough rights to view');
+
         $subdivisions = Subdivision::all()->take(10);
         return view('subdivision::index',[
             'subdivisions' => $subdivisions
@@ -34,7 +36,9 @@ class IndexController extends Controller
      */
     public function create()
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('create.subdivision'))
+            return $this->noAccess('Not enough rights to create');
+
         $users = User::all();
         return view('subdivision::create',[
             'responsibles' => $users
@@ -49,7 +53,9 @@ class IndexController extends Controller
      */
     public function show($id)
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('show.subdivision'))
+            return $this->noAccess('Not enough rights to view');
+
         $sub = Subdivision::where('id',$id)->firstOrFail();
         return view('subdivision::show',['subdivision' => $sub]);
     }
@@ -62,7 +68,9 @@ class IndexController extends Controller
      */
     public function edit($id)
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('edit.subdivision'))
+            return $this->noAccess('Not enough rights to edit');
+
         $sub = Subdivision::where('id',$id)->firstOrFail();
         $users = User::all();
         return view('subdivision::edit',[
@@ -118,7 +126,9 @@ class IndexController extends Controller
      */
     public function destroy($id)
     {
-        //TODO: Check Permissions
+        if(!\Auth::user()->can('delete.subdivision'))
+            return $this->noAccess('Not enough rights to delete');
+
         if(Subdivision::all()->count() <= 1){
             \Flash::warning('You can not delete the last subdivision!');
             return redirect()->back();

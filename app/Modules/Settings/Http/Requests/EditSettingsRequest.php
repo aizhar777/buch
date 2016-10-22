@@ -14,7 +14,8 @@ class EditSettingsRequest extends FormRequest
      */
     public function authorize()
     {
-        //todo:check permission
+        if(!\Auth::user()->can('delete.category'))
+            return false;
         return true;
     }
 

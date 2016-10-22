@@ -9,6 +9,8 @@ abstract class Module implements ModuleInterface
 {
     protected $name = 'Module no name';
 
+    protected $permission = null;
+
     protected $_wrapper = '<div class="col-md-%1$s col-sm-%1$s col-xs-%1$s">%2$s</div>';
 
     protected $_panel = '<div class="x_panel">%1$s %2$s</div>';
@@ -44,19 +46,44 @@ abstract class Module implements ModuleInterface
     {
     }
 
-    protected $with_div = 12;
-
     /**
      * HTML Widget
      *
-     * @return string
+     * @return string|null
      */
     public function widget()
     {
-        if($this->getContent() !== null)
+        if($this->check() && is_string($this->getContent()))
             return $this->getWidget();
         return null;
     }
+
+    /**
+     * Menu sidebar dropdown
+     *
+     * @return string|null
+     */
+    public function menuSidebar()
+    {
+        if($this->check() && $this->getMenuSidebar() != null)
+            return sprintf($this->_sidebarMenu, $this->getMenuSidebarIcon(), $this->name, $this->getMenuSidebar());
+        return null;
+    }
+
+    /**
+     * Check permission
+     *
+     * @return bool
+     */
+    public function check():bool
+    {
+        if ($this->permission == null) return false;
+        if(!\Auth::user()->can($this->permission))
+            return false;
+        return true;
+    }
+
+    protected $with_div = 12;
 
     /**
      * Widget wrapper and data
@@ -122,18 +149,6 @@ abstract class Module implements ModuleInterface
      * @return string
      */
     abstract protected function getContent();
-
-    /**
-     * Menu sidebar dropdown
-     *
-     * @return string|null
-     */
-    public function menuSidebar()
-    {
-        if($this->getMenuSidebar() == null) return null;
-
-        return sprintf($this->_sidebarMenu, $this->getMenuSidebarIcon(), $this->name, $this->getMenuSidebar());
-    }
 
     /**
      * Menu sidebar dropdown

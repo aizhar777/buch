@@ -14,7 +14,8 @@ class CreateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        //Todo: check permissions
+        if(!\Auth::user()->can('create.category'))
+            return false;
         return true;
     }
 

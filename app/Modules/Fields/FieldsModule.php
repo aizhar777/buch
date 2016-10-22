@@ -8,6 +8,7 @@ use App\Library\Module;
 class FieldsModule extends Module
 {
     public $name = 'Fields';
+    protected $permission = 'view.fieldParam';
 
     /**
      * @return null

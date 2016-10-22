@@ -8,6 +8,7 @@ use App\Library\Module;
 class SettingsModule extends Module
 {
     public $name = 'Settings';
+    protected $permission = 'view.settings';
     /**
      * dropdown links
      *
@@ -16,7 +17,7 @@ class SettingsModule extends Module
      */
     protected function getDropDown()
     {
-        // TODO: Implement getDropDown() method.
+        return null;
     }
 
     /**

@@ -1,0 +1,20 @@
+.error_no_access_wrapper{
+    margin-top: 68px;
+    width: 100%;
+    padding: 0;
+}
+.error_no_access_wrapper .code{
+    font-family: 'Roboto','Verdana', 'Arial';
+    font-weight: 100;
+    font-size: 84px;
+    color: #636b6f;
+    text-align: center;
+}.error_no_access_wrapper .code i{
+     color: rgba(243, 156, 18, 0.88);
+ }
+.error_no_access_wrapper .message{
+    font-family: 'Roboto','Verdana', 'Arial';
+    font-weight: 300;
+    font-size: 32px;
+    text-align: center;
+}

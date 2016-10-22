@@ -44,7 +44,9 @@ class DataController extends Controller
 
     public function delete($id)
     {
-        //todo: check permission
+        if(!\Auth::user()->can('delete.product'))
+            return $this->noAccess('Not enough rights to delete');
+
         if(Product::deleteById($id)){
             \Flash::success('Successfully deleted!');
             return redirect()->route('products');

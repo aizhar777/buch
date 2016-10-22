@@ -14,7 +14,6 @@ class DataController extends Controller
 {
     public function create(CreateClientAndRequisiteRequest $request)
     {
-
         $client = Client::createClientAndRequisite($request);
 
         if ($client instanceof Client){

@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 class DataController extends Controller
 {
     use NoAccess;
+
     public function create(CreateFieldRequest $request)
     {
         $createdField = FieldParam::create([

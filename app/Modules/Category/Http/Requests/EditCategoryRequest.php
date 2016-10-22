@@ -14,7 +14,8 @@ class EditCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        //Todo: check permissions
+        if(!\Auth::user()->can('edit.category'))
+            return false;
         return true;
     }
 

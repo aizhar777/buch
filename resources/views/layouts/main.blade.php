@@ -28,6 +28,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{{url('css/custom.css')}}" rel="stylesheet">
+    <link href="{{url('css/style.css')}}" rel="stylesheet">
     <style>
         body{
             width: 99%;

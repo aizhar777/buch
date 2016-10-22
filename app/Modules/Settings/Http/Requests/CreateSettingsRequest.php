@@ -14,7 +14,8 @@ class CreateSettingsRequest extends FormRequest
      */
     public function authorize()
     {
-        //todo:check permission
+        if(!\Auth::user()->can('create.settings'))
+            return false;
         return true;
     }
 

@@ -11,6 +11,7 @@ class ClientsModule extends Module
 {
     public $name = 'Clients';
     public $with_div = 6;
+    protected $permission = 'view.client';
 
     /**
      * dropdown links
