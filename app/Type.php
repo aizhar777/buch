@@ -19,4 +19,18 @@ class Type extends Model
      * @var string
      */
     const TYPE = 'App\Type';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'class_id',
+        'class_type',
+        'is_deleted',
+    ];
 }

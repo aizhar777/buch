@@ -4,9 +4,11 @@ namespace App\Modules\Subdivision\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class CreateSubdivisionRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,7 +16,8 @@ class CreateSubdivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('create.subdivision'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('create.subdivision'))
             return false;
         return true;
     }

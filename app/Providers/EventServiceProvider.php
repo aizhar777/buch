@@ -16,6 +16,13 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserIsLogged' => [
             'App\Listeners\SendUserLoggedToLogDb',
         ],
+        'App\Events\ProductCreated' => [],
+        'App\Events\ClientCreated' => [],
+        'App\Events\StockCreated' => [],
+        'App\Events\TradeCreated' => [],
+        'App\Events\SubdivisionCreated' => [],
+        'App\Events\FieldMapCreated' => [],
+        'App\Events\CategoryCreated' => [],
     ];
 
     /**

@@ -14,7 +14,8 @@ class EditSettingsRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('delete.category'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('delete.category'))
             return false;
         return true;
     }

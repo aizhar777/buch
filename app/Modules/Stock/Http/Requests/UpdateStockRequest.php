@@ -4,9 +4,11 @@ namespace App\Modules\Stock\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class UpdateStockRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,7 +16,8 @@ class UpdateStockRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('edit.stock'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.stock'))
             return false;
         return true;
     }

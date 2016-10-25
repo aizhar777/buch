@@ -41,12 +41,13 @@
                 </ul>
             </div>-->
 
-            @if(\Module::count() > 0)
-                <div class="menu_section">
-                    <h3>Modules</h3>
 
-                    @foreach(\Module::all() as $module)
-                        @if ($module['enabled'])
+             @if(\Module::count() > 0)
+                 <div class="menu_section">
+                     <h3>Modules</h3>
+
+                     @foreach(\Module::all() as $module)
+                         @if ($module['enabled'])
                             <?php
 
                             $name = $module['name'];
@@ -59,10 +60,10 @@
                             }
 
                             ?>
-                        @endif
-                    @endforeach
-                </div>
-            @endif
+                         @endif
+                     @endforeach
+                 </div>
+             @endif
 
         </div>
         <!-- /sidebar menu -->

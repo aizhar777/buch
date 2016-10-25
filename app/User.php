@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Library\Traits\CurrentUserModel;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Caffeinated\Shinobi\Traits\ShinobiTrait;
@@ -14,7 +15,7 @@ use App\Notifications\SentEmailLink as ResetPasswordNotification;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-    use Notifiable, Authenticatable, CanResetPassword, ShinobiTrait;
+    use Notifiable, Authenticatable, CanResetPassword, ShinobiTrait, CurrentUserModel;
 
     /**
      * Type of relations
@@ -48,7 +49,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        return $this->belongsToMany('\App\Role')->withTimestamps();
+        /*
+        $currentUser = $this->getCurrentUser();
+
+        if($currentUser->id == $this->id) {
+            if (\Session::has('current.roles')) {
+                $roles = session('current.roles');
+            }else{
+                $roles = $this->belongsToMany('\App\Role')->withTimestamps();
+                \Session::put('current.roles',$roles);
+            }
+        }else{*/
+            $roles = $this->belongsToMany('\App\Role')->withTimestamps();
+        //}
+
+        return $roles;
     }
 
     /**
@@ -101,6 +116,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->morphMany('App\Image', 'imageable');
     }
 
+    public function trades()
+    {
+        return $this->hasMany('App\Trade','id', 'client_id');
+    }
+
+    public function completedTrades()
+    {
+        return $this->hasMany('App\Trade','id', 'completed_by_user');
+    }
+
     public function createImage(Request $request)
     {
         if(!$request->hasFile('user_image'))
@@ -125,6 +150,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             unlink($userPhoto->getPath());
             return false;
         }
+    }
+
+    /**
+     * Is current user
+     *
+     * @return bool
+     */
+    public function is_current()
+    {
+        if($this->getCurrentUser()->id == $this->id)
+            return true;
+        return false;
     }
 
 }

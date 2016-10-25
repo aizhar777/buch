@@ -76,6 +76,11 @@ class Product extends Model
         return $this->belongsTo('App\Subdivision', 'subdivision_id', 'id');
     }
 
+    public function trades()
+    {
+        return $this->belongsToMany('App\Trade','trades_has_products','products_id', 'trades_id')->withPivot('quantity');
+    }
+
     /**
      * Create new product
      *

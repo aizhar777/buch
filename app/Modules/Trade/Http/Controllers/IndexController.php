@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Trade\Http\Controllers;
 
+use App\Client;
+use App\Modules\Trade\Http\Requests\CreateTradeRequest;
+use App\Ppc;
+use App\Product;
+use App\Trade;
+use App\TradeStatus;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
-class TestResourceController extends Controller
+class IndexController extends Controller
 {
-
-    public function test()
-    {
-        for ($i=0; $i < 100; $i++)
-            $currentUser = $this->getCurrentUser()->toArray();
-
-        return view('tests',['testData' => $currentUser]);
-    }
 
     /**
      * Display a listing of the resource.
@@ -24,7 +24,8 @@ class TestResourceController extends Controller
      */
     public function index()
     {
-        //
+        $trades = Trade::all();
+        return view('trade::index',['trades' => $trades]);
     }
 
     /**
@@ -34,18 +35,29 @@ class TestResourceController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::all();
+        $users = User::all();
+        $ppc = Ppc::all();
+        $status = TradeStatus::all();
+        $clients = Client::all();
+        return view('trade::create',[
+            'products' => $products,
+            'users' => $users,
+            'codes' => $ppc,
+            'clients' => $clients,
+            'all_status' => $status,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateTradeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTradeRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

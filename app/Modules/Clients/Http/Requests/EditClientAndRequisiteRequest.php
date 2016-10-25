@@ -3,8 +3,11 @@
 namespace App\Modules\Clients\Http\Requests;
 
 
+use App\Library\Traits\CurrentUserModel;
+
 class EditClientAndRequisiteRequest extends EditClientRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -12,7 +15,7 @@ class EditClientAndRequisiteRequest extends EditClientRequest
      */
     public function authorize()
     {
-        $user = \Auth::user();
+        $user = $this->getCurrentUser();
         if(!$user->can('edit.client'))
             return false;
         if(!$user->can('edit.requisite'))

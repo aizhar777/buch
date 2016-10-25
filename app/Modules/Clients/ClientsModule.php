@@ -37,9 +37,10 @@ class ClientsModule extends Module
         $tbClose = '</tbody> </table>';
         $content = '<div class="alert alert-info">You have no clients!</div>';
 
-        $clients = Client::all()->take(10);
+        $clients = Client::with('supervise')->take(10)->get();
 
         if($clients->count() > 0) {
+
             foreach ($clients as $client) {
                 $date = date('d-m-Y H:s', strtotime($client->created_at));
                 $curator = 'none';
@@ -47,16 +48,17 @@ class ClientsModule extends Module
                     $curator = '<a href="' . route('user.profile', ['id' => $client->supervise->id]) . '">' . $client->supervise->name . '</a>';
                 }
                 $tBody .= "
-                <tr> 
-                    <th>{$client->id}</th> 
-                    <td>{$client->name}</td> 
-                    <td>{$client->email}</td> 
-                    <td>{$client->phone}</td> 
-                    <td>{$curator}</td> 
-                    <td>$date</td> 
-                </tr>
-            ";
+                    <tr> 
+                        <th>{$client->id}</th> 
+                        <td>{$client->name}</td> 
+                        <td>{$client->email}</td> 
+                        <td>{$client->phone}</td> 
+                        <td>{$curator}</td> 
+                        <td>$date</td> 
+                    </tr>
+                ";
             }
+
             $content = $tableOpen . $tBody . $tbClose;
         }
 

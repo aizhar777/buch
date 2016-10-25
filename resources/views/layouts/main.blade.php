@@ -19,6 +19,8 @@
     <link href="{{url('vendors/animate.css/animate.min.css')}}" rel="stylesheet">
     <!-- NProgress -->
     <link href="{{url('vendors/nprogress/nprogress.css')}}" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="{{url('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
     <!-- Switchery -->
     <link href="{{url('vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
     <!-- PNotify -->
@@ -61,6 +63,8 @@
 <script src="{{url('vendors/switchery/dist/switchery.min.js')}}"></script>
 <!-- NProgress -->
 <script src="{{url('vendors/nprogress/nprogress.js')}}"></script>
+<!-- Select2 -->
+<script src="{{url('vendors/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- PNotify -->
 <script src="{{url('vendors/pnotify/dist/pnotify.js')}}"></script>
 <script src="{{url('vendors/pnotify/dist/pnotify.buttons.js')}}"></script>

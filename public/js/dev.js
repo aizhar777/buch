@@ -47,4 +47,21 @@ $(document).ready(function(){
             $('#subdivision_responsible_wrap').hide();
         }
     }
+
+    // Select2 start
+    $(".select2_single").select2({
+        placeholder: "Select a state",
+        allowClear: true
+    });
+/*
+    $(".select2_group").select2({
+        placeholder: "With Max Selection limit"
+    });*/
+    $(".select2_multiple").select2({
+        placeholder: "With Max Selection limit 4",
+        allowClear: true
+    });
+
+    $( '#select_products' ).change(application.productTradeOptions);
+    // Select2 end
 });

@@ -41,7 +41,8 @@ class DataController extends Controller
 
     public function delete($id)
     {
-        if(!\Auth::user()->can('delete.client'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('delete.client'))
             return $this->noAccess('Not enough rights to delete');
 
         $client = Client::deleteClientById($id);

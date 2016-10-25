@@ -14,7 +14,8 @@ class CreateSettingsRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('create.settings'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('create.settings'))
             return false;
         return true;
     }

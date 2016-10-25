@@ -35,5 +35,6 @@ class SignInController extends LoginController
     protected function authenticated(Request $request, $user)
     {
         event(new UserIsLogged($user));
+        \Session::put('current.user',$user);
     }
 }

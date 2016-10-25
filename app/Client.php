@@ -52,6 +52,11 @@ class Client extends Model
         return $this->morphMany('App\Field', 'accessory');
     }
 
+    public function trades()
+    {
+        return $this->hasMany('App\Trade','id', 'client_id');
+    }
+
 
     /**
      * Create new client

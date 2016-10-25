@@ -4,9 +4,11 @@ namespace App\Modules\Products\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class EditProductRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,7 +16,8 @@ class EditProductRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('edit.product'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.product'))
             return false;
         return true;
     }

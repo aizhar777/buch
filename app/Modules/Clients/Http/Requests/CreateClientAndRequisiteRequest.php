@@ -3,9 +3,12 @@
 namespace App\Modules\Clients\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class CreateClientAndRequisiteRequest extends FormRequest
 {
+    use CurrentUserModel;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +16,7 @@ class CreateClientAndRequisiteRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = \Auth::user();
+        $user = $this->getCurrentUser();
         if(!$user->can('create.client'))
             return false;
         if(!$user->can('create.requisite'))

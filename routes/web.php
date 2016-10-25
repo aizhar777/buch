@@ -29,6 +29,4 @@ Route::get('/dashboard', 'HomeController@index')
 
 
 #---- TEST -----#
-Route::get('/test', function () {
-    return view('errors.noaccess');
-});
+Route::get('/test', 'TestResourceController@test');

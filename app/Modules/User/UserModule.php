@@ -33,7 +33,7 @@ class UserModule extends Module
         $tBody = '';
         $tbClose = '</tbody> </table>';
 
-        $users = User::all(['id','name','email','created_at','updated_at'])->take(10);
+        $users = User::all()->take(10);
 
         foreach ($users as $user){
             $date = date('d-m-Y H:s', strtotime($user->created_at));

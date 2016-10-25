@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StocksAndSubdivisionsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(FieldsTableSeeder::class);
+        $this->call(TradeStatusSeeeder::class);
 
         //Test Data
         $this->call(TestDataAllTablesSeeder::class);

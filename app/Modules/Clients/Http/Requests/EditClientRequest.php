@@ -4,9 +4,11 @@ namespace App\Modules\Clients\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class EditClientRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,7 +16,8 @@ class EditClientRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('edit.client'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.client'))
             return false;
         return true;
     }

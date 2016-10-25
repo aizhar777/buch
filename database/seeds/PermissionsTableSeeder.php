@@ -8,7 +8,7 @@ class PermissionsTableSeeder extends Seeder
     /**
      * Subjects array
      *
-     * @var array $permissions
+     * @var array $subjects
      */
     protected $subjects = [
         'user',
@@ -21,6 +21,8 @@ class PermissionsTableSeeder extends Seeder
         'requisite',
         'stock',
         'subdivision',
+        'trade',
+        'tradeStatus',
     ];
 
     /**

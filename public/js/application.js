@@ -45,3 +45,27 @@ application.updateSettings = function (slug) {
         self.message("Oh No!", "Something terrible happened.", "error");
     });
 };
+
+application.productTradeOptions = function() {
+    var self = this;
+    console.log('changed!');
+    var blockOptions = $('#options_block');
+    var st = '<h4>Products:</h4>';
+    var html = '';
+    $( "#select_products option:selected" ).each(function() {
+        var options = $( this );
+        html += window.application.getInputForTradeOptions(options.text(), options.val(),options.attr('data-balance'));
+        //console.log($( this ));
+    });
+    console.log('START:-'+html+'-:END');
+    blockOptions.html(st+html);
+};
+
+application.getInputForTradeOptions = function(title, id, max) {
+    return '<div class="form-group"><label class="control-label col-md-3 col-sm-3 col-xs-12">'
+        + title
+        + '</label><div class="col-md-9 col-sm-9 col-xs-12"><input type="number" min="1" max="'
+        + max +'" name="product_options['
+        + id
+        + ']" placeholder="Количество.." value="1" class="form-control"></div></div>';
+};

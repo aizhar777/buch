@@ -76,7 +76,8 @@ class DataController extends Controller
 
     public function delete($id)
     {
-        if(!\Auth::user()->can('delete.fieldParam'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('delete.fieldParam'))
             return $this->noAccess('Not enough rights to delete');
 
         $fMap = FieldParam::find($id)->firstOrFail();
@@ -88,6 +89,5 @@ class DataController extends Controller
             \Flash::error('Could not delete');
             return redirect()->route('field.list');
         }
-
     }
 }

@@ -14,8 +14,7 @@ class DataController extends Controller
 {
     public function userEdit($id, EditUserRequest $request)
     {
-        $user = \Auth::user();
-
+        $user = $this->getCurrentUser();
         if($user instanceof User){
             if($user->id == $id) {
                 return $this->updateUser($user, $request);
@@ -28,7 +27,8 @@ class DataController extends Controller
 
     protected function updateProfile($id, Request $request)
     {
-        if(!\Auth::user()->can('edit.user'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.user'))
             return $this->noAccess('Not enough rights to edit user');
         $user = User::whereId($id)->firstOrFail();
 
@@ -45,6 +45,9 @@ class DataController extends Controller
 
         $bFields = BFields::getInstance();
         $bFields->updateOrCreate($user, $request);
+
+        if($user->is_current())
+            $user->reloadCurrentUser();
 
         return redirect()->route('user.profile',$user->id);
     }

@@ -19,4 +19,21 @@ class TradeStatus extends Model
      * @var string
      */
     const TYPE = 'App\TradeStatus';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'level',
+    ];
+
+    public function trades()
+    {
+        return $this->hasMany('App\Trade','id', 'status');
+    }
 }

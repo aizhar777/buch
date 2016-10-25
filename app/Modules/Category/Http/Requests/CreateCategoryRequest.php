@@ -4,9 +4,11 @@ namespace App\Modules\Category\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class CreateCategoryRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,7 +16,8 @@ class CreateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('create.category'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('create.category'))
             return false;
         return true;
     }

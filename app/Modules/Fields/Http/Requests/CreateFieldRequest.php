@@ -3,9 +3,11 @@
 namespace App\Modules\Fields\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Library\Traits\CurrentUserModel;
 
 class CreateFieldRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +15,8 @@ class CreateFieldRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('create.fieldParam'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('create.fieldParam'))
             return false;
         return true;
     }

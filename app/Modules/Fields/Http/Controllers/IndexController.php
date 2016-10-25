@@ -14,7 +14,8 @@ class IndexController extends Controller
 
     public function show()
     {
-        if(!\Auth::user()->can('view.fieldParam'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('view.fieldParam'))
             return $this->noAccess('Insufficient permissions to view');
 
         $felds = FieldParam::all()->take(10);
@@ -25,7 +26,8 @@ class IndexController extends Controller
 
     public function add()
     {
-        if(!\Auth::user()->can('create.fieldParam'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('create.fieldParam'))
             return $this->noAccess('Insufficient rights to create');
 
         $types = Classes::all();
@@ -34,7 +36,8 @@ class IndexController extends Controller
 
     public function edit($id)
     {
-        if(!\Auth::user()->can('edit.fieldParam'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.fieldParam'))
             return $this->noAccess('Insufficient permission to change');
 
         $field = FieldParam::find($id)->firstOrFail();

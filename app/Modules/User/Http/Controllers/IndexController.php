@@ -16,7 +16,7 @@ class IndexController extends Controller
      */
     public function userProfile($id = null)
     {
-        $profile = \Auth::user();
+        $profile = $this->getCurrentUser();
 
         if ($id !== null and $profile->id != $id) {
             $user = User::findOrFail($id);
@@ -32,7 +32,7 @@ class IndexController extends Controller
      */
     public function userEdit($id)
     {
-        $user = \Auth::user();
+        $user = $this->getCurrentUser();
         if($user->id == $id)
             return $this->editAction($user);
 
@@ -48,7 +48,8 @@ class IndexController extends Controller
      */
     public function checkAndEditAction(User $user)
     {
-        if(!\Auth::user()->can('edit.user'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.user'))
             return $this->noAccess();
         return $this->editAction($user);
     }
@@ -76,7 +77,8 @@ class IndexController extends Controller
      */
     public function showUser(User $user)
     {
-        if(!\Auth::user()->can('show.user'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('show.user'))
             return $this->noAccess();
         return $this->showProfile($user);
     }

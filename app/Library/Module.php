@@ -4,9 +4,11 @@ namespace App\Library;
 
 
 use App\Library\Interfaces\ModuleInterface;
+use App\Library\Traits\CurrentUserModel;
 
 abstract class Module implements ModuleInterface
 {
+    use CurrentUserModel;
     protected $name = 'Module no name';
 
     protected $permission = null;
@@ -78,7 +80,7 @@ abstract class Module implements ModuleInterface
     public function check():bool
     {
         if ($this->permission == null) return false;
-        if(!\Auth::user()->can($this->permission))
+        if(!$this->getCurrentUser()->can($this->permission))
             return false;
         return true;
     }

@@ -23,10 +23,11 @@ class IndexController extends Controller
 
     public function viewAll()
     {
-        if(!\Auth::user()->can('view.product'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('view.product'))
             return $this->noAccess('Not enough rights to view');
 
-        $products = Product::all()->take(10);
+        $products = Product::with('stock', 'subdivision')->take(10)->get();
         return view('products::show',[
             'products' => $products,
         ]);
@@ -34,7 +35,8 @@ class IndexController extends Controller
 
     public function viewOne($id)
     {
-        if(!\Auth::user()->can('show.product'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('show.product'))
             return $this->noAccess('Not enough rights to view');
 
         $product = Product::where('id', $id)->firstOrFail();
@@ -45,7 +47,8 @@ class IndexController extends Controller
 
     public function create()
     {
-        if(!\Auth::user()->can('create.product'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('create.product'))
             return $this->noAccess('Not enough rights to delete');
 
         $stocks = Stock::all();
@@ -58,7 +61,8 @@ class IndexController extends Controller
 
     public function edit($id)
     {
-        if(!\Auth::user()->can('edit.product'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.product'))
             return $this->noAccess('Not enough rights to delete');
 
         $product = Product::where('id', $id)->firstOrFail();

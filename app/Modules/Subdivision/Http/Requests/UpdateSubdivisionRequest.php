@@ -14,7 +14,8 @@ class UpdateSubdivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!\Auth::user()->can('edit.subdivision'))
+        $user = $this->getCurrentUser();
+        if(!$user->can('edit.subdivision'))
             return false;
         return true;
     }
