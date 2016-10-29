@@ -30,9 +30,9 @@ class CreateTradeRequest extends FormRequest
     {
         return [
             'status' => 'required|exists:trade_statuses,id',
-            'ppc' => 'required|exists:trade_statuses,id',
-            'curator' => 'required|exists:trade_statuses,id',
-            'client_id' => 'required|exists:trade_statuses,id',
+            'ppc' => 'required|exists:ppc,id',
+            'curator' => 'required|exists:users,id',
+            'client_id' => 'required|exists:clients,id',
             'products' => 'required|exists:products,id',
             'product_options' => 'required|array',
             'payment_is_completed' => 'sometimes|boolean',

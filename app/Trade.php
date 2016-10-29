@@ -62,7 +62,7 @@ class Trade extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Product','trades_has_products','trades_id', 'products_id')->withPivot('quantity');
+        return $this->belongsToMany('App\Product','trades_has_products','trades_id', 'products_id')->with('subdivision', 'stock')->withPivot('quantity')->withTimestamps();
     }
 
     /**
@@ -197,6 +197,8 @@ class Trade extends Model
             $total += (float)$sum;
         }
 
-        return $products->render();
+        $html = $products->render();
+        $html .= '<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">TOTAL: '.number_format($total, 2, '.', ' ').'</p>';
+        return $html;
     }
 }
