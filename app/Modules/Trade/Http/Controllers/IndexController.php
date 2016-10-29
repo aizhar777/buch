@@ -93,8 +93,9 @@ class IndexController extends Controller
             ])
             ->firstOrFail();
 
+        $statuses = TradeStatus::all();
 
-        return view('trade::show',['trade' => $trade]);
+        return view('trade::show',['trade' => $trade, 'statuses' => $statuses]);
     }
 
     /**

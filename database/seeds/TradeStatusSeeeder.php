@@ -9,46 +9,58 @@ class TradeStatusSeeeder extends Seeder
      */
     public $allStatuses = [
         [
-            'name' => 'Открытие сделки',
-            'slug' => 'is_open',
-            'description' => 'Открытие сделки',
+            'name' => 'Заявка',
+            'slug' => 'request',
+            'description' => 'Заявка для сделки',
             'level' => 0
         ],
         [
-            'name' => 'Поставка',
-            'slug' => 'delivery',
-            'description' => 'Поставка',
-            'level' => 1
+            'name' => 'Открытие сделки',
+            'slug' => 'is_open',
+            'description' => 'Открытие сделки',
+            'level' => 10
         ],
         [
-            'name' => 'Выполнено',
-            'slug' => 'commitments_fulfilled',
-            'description' => 'Выполнено',
-            'level' => 2
+            'name' => 'В обработке',
+            'slug' => 'in_progress',
+            'description' => 'Находится в обработке',
+            'level' => 20
         ],
         [
-            'name' => 'Подписание',
-            'slug' => 'signing',
-            'description' => 'Подписание актов выполненных работ',
-            'level' => 3
+            'name' => 'Обработан',
+            'slug' => 'processed',
+            'description' => 'Сделка обработана',
+            'level' => 40
         ],
         [
-            'name' => 'Ожидается оплата',
-            'slug' => 'anticipated_payment',
-            'description' => 'Ожидается оплата',
-            'level' => 4
+            'name' => 'Договор, Счет',
+            'slug' => 'contract_account',
+            'description' => 'Подписание договоров, и выставление счетов.',
+            'level' => 60
         ],
         [
-            'name' => 'Оплачено',
-            'slug' => 'paid',
-            'description' => 'Оплачено',
-            'level' => 5
+            'name' => 'Оплата, выполнение',
+            'slug' => 'payment_execution',
+            'description' => 'Оплата и выполнение всех обязательств',
+            'level' => 80
+        ],
+        [
+            'name' => 'Документы, Закрытие',
+            'slug' => 'documents_closing',
+            'description' => 'Завершение сделки, подписание документов.',
+            'level' => 100
+        ],
+        [
+            'name' => 'Закрыть',
+            'slug' => 'close',
+            'description' => 'Закрыть сделку',
+            'level' => 101
         ],
         [
             'name' => 'В архиве',
             'slug' => 'stored_in_the_archive',
-            'description' => 'Оплачено',
-            'level' => 6
+            'description' => 'Все обязательства выполнены, находится в архиве',
+            'level' => 110
         ],
     ];
 

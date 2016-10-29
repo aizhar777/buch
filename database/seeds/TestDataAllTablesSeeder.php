@@ -14,5 +14,6 @@ class TestDataAllTablesSeeder extends Seeder
         //Test data
         $this->call(CategoryTableSeeder::class);
         $this->call(ClientsTableSeeder::class);
+        $this->call(ProductsTableSeeeder::class);
     }
 }
