@@ -80,7 +80,7 @@ abstract class Module implements ModuleInterface
     public function check():bool
     {
         if ($this->permission == null) return false;
-        if(!$this->getCurrentUser()->can($this->permission))
+        if(!$this->checkPerm($this->permission))
             return false;
         return true;
     }

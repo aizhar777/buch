@@ -43,8 +43,7 @@ class DataController extends Controller
 
     public function delete($id)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('delete.category'))
+        if(!$this->checkPerm('delete.category'))
             return $this->noAccess('Not enough rights to delete');
 
         if (Category::deleteCategory($id)){

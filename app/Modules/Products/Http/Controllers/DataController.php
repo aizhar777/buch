@@ -45,7 +45,7 @@ class DataController extends Controller
     public function delete($id)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('delete.product'))
+        if(!$this->checkPerm('delete.product'))
             return $this->noAccess('Not enough rights to delete');
 
         if(Product::deleteById($id)){

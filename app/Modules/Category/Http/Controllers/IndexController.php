@@ -20,8 +20,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('view.category'))
+        if(!$this->checkPerm('view.category'))
             return $this->noAccess('Not enough rights to view');
 
         $cats = Category::all();
@@ -32,8 +31,7 @@ class IndexController extends Controller
 
     public function show($id)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('show.category'))
+        if(!$this->checkPerm('show.category'))
             return $this->noAccess('Not enough rights to show');
 
         $cat = Category::whereId($id)->firstOrFail();
@@ -44,8 +42,7 @@ class IndexController extends Controller
 
     public function create()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('create.category'))
+        if(!$this->checkPerm('create.category'))
             return $this->noAccess('Not enough rights to create');
 
         $cats = Category::all()->toHierarchy();
@@ -58,8 +55,7 @@ class IndexController extends Controller
 
     public function edit($id)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.category'))
+        if(!$this->checkPerm('edit.category'))
             return $this->noAccess('Not enough rights to delete');
 
         $cats = Category::all()->toHierarchy();

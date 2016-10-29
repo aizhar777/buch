@@ -16,8 +16,7 @@ class CreateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('create.category'))
+        if(!$this->checkPerm('create.category'))
             return false;
         return true;
     }

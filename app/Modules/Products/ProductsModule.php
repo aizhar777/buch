@@ -53,7 +53,7 @@ class ProductsModule extends Module
         $tbClose = '</tbody> </table>';
         $content = '<div class="alert alert-info">You have no products!</div>';
 
-        $products = Product::all()->take(10);
+        $products = Product::with('stock', 'subdivision')->take(5);
 
         if($products->count() > 0) {
             foreach ($products as $product) {
@@ -71,11 +71,13 @@ class ProductsModule extends Module
                 if ($product->is_service)
                     $is_service = 'yes';
 
+                $description = str_limit($product->description,20);
+
                 $tBody .= "
                 <tr> 
                     <th>{$product->id}</th> 
                     <td>{$product->name}</td> 
-                    <td>{$product->description}</td> 
+                    <td>$description</td> 
                     <td>{$product->price}</td> 
                     <td>{$product->cost}</td> 
                     <td>$is_service</td> 

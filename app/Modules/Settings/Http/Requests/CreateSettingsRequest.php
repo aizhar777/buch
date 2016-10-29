@@ -15,7 +15,7 @@ class CreateSettingsRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('create.settings'))
+        if(!$this->checkPerm('create.settings'))
             return false;
         return true;
     }

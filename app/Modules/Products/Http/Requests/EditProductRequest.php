@@ -17,7 +17,7 @@ class EditProductRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('edit.product'))
+        if(!$this->checkPerm('edit.product'))
             return false;
         return true;
     }

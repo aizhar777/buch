@@ -2,10 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Library\Traits\CurrentUserModel;
 use Closure;
 
 class OnEnter
 {
+    use CurrentUserModel;
+
     /**
      * Handle an incoming request.
      *
@@ -15,7 +18,7 @@ class OnEnter
      */
     public function handle($request, Closure $next)
     {
-        if (\Auth::user()!== null and \Auth::user()->isRole('admin'))
+        if ($this->getCurrentUser() !== null and $this->getCurrentUser()->isUserRole('admin'))
         {
             \Debugbar::enable();
         }else{

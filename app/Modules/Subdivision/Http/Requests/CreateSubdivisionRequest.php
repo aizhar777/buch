@@ -16,8 +16,7 @@ class CreateSubdivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('create.subdivision'))
+        if(!$this->checkPerm('create.subdivision'))
             return false;
         return true;
     }

@@ -22,7 +22,7 @@ class IndexController extends Controller
     public function index()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('view.stock'))
+        if(!$this->checkPerm('view.stock'))
             return $this->noAccess('Not enough rights to view');
 
         $stocks = Stock::all()->take(10);
@@ -39,7 +39,7 @@ class IndexController extends Controller
     public function create()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('create.stock'))
+        if(!$this->checkPerm('create.stock'))
             return $this->noAccess('Not enough rights to create');
 
         $subdivisions = Subdivision::all();
@@ -59,7 +59,7 @@ class IndexController extends Controller
     public function show($id)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('show.stock'))
+        if(!$this->checkPerm('show.stock'))
             return $this->noAccess('Not enough rights to view');
 
         $stock = Stock::where('id',$id)->firstOrFail();
@@ -75,7 +75,7 @@ class IndexController extends Controller
     public function edit($id)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('edit.stock'))
+        if(!$this->checkPerm('edit.stock'))
             return $this->noAccess('Not enough rights to esit');
 
         $stock = Stock::where('id',$id)->firstOrFail();
@@ -136,7 +136,7 @@ class IndexController extends Controller
     public function destroy($id)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('delete.stock'))
+        if(!$this->checkPerm('delete.stock'))
             return $this->noAccess('Not enough rights to delete');
 
         if(Stock::all()->count() <= 1){

@@ -17,7 +17,7 @@ class EditClientRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('edit.client'))
+        if(!$this->checkPerm('edit.client'))
             return false;
         return true;
     }

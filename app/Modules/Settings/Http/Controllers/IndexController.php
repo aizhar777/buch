@@ -14,7 +14,7 @@ class IndexController extends Controller
     public function view()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('view.settings'))
+        if(!$this->checkPerm('view.settings'))
             return $this->noAccess('Not enough rights to view');
         $settings = Setting::all();
         return view('settings::show',[
@@ -25,7 +25,7 @@ class IndexController extends Controller
     public function create()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('create.settings'))
+        if(!$this->checkPerm('create.settings'))
             return $this->noAccess('Not enough rights to create');
         return view('settings::create');
     }
@@ -33,7 +33,7 @@ class IndexController extends Controller
     public function edit($id)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('edit.settings'))
+        if(!$this->checkPerm('edit.settings'))
             return $this->noAccess('Not enough rights to edit');
         return view('settings::edit');
     }

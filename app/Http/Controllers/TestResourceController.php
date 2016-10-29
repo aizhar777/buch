@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Trade;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 
 class TestResourceController extends Controller
 {
-
     public function test()
     {
-        for ($i=0; $i < 100; $i++)
-            $currentUser = $this->getCurrentUser()->toArray();
-
-        return view('tests',['testData' => $currentUser]);
+        var_dump($this->checkPerm('delete.client'));
+        //return view('tests');
     }
 
     /**
@@ -40,7 +37,7 @@ class TestResourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,7 +48,7 @@ class TestResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -62,7 +59,7 @@ class TestResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -73,8 +70,8 @@ class TestResourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -85,7 +82,7 @@ class TestResourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

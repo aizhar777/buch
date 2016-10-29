@@ -16,8 +16,7 @@ class UpdateStockRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.stock'))
+        if(!$this->checkPerm('edit.stock'))
             return false;
         return true;
     }

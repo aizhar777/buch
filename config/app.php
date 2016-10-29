@@ -182,6 +182,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Aizhar777\Cell\CellServiceProvider::class,
 
     ],
 
@@ -233,6 +234,7 @@ return [
         'Flash' => Caffeinated\Flash\Facades\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class,
+        'Cell' => Aizhar777\Cell\Facades\Cell::class,
 
     ],
 

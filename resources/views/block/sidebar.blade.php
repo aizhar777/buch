@@ -1,4 +1,10 @@
-<?php $user = Auth::user() ?>
+<?php
+    if(\Session::has('current.user')){
+        $user = \Session::get('current.user');
+    }else{
+        $user = \Auth::user();
+    }
+?>
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
@@ -11,7 +17,7 @@
         <!-- menu profile quick info -->
         <div class="profile" style="margin-bottom: 35px">
             <div class="profile_pic">
-                @if(count($user->photos))
+                @if(!empty($user) && count($user->photos))
                     <img src="/upload/images/{{$user->photos()->first()->src or 'user.png'}}" alt="..." class="img-circle profile_img">
                 @else
                     <img src="/images/user.png" alt="..." class="img-circle profile_img">
@@ -19,7 +25,7 @@
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>{{$user->name}}</h2>
+                <h2>{{$user->name or 'NO NAME'}}</h2>
             </div>
             <div class="clearfix"></div>
         </div>

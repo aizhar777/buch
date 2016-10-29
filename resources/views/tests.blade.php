@@ -48,7 +48,8 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            {!! var_dump($testData) !!}
+                            @{!! var_dump($trade) !!}
+                            {!! $html !!}
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ class CreateStockRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('create.stock'))
+        if(!$this->checkPerm('create.stock'))
             return false;
         return true;
     }

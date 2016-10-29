@@ -3,10 +3,12 @@
 namespace App\Modules\Subdivision\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Library\Traits\CurrentUserModel;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSubdivisionRequest extends FormRequest
 {
+    use CurrentUserModel;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,8 +16,7 @@ class UpdateSubdivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.subdivision'))
+        if(!$this->checkPerm('edit.subdivision'))
             return false;
         return true;
     }

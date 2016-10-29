@@ -16,8 +16,7 @@ class CreateTradeRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('create.trade'))
+        if(!$this->checkPerm('create.trade'))
             return false;
         return true;
     }

@@ -15,7 +15,7 @@ class EditSettingsRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('delete.category'))
+        if(!$this->checkPerm('delete.category'))
             return false;
         return true;
     }

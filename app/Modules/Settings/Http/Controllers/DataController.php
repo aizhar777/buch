@@ -14,7 +14,7 @@ class DataController extends Controller
     public function edit($slug, EditSettingsRequest $request)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('edit.settings'))
+        if(!$this->checkPerm('edit.settings'))
             return json_encode(['status' => 'error', 'title' => 'Forbiden', 'message' => 'You are not have permission to update']);
 
         $result = [

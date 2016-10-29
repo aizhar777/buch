@@ -69,3 +69,13 @@ application.getInputForTradeOptions = function(title, id, max) {
         + id
         + ']" placeholder="Количество.." value="1" class="form-control"></div></div>';
 };
+
+application.getTradeProducts = function () {
+    var wrp = $('#trade_products_wrapper'),
+        link = $('#show_trade_products');
+    link.html('<i class="fa fa-refresh fa-spin fa-fw"></i> loading..');
+    $.get(link.attr('href'), function(data) {
+        wrp.html(data);
+        console.log('products loaded');
+    });
+};

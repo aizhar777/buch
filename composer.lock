@@ -4,9 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "84ad24ed1857b12cd384164209d6aa89",
-    "content-hash": "260aadb8eca1cac80fc08cbeba6d4cbb",
+    "hash": "3702952953295fc42db665b62052db83",
+    "content-hash": "d67ede50603094cd25c78cbc1ef27560",
     "packages": [
+        {
+            "name": "aizhar777/cell",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aizhar777/cell.git",
+                "reference": "709d0c11e8f68540550815b3633836b6827cbade"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aizhar777/cell/zipball/709d0c11e8f68540550815b3633836b6827cbade",
+                "reference": "709d0c11e8f68540550815b3633836b6827cbade",
+                "shasum": ""
+            },
+            "require": {
+                "donquixote/cellbrush": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Aizhar777\\Cell\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aizhar Olexin",
+                    "email": "aizharolexin@gmail.com"
+                }
+            ],
+            "description": "Laravel package for generate html table",
+            "keywords": [
+                "aizhar777",
+                "html table",
+                "laravel"
+            ],
+            "time": "2016-10-28 18:27:35"
+        },
         {
             "name": "barryvdh/laravel-debugbar",
             "version": "v2.3.0",
@@ -826,6 +867,40 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "donquixote/cellbrush",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/donquixote/cellbrush.git",
+                "reference": "09c70b421828624756e56591de41d5e86030f50e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/donquixote/cellbrush/zipball/09c70b421828624756e56591de41d5e86030f50e",
+                "reference": "09c70b421828624756e56591de41d5e86030f50e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Donquixote\\Cellbrush\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Hennings",
+                    "email": "andreas@dqxtech.net"
+                }
+            ],
+            "description": "Library to generate HTML tables.",
+            "homepage": "http://github.com/donquixote/cellbrush",
+            "time": "2016-05-18 16:51:39"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -4342,7 +4417,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.4"
+        "php": "7.0.*"
     },
     "platform-dev": []
 }

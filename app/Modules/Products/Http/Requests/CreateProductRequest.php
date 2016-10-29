@@ -16,7 +16,7 @@ class CreateProductRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('create.product'))
+        if(!$this->checkPerm('create.product'))
             return false;
         return true;
     }

@@ -13,9 +13,9 @@
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Go!</button>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -59,15 +59,15 @@
                     @foreach(\Module::all() as $module)
                         @if ($module['enabled'])
                             <?php
-                                $name = $module['name'];
-                                $classModule = config('modules.namespace').$name.'\\'.$name.'Module';
-                                if(class_exists($classModule)){
-                                    $mod = new $classModule();
-                                    echo $mod->widget();
-                                }
+                            $name = $module['name'];
+                            $classModule = config('modules.namespace') . $name . '\\' . $name . 'Module';
+                            if (class_exists($classModule)) {
+                                $mod = new $classModule();
+                                echo $mod->widget();
+                            }
                             ?>
                         @endif
-                        @endforeach
+                    @endforeach
                 @endif
 
             </div>

@@ -77,7 +77,7 @@ class DataController extends Controller
     public function delete($id)
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('delete.fieldParam'))
+        if(!$this->checkPerm('delete.fieldParam'))
             return $this->noAccess('Not enough rights to delete');
 
         $fMap = FieldParam::find($id)->firstOrFail();

@@ -19,7 +19,7 @@ class EditUserRequest extends FormRequest
     {
         $user = $this->getCurrentUser();
         if($user instanceof User){
-            if($user->id == $request->route('id') || $user->can('edit.user'))
+            if($user->id == $request->route('id') || $this->checkPerm('edit.user'))
                 return true;
         }
         return false;

@@ -7,7 +7,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>{{$stock->name or 'Error'}}</h3>
+                    <h3>Trade № {{$trade->id or 'Error'}}</h3>
                 </div>
 
                 <div class="title_right">
@@ -45,49 +45,68 @@
                     <div class="x_panel">
                         <div class="x_title">
 
-                            <h2>Storage: {{$stock->name or 'Error'}}</h2>
+                            <h2>Trade</h2>
 
                             <ul class="nav navbar-right panel_toolbox">
                                 <li>
                                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
-                                <li class="dropdown">
-
-                                    <a href="#"
-                                       class="dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       role="button"
-                                       aria-expanded="false">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="{{route('stock')}}">All store</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('stock.edit',['id' => $stock->id])}}">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a onclick="event.preventDefault();document.getElementById('stock-{{$stock->id}}-delete-form').submit();">Delete</a>
-                                        </li>
-                                    </ul>
+                                <li>
+                                    <a href="{{route('trade')}}" title="All trades"><i class="fa fa-th-list"></i></a>
+                                </li>
+                                <li>
+                                    <a href="{{route('trade.edit',['id' => $trade->id])}}" title="Edit"><i class="fa fa-pencil-square"></i></a>
+                                </li>
+                                <li>
+                                    <a onclick="event.preventDefault();document.getElementById('trade-{{$trade->id}}-delete-form').submit();"  title="Delete"><i class="fa fa-trash"></i></a>
                                 </li>
                             </ul>
-                            @include('forms.stock_delete_form', ['id' => $stock->id])
+                            @include('forms.delete_form', ['id' => $trade->id, 'slug' => 'trade'])
 
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="x_content">
-                            <div><b>Name:</b> {{$stock->name}}</div>
-                            <div><b>Slug:</b> {{$stock->slug}}</div>
-                            <div><b>Description:</b> {{$stock->description or 'Empty'}}</div>
-                            <div><b>Address:</b> {{$stock->address or 'None'}}</div>
-                            <div><b>Subdivision:</b> {{$stock->subdivision->name or 'Empty'}}</div>
-                            <div><b>Responsible:</b> {{$stock->user->name or 'None'}}</div>
-                            <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($stock->created_at))}}</div>
+                            <div><b>Status:</b> {{$trade->statuses->name or 'None'}}</div>
+                            <div><b>PPC:</b>
+                                @if($trade->ppCode)
+                                    <abbr title="{{$trade->ppCode->description}}" class="initialism">Code: {{$trade->ppCode->code or 'None'}}</abbr>
+                                @else
+                                    ID# {{$trade->ppc}}
+                                @endif
+                            </div>
+                            <div><b>Curator:</b>
+                                @if($trade->supervisor)
+                                    <a href="{{route('user.profile',['id' => $trade->supervisor->id])}}"><i class="fa fa-user"></i> {{$trade->supervisor->name}}</a>
+                                @else
+                                    ID# {{$trade->curador}}
+                                @endif
+                            </div>
+                            <div><b>Client:</b>
+                                @if($trade->client)
+                                    <a href="{{route('clients',['id' => $trade->client->id])}}"><i class="fa fa-user"></i> {{$trade->client->name}}</a>
+                                @else
+                                    ID# {{$trade->client_id}}
+                                @endif
+                            </div>
+                            <div><b>Payment is completed:</b>
+                                @if($trade->payment_is_completed)
+                                    Completed by @if($trade->completer)
+                                        <a href="{{route('user.profile',['id' => $trade->completer->id])}}"><i class="fa fa-user"></i> {{$trade->completer->name}}</a>
+                                    @else
+                                        User ID: {{$trade->completed_by_user}}
+                                    @endif
+                                @else
+                                    Is not complete
+                                @endif
+                            </div>
+                            <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($trade->created_at))}}</div>
+
                         </div>
+                    </div>
+
+                    <div id="trade_products_wrapper">
+                        <a href="{{route('trade.get.products',['id' => $trade->id])}}" data-load="none" onclick="event.preventDefault();application.getTradeProducts();" id="show_trade_products">Show trade products</a>
                     </div>
 
                 </div>

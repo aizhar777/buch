@@ -15,10 +15,9 @@ class EditClientAndRequisiteRequest extends EditClientRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.client'))
+        if(!$this->checkPerm('edit.client'))
             return false;
-        if(!$user->can('edit.requisite'))
+        if(!$this->checkPerm('edit.requisite'))
             return false;
         return true;
     }

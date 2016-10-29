@@ -59,13 +59,13 @@
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
-                                        <th>#ID</th>
+                                        <th>Trade ID</th>
                                         <th>Status</th>
                                         <th>PPC</th>
                                         <th>Curator</th>
                                         <th>Client</th>
-                                        <th>payment_is_completed</th>
-                                        <th>completed_by_user</th>
+                                        <th>Payment is completed</th>
+                                        <th>Products</th>
                                         <th>Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -73,13 +73,49 @@
                                     <tbody>
                                     @foreach($trades as $trade)
                                         <tr>
-                                            <th>{{$trade->id}}</th>
-                                            <th>{{$trade->status}}</th>
-                                            <th>{{$trade->ppc or 'none'}}</th>
-                                            <th>{{$trade->curator or 'none'}}</th>
-                                            <th>{{$trade->client_id}}</th>
-                                            <th>{{$trade->payment_is_completed or 'none'}}</th>
-                                            <th>{{$trade->completed_by_user or 'none'}}</th>
+                                            <th>#{{$trade->id}}</th>
+                                            <th>{{$trade->statuses->name or 'None'}}</th>
+                                            <th>
+                                                @if($trade->ppCode)
+                                                    <abbr title="{{$trade->ppCode->description}}" class="initialism">Code: {{$trade->ppCode->code or 'None'}}</abbr>
+                                                @else
+                                                    ID# {{$trade->ppc}}
+                                                @endif
+                                            </th>
+                                            <th>
+                                                @if($trade->supervisor)
+                                                    <a href="{{route('user.profile',['id' => $trade->supervisor->id])}}"><i class="fa fa-user"></i> {{$trade->supervisor->name}}</a>
+                                                @else
+                                                    ID# {{$trade->curador}}
+                                                @endif
+                                            </th>
+                                            <th>
+                                                @if($trade->client)
+                                                    <a href="{{route('clients',['id' => $trade->client->id])}}"><i class="fa fa-user"></i> {{$trade->client->name}}</a>
+                                                @else
+                                                    ID# {{$trade->client_id}}
+                                                @endif
+                                            </th>
+                                            <th>
+                                                @if($trade->payment_is_completed)
+                                                    Completed by @if($trade->completer)
+                                                        <a href="{{route('user.profile',['id' => $trade->completer->id])}}"><i class="fa fa-user"></i> {{$trade->completer->name}}</a>
+                                                    @else
+                                                        User ID: {{$trade->completed_by_user}}
+                                                    @endif
+                                                @else
+                                                    Is not complete
+                                                @endif
+                                            </th>
+                                            <th>
+                                                @if($trade->products->count())
+                                                    @foreach($trade->products as $product)
+                                                        <a href="{{route('products',['id' => $product->id])}}">{{$product->name}}</a>
+                                                    @endforeach
+                                                @else
+                                                    NONE?
+                                                @endif
+                                            </th>
                                             <th>{{date('d.m.Y H:i', strtotime($trade->created_at))}}</th>
                                             <th>
                                                 <div class="btn-group">

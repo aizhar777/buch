@@ -36,5 +36,7 @@ class SignInController extends LoginController
     {
         event(new UserIsLogged($user));
         \Session::put('current.user',$user);
+        \Session::put('current.perms',$user->getPermissions());
+        \Session::put('current.roles',$user->roles()->get());
     }
 }

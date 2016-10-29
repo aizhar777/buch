@@ -16,7 +16,7 @@ class CreateFieldRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('create.fieldParam'))
+        if(!$this->checkPerm('create.fieldParam'))
             return false;
         return true;
     }

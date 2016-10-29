@@ -24,6 +24,8 @@ class IndexController extends Controller
      */
     public function index()
     {
+        if(!$this->checkPerm('view.trade'))
+            return $this->noAccess('Not enough rights to view');
         $trades = Trade::all();
         return view('trade::index',['trades' => $trades]);
     }
@@ -35,6 +37,9 @@ class IndexController extends Controller
      */
     public function create()
     {
+        if(!$this->checkPerm('create.trade'))
+            return $this->noAccess('Not enough rights to view');
+
         $products = Product::all();
         $users = User::all();
         $ppc = Ppc::all();
@@ -53,11 +58,18 @@ class IndexController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  CreateTradeRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateTradeRequest $request)
     {
-        dd($request->all());
+        $tradeCreated = Trade::createTradeAndAddProducts($request);
+        if ($tradeCreated instanceof Trade){
+            \Flash::success('Trade created!');
+            return redirect()->route('trade');
+        } else {
+            \Flash::error('Trade not created!');
+            return redirect()->back()->withInput($request->all());
+        }
     }
 
     /**
@@ -68,7 +80,21 @@ class IndexController extends Controller
      */
     public function show($id)
     {
-        //
+        if(!$this->checkPerm('show.trade'))
+            return $this->noAccess('Not enough rights to view');
+
+        $trade = Trade::whereId($id)
+            ->with([
+                'statuses',
+                'ppCode',
+                'client',
+                'supervisor',
+                'completer',
+            ])
+            ->firstOrFail();
+
+
+        return view('trade::show',['trade' => $trade]);
     }
 
     /**

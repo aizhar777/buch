@@ -16,8 +16,7 @@ class EditCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.category'))
+        if(!$this->checkPerm('edit.category'))
             return false;
         return true;
     }

@@ -16,10 +16,9 @@ class CreateClientAndRequisiteRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('create.client'))
+        if(!$this->checkPerm('create.client'))
             return false;
-        if(!$user->can('create.requisite'))
+        if(!$this->checkPerm('create.requisite'))
             return false;
         return true;
     }

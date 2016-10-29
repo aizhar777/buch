@@ -21,4 +21,8 @@ Route::group(['prefix' => 'trade', 'middleware' => ['debug', 'auth']], function(
     Route::post('/store', 'IndexController@store')->name('trade.store');
     Route::put('/update/{id}', 'IndexController@update')->where(['id' => '[0-9]+'])->name('trade.update');
     Route::delete('/destroy/{id}', 'IndexController@destroy')->where(['id' => '[0-9]+'])->name('trade.destroy');
+
+    // AJAX
+
+    Route::get('/{id}/get/products', 'AjaxController@getProducts')->where(['id' => '[0-9]+'])->name('trade.get.products');
 });

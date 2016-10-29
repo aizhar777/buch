@@ -20,8 +20,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('view.subdivision'))
+        if(!$this->checkPerm('view.subdivision'))
             return $this->noAccess('Not enough rights to view');
 
         $subdivisions = Subdivision::all()->take(10);
@@ -37,8 +36,7 @@ class IndexController extends Controller
      */
     public function create()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('create.subdivision'))
+        if(!$this->checkPerm('create.subdivision'))
             return $this->noAccess('Not enough rights to create');
 
         $users = User::all();
@@ -55,8 +53,7 @@ class IndexController extends Controller
      */
     public function show($id)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('show.subdivision'))
+        if(!$this->checkPerm('show.subdivision'))
             return $this->noAccess('Not enough rights to view');
 
         $sub = Subdivision::where('id',$id)->firstOrFail();
@@ -71,8 +68,7 @@ class IndexController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.subdivision'))
+        if(!$this->checkPerm('edit.subdivision'))
             return $this->noAccess('Not enough rights to edit');
 
         $sub = Subdivision::where('id',$id)->firstOrFail();
@@ -130,8 +126,7 @@ class IndexController extends Controller
      */
     public function destroy($id)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('delete.subdivision'))
+        if(!$this->checkPerm('delete.subdivision'))
             return $this->noAccess('Not enough rights to delete');
 
         if(Subdivision::all()->count() <= 1){

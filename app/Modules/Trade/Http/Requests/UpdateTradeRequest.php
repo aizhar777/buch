@@ -16,8 +16,7 @@ class UpdateTradeRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.trade'))
+        if(!$this->checkPerm('edit.trade'))
             return false;
         return true;
     }

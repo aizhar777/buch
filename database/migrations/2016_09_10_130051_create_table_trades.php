@@ -19,7 +19,7 @@ class CreateTableTrades extends Migration
             $table->integer('ppc')->unsigned()->nullable();
             $table->integer('curator')->unsigned()->nullable();
             $table->integer('client_id')->unsigned();
-            $table->boolean('payment_is_completed')->default(0);
+            $table->boolean('payment_is_completed')->nullable()->default(0);
             $table->integer('completed_by_user')->unsigned()->nullable();
             $table->timestamps();
         });

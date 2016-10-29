@@ -48,8 +48,7 @@ class IndexController extends Controller
      */
     public function checkAndEditAction(User $user)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.user'))
+        if(!$this->checkPerm('edit.user'))
             return $this->noAccess();
         return $this->editAction($user);
     }
@@ -77,8 +76,7 @@ class IndexController extends Controller
      */
     public function showUser(User $user)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('show.user'))
+        if(!$this->checkPerm('show.user'))
             return $this->noAccess();
         return $this->showProfile($user);
     }

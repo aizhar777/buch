@@ -17,7 +17,7 @@ class EditFieldsMapRequest extends FormRequest
     public function authorize()
     {
         $user = $this->getCurrentUser();
-        if(!$user->can('edit.fieldParam'))
+        if(!$this->checkPerm('edit.fieldParam'))
             return false;
         return true;
     }

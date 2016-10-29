@@ -27,8 +27,7 @@ class DataController extends Controller
 
     protected function updateProfile($id, Request $request)
     {
-        $user = $this->getCurrentUser();
-        if(!$user->can('edit.user'))
+        if(!$this->checkPerm('edit.user'))
             return $this->noAccess('Not enough rights to edit user');
         $user = User::whereId($id)->firstOrFail();
 
