@@ -172,6 +172,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,          //https://github.com/barryvdh/laravel-debugbar
         Baum\Providers\BaumServiceProvider::class,         //https://github.com/etrepat/baum
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Aizhar777\Cell\CellServiceProvider::class, //self provider
         //
 
         /*
@@ -182,7 +183,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Aizhar777\Cell\CellServiceProvider::class,
+        App\Providers\NumberToStringServiceProvider::class,
 
     ],
 
@@ -234,7 +235,8 @@ return [
         'Flash' => Caffeinated\Flash\Facades\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class,
-        'Cell' => Aizhar777\Cell\Facades\Cell::class,
+        'Cell' => \Aizhar777\Cell\Facades\Cell::class,
+        'NumberToString' => App\Library\Facades\NumberToStringFacade::class,
 
     ],
 

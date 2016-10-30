@@ -10,8 +10,8 @@ class TestResourceController extends Controller
 {
     public function test()
     {
-        var_dump($this->checkPerm('delete.client'));
-        //return view('tests');
+        //var_dump($this->checkPerm('delete.client'));
+        return view('tests');
     }
 
     /**

@@ -48,8 +48,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            @{!! var_dump($trade) !!}
-                            {!! $html !!}
+                            @nts(423.75)
                         </div>
                     </div>
                 </div>

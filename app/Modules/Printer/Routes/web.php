@@ -11,8 +11,23 @@
 |
 */
 
+/**
+ * TYPE:
+ *  check - Товарный чек
+ *  invoice - Счет фактура
+ *  certificate - Акт Выполненных Работ
+ *  order - Прих Кассовый Ордер
+ *
+ * FORMAT:
+ *  landscape - Альбомная ориентация (landscape orientation)
+ *  portrait - Книжная ориентация (portrait orientation)
+ */
 Route::group(['prefix' => 'printer'], function() {
-    Route::get('/', function() {
-        dd('This is the Printer module index page. Build something great!');
-    });
+    Route::get('/trade/{id}/{type}/{format}/{output?}', 'IndexController@printTrade')
+    ->where([
+        'id' => '[0-9]+',
+        'type' => '(check|invoice|certificate|order)',
+        'format' => '(landscape|portrait)',
+        'output' => '(html|pdf)',
+    ])->name('printer.trade');
 });

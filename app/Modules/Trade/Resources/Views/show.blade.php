@@ -76,6 +76,25 @@
                                 <li>
                                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
+
+                                <li class="dropdown">
+
+                                    <a href="#"
+                                       class="dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       role="button"
+                                       aria-expanded="false">
+                                        <i class="fa fa-print"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{route('printer.trade',['id' => $trade->id, 'type' => 'check', 'format' => 'portrait'])}}">Print check (portrait)</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
                                 <li>
                                     <a href="{{route('trade')}}" title="All trades"><i class="fa fa-th-list"></i></a>
                                 </li>
