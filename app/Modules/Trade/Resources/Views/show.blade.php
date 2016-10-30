@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Trade #' . $trade->id . ' -')
+
 @section('content')
 
     <!-- page content -->

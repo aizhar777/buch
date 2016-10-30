@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Create trade -')
+
 @section('content')
 
     <!-- page content -->

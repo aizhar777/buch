@@ -56,7 +56,7 @@ class ProductsModule extends Module
         $products = Product::with('stock', 'subdivision')->take(5);
 
         if($products->count() > 0) {
-            foreach ($products as $product) {
+            foreach ($products->get() as $product) {
                 $date = date('d-m-Y H:s', strtotime($product->created_at));
 
                 $stock = $product->stock_id . ' stock';

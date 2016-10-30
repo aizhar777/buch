@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Modules\Trade\Http\Requests\CreateTradeRequest;
+use App\Modules\Trade\Http\Requests\UpdateTradeRequest;
 use Illuminate\Database\Eloquent\Model;
 
 class Trade extends Model
@@ -114,6 +115,48 @@ class Trade extends Model
     }
 
     /**
+     * Update trade and quantity products
+     *
+     * @param UpdateTradeRequest $request
+     * @param $id
+     * @return array|bool
+     */
+    public static function updateTradeandProducts(UpdateTradeRequest $request, $id)
+    {
+        $errors = [];
+
+        $product_options = $request->get('product_options');
+        $products = $request->get('products');
+
+        $trade = self::whereId($id)->with('statuses','ppCode','client','supervisor','completer','products')->firstOrFail();
+
+        if($trade->status !== $request->get('status'))
+            $trade->status = $request->get('status');
+
+        if($trade->ppc !== $request->get('ppc'))
+            $trade->ppc = $request->get('ppc');
+
+        if($trade->curator !== $request->get('curator'))
+            $trade->curator = $request->get('curator');
+
+        if($trade->payment_is_completed !== $request->get('payment_is_completed'))
+            $trade->payment_is_completed = $request->get('payment_is_completed');
+
+        if($trade->completed_by_user !== $request->get('completed_by_user'))
+            $trade->completed_by_user = $request->get('completed_by_user');
+
+        if(!$trade->save())
+            $errors[] = 'Неудалось обновить trade c ID:'.$trade->id;
+        foreach ($products as $product){
+            if (!empty($product_options[$product]))
+                $trade->products()->updateExistingPivot($product, ['quantity' => $product_options[$product]]);
+        }
+        if(count($errors))
+            return $errors;
+        return true;
+    }
+
+    /**
      * Find Trade by id
      *
      * @param $id
@@ -154,7 +197,7 @@ class Trade extends Model
         $products = \Cell::create()
             ->addClass($cssClass)
             ->addColNames([
-                'id',
+                'number',
                 'name',
                 'description',
                 'price',
@@ -166,7 +209,7 @@ class Trade extends Model
 
         $products->thead()
             ->addRowName('head row')
-            ->th('head row', 'id', '№')
+            ->th('head row', 'number', '№')
             ->th('head row', 'name', 'Name')
             ->th('head row', 'description', 'Description')
             ->th('head row', 'price', 'Price')
@@ -183,7 +226,7 @@ class Trade extends Model
             $sum = (float)$product->price * (float)$product->pivot->quantity;
 
             $products->addRow($product->id)
-                ->tdOpenEnd('id', $product->id)
+                ->tdOpenEnd('number', $id)
                 ->tdOpenEnd('name', $product->name)
                 ->tdOpenEnd('description', str_limit($product->description, 150))
                 ->tdOpenEnd('price', number_format($product->price, 2, '.', ' '))

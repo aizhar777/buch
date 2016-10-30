@@ -1,3 +1,10 @@
+<?php
+if(\Session::has('current.user')){
+    $user = \Session::get('current.user');
+}else{
+    $user = \Auth::user();
+}
+?>
 <!-- top navigation -->
 <div class="top_nav">
     <div class="nav_menu">
@@ -8,20 +15,19 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                       aria-expanded="false">
-                        <img src="/images/user.png" alt=""> {{Auth::user()->email}}
+                    <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <img src="/upload/images/{{ (\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name}}"> {{$user->email}}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="{{url('/user')}}"> Profile</a></li>
+                        <li><a href="{{route('user.profile',['id' => $user->id])}}"> Profile</a></li>
                         <li>
-                            <a href="javascript:;">
+                            <a href="{{route('user.edit',$user->id)}}">
                                 <span class="badge bg-red pull-right">50%</span>
                                 <span>Settings</span>
                             </a>
                         </li>
-                        <li><a href="javascript:;">Help</a></li>
+                        <li><a href="javascript:void(0);">Help</a></li>
                         <li>
                             <a href="{{ url('/auth/signout') }}"
                                onclick="event.preventDefault();
@@ -35,7 +41,7 @@
                 </li>
 
                 <li role="presentation" class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                    <a href="javascript:void(0);" class="dropdown-toggle info-number" data-toggle="dropdown"
                        aria-expanded="false">
                         <i class="fa fa-envelope-o"></i>
                         <span class="badge bg-green">6</span>
@@ -104,59 +110,3 @@
     </div>
 </div>
 <!-- /top navigation -->
-
-
-<!--
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-
-            <!-- Collapsed Hamburger --
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Branding Image --
-            <a class="navbar-brand" href="{{ url('/') }}">
-                BUCH
-            </a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <!-- Left Side Of Navbar --
-            <ul class="nav navbar-nav">
-                &nbsp;
-            </ul>
-
-            <!-- Right Side Of Navbar --
-            <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links --
-                @if (Auth::guest())
-                    <li><a href="{{ route('signInForm') }}">Login</a></li>
-                    <li><a href="{{ route('signUpForm') }}">Register</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ url('/auth/signout') }}"
-                                   onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-                                @include('block.logout_form')
-                            </li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </div>
-    </div>
-</nav>
--->

@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Edit trade #' . $trade->id . ' -')
+
 @section('content')
 
     <!-- page content -->
@@ -7,7 +9,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Edit storage: {{$storage->name or 'Error'}}</h3>
+                    <h3>Edit trade #{{$trade->id}}</h3>
                 </div>
 
                 <div class="title_right">
@@ -43,19 +45,20 @@
                     @include('block.flash_messages')
 
 
-                    <form action="{{route('stock.update',['id' => $storage->id])}}" method="post" class="form-horizontal form-label-left">
+                    <form action="{{route('trade.update', ['id' => $trade->id ])}}" method="post" class="form-horizontal form-label-left">
                         {{csrf_field()}}
                         {{method_field('PUT')}}
 
                         <div class="x_panel">
                             <div class="x_title">
 
-                                <h2>Edit form</h2>
+                                <h2>Edit trade form</h2>
 
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li>
                                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </li>
+
                                     <li class="dropdown">
 
                                         <a href="#"
@@ -68,12 +71,14 @@
 
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{{route('stock')}}">All stores</a>
+                                                <a href="{{route('trade')}}">All trades</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('trade.show',['id' => $trade->id])}}">Back</a>
                                             </li>
                                         </ul>
 
                                     </li>
-
                                 </ul>
 
                                 <div class="clearfix"></div>
@@ -82,68 +87,106 @@
                             <div class="x_content">
 
                                 <div class="form-group">
-                                    <label for="stock_name" class="control-label col-md-3 col-sm-3 col-xs-12">Name storage</label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input name="name"  id="stock_name" type="text" class="form-control" placeholder="Stock name" value="{{$storage->name}}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="stock_slug" class="control-label col-md-3 col-sm-3 col-xs-12">Slug storage</label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input name="slug"  id="stock_slug" type="text" class="form-control" placeholder="Stock slug" value="{{$storage->slug}}">
-                                        <span id="helpBlock" class="help-block">Only Latin characters and dashes "-" or "_"</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="stock_description" class="control-label col-md-3 col-sm-3 col-xs-12">Description storage</label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <textarea name="description" id="stock_description" rows="5" class="form-control" placeholder="Stock description">{{$storage->description}}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="stock_subdivision" class="control-label col-md-3 col-sm-3 col-xs-12">Subdivision storage</label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <select id="stock_subdivision" name="subdivision_id" class="form-control">
-                                            <option>Choose subdivision</option>
-                                            @if(!empty($subdivisions))
-                                                @foreach($subdivisions as $subdivision)
-                                                    <option value="{{$subdivision->id}}" @if($storage->subdivision_id == $subdivision->id) selected @endif >{{$subdivision->name}}</option>
-                                                @endforeach
-                                            @endif
+                                        <select name="status" class="select2_single form-control">
+                                            @foreach($all_status as $status)
+                                                <option value="{{$status->id}}" title="{{$status->description}}"
+                                                        @if($status->id == $trade->status) selected @endif >{{$status->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
-
-
                                 <div class="form-group">
-                                    <label for="is_responsible" class="control-label col-md-3 col-sm-3 col-xs-12">Add responseble for storage</label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Curator</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input name="is_responsible"  id="is_responsible" type="checkbox" @if(!empty($storage->is_responsible)) checked @endif >
+                                        <select name="curator" class="select2_single form-control">
+                                            <option>Select curator</option>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}"
+                                                        @if($user->id == $trade->curator) selected @endif >{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="stock_responsible_wrap">
-                                    <label for="stock_responsible" class="control-label col-md-3 col-sm-3 col-xs-12">Responsible for storage</label>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Client</label>
                                     <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <select id="stock_responsible" name="responsible" class="form-control">
-                                            <option value="">Choose user</option>
-                                            @if(!empty($responsibles))
-                                                @foreach($responsibles as $responsible)
-                                                    <option value="{{$responsible->id}}" @if($storage->responsible == $responsible->id) selected @endif >{{$responsible->name}}</option>
-                                                @endforeach
-                                            @endif
+                                        <select name="client_id" class="select2_single form-control" required>
+                                            <option>Select client</option>
+                                            @foreach($clients as $client)
+                                                <option value="{{$client->id}}"
+                                                        @if($client->id == $trade->client_id) selected @endif >{{$client->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Purchase code</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select name="ppc" class="select2_single form-control">
+                                            <option>Select PPC</option>
+                                            @foreach($codes as $ppc)
+                                                <option value="{{$ppc->id}}" title="{{$ppc->description}}"
+                                                        @if($ppc->id == $trade->ppc) selected @endif >{{$ppc->code}}
+                                                    : {{str_limit($ppc->description, 80, '...')}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Select products</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <select name="products[]" id="select_products"
+                                                class="select2_multiple form-control" multiple="multiple">
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}" data-balance="{{$product->balance}}"
+                                                        @foreach($trade->products as $prd)
+                                                        @if($product->id == $prd->id)
+                                                        selected
+                                                        @endif
+                                                        @endforeach
+                                                >
+                                                    {{$product->name}}
+                                                    (
+                                                    price: {{number_format($product->price)}}
+                                                    @if(!$product->is_service)
+                                                         | {{$product->balance}}
+                                                    @endif
+                                                    )
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="options_block_edit" style="margin: 0;padding: 0;">
+                                    @foreach($trade->products as $tradeProduct)
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            {{$tradeProduct->name}} @if(!$tradeProduct->is_service) ({{$tradeProduct->balance}}) @endif
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <input
+                                                    type="number" min="1"
+                                                    @if(!$tradeProduct->is_service)
+                                                    max="{{$tradeProduct->balance}}"
+                                                    @endif
+                                                    name="product_options[{{$tradeProduct->id}}]"
+                                                    placeholder="Количество.."
+                                                    value="{{$tradeProduct->pivot->quantity}}"
+                                                    class="form-control"
+                                            >
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </div>
 
                             </div>
                         </div>
-
-                        <div class="ln_solid"></div>
 
                         <div class="form-group">
                             <button class="btn btn-large btn-primary" type="submit">Update</button>

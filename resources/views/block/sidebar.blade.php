@@ -17,11 +17,7 @@
         <!-- menu profile quick info -->
         <div class="profile" style="margin-bottom: 35px">
             <div class="profile_pic">
-                @if(!empty($user) && count($user->photos))
-                    <img src="/upload/images/{{$user->photos()->first()->src or 'user.png'}}" alt="..." class="img-circle profile_img">
-                @else
-                    <img src="/images/user.png" alt="..." class="img-circle profile_img">
-                @endif
+                <img src="/upload/images/{{(\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name or 'User photo'}}" class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>

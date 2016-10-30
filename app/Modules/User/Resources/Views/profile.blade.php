@@ -140,6 +140,43 @@
                         </div>
                     </div>
 
+                    @if($user->photos->count() > 0)
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>User Photo's <small>Media Gallery</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <!-- =============================================================================== -->
+                            <p>Media gallery emelents</p>
+
+                            <div class="row">
+                                @foreach($user->photos as $photo)
+                                <div class="col-md-55">
+                                    <div class="thumbnail user_profile">
+                                        <div class="image view user_profile view-first">
+                                            <img style="width: 100%; display: block;" src="/upload/images/{{$photo->src}}" alt="Photo #{{$photo->id}} - {{$user->name}}" />
+                                            <div class="mask">
+                                                <p>{{$photo->name}}</p>
+                                                <div class="tools tools-bottom">
+                                                    <a href="#" title="Set as default"><i class="fa fa-user"></i></a>
+                                                    <a href="#" title="Delete this photo"><i class="fa fa-times"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                            <!-- =============================================================================== -->
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

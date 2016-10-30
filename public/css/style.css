@@ -34,3 +34,16 @@
     background-color: #8c8c8c;
     color: #fff;
 }
+.thumbnail.user_profile .image {
+    height: 100%;
+}
+.view.user_profile .mask{
+    bottom: 0;
+}
+.view.user_profile .tools {
+    margin: 102px 0 0 0;
+}
+.panel_toolbox {
+    float: right;
+    min-width: 24px;
+}

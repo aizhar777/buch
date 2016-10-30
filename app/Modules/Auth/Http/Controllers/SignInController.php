@@ -38,5 +38,6 @@ class SignInController extends LoginController
         \Session::put('current.user',$user);
         \Session::put('current.perms',$user->getPermissions());
         \Session::put('current.roles',$user->roles()->get());
+        \Session::put('current.image',$user->photos()->first()->src);
     }
 }

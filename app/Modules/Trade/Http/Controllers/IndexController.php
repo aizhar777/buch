@@ -4,6 +4,7 @@ namespace App\Modules\Trade\Http\Controllers;
 
 use App\Client;
 use App\Modules\Trade\Http\Requests\CreateTradeRequest;
+use App\Modules\Trade\Http\Requests\UpdateTradeRequest;
 use App\Ppc;
 use App\Product;
 use App\Trade;
@@ -106,19 +107,45 @@ class IndexController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(!$this->checkPerm('create.trade'))
+            return $this->noAccess('Not enough rights to view');
+
+        $trade = Trade::whereId($id)->with('statuses','ppCode','client','supervisor','completer','products')->firstOrFail();
+        $products = Product::all();
+        $users = User::all();
+        $ppc = Ppc::all();
+        $status = TradeStatus::all();
+        $clients = Client::all();
+        return view('trade::edit',[
+            'trade' => $trade,
+            'products' => $products,
+            'users' => $users,
+            'codes' => $ppc,
+            'clients' => $clients,
+            'all_status' => $status,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateTradeRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTradeRequest $request, $id)
     {
-        //
+        $result = Trade::updateTradeandProducts($request, $id);
+
+        if ($result && !is_array($result)){
+            \Flash::success('Trade updated!');
+            return redirect()->route('trade.show',['id' => $id]);
+        } else {
+            $errors = '<p>Trade not updated!</p>';
+            foreach ($result as $err) $errors .= "<p>$err</p>";
+            \Flash::error($errors);
+            return redirect()->back()->withInput($request->all());
+        }
     }
 
     /**
@@ -129,6 +156,7 @@ class IndexController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \Flash::warning('Removing trade unless provided. You can trade moved to the archive. TRADE_ID:'.$id);
+        return redirect()->back();
     }
 }

@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{config('app.name')}}</title>
+    <title> @yield('title', 'Home -') {{config('app.name')}}</title>
 
     <!-- Bootstrap -->
     <link href="{{url('vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -31,10 +31,10 @@
     <!-- Custom Theme Style -->
     <link href="{{url('css/custom.css')}}" rel="stylesheet">
     <link href="{{url('css/style.css')}}" rel="stylesheet">
-    <style>
+    <style>/*
         body{
             width: 99%;
-        }
+        }*/
         {!! $style or '' !!}
     </style>
 </head>
