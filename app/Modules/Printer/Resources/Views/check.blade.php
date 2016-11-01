@@ -847,9 +847,9 @@
     <tr style="height:40px">
         <td colspan="20" class="s19">Сумма прописью:
             @if(config('company.vat_rate') == 'NONE')
-                @nts($summ)
+                @numToWords($summ)
             @else
-                @nts($summ + (($summ/100) * config('company.vat_rate')))
+                @numToWords($summ + (($summ/100) * config('company.vat_rate')))
             @endif
         </td>
         <td/>
