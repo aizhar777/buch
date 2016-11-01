@@ -3,6 +3,8 @@
 namespace App\Modules\User\Http\Controllers;
 
 use App\Library\BFields;
+use App\Permission;
+use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
 
@@ -105,4 +107,73 @@ class IndexController extends Controller
             'fields' => $fields
         ]);
     }
+
+    public function usersList()
+    {
+        if(!$this->checkPerm('view.user'))
+            return $this->noAccess();
+        $users = User::paginate(10);
+        return view('user::index',['users' => $users]);
+    }
+
+    public function rolesAction()
+    {
+        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+            return $this->noAccess();
+
+        $roles = Role::paginate(10);
+        return view('user::index_roles',['roles' => $roles]);
+    }
+
+    public function rolesShowAction($id)
+    {
+        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+            return $this->noAccess();
+
+        $role = Role::whereId($id)->firstOrFail();
+
+        return $this->showRole($role);
+    }
+
+    public function rolesShowBySlugAction($slug)
+    {
+        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+            return $this->noAccess();
+
+        $role = Role::whereSlug($slug)->firstOrFail();
+
+        return $this->showRole($role);
+    }
+
+    public function showRole(Role $role)
+    {
+        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+            return $this->noAccess();
+
+        return view('user::show_role',['role' => $role]);
+    }
+
+    public function rolesCreateAction(){}
+    public function rolesEditAction(){}
+
+    public function permissionAction()
+    {
+        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of permissions
+            return $this->noAccess();
+
+        $perms = Permission::paginate(10);
+        return view('user::index_perms',['perms' => $perms]);
+    }
+
+    public function permissionShowAction($id)
+    {
+        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+            return $this->noAccess();
+
+        $perm = Permission::whereId($id)->firstOrFail();
+
+        return view('user::show_perm',['perm' => $perm]);
+    }
+    public function permissionCreateAction(){}
+    public function rpermissionEditAction(){}
 }

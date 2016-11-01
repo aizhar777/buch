@@ -75,12 +75,20 @@ abstract class Module implements ModuleInterface
     /**
      * Check permission
      *
+     * @param string $perm
      * @return bool
      */
-    public function check():bool
+    public function check($perm = null):bool
     {
-        if ($this->permission == null) return false;
-        if(!$this->checkPerm($this->permission))
+        $permission = '';
+        if($perm == null){
+            if ($this->permission == null) return false;
+            $permission = $this->permission;
+        }else{
+            $permission = $perm;
+        }
+
+        if(!$this->checkPerm($permission))
             return false;
         return true;
     }
@@ -155,7 +163,7 @@ abstract class Module implements ModuleInterface
     /**
      * Menu sidebar dropdown
      *
-     * @example Return the links kit "<li><a href='/#link'>link</a><a href='/#link2'>link2</a></li>"
+     * @example Return the links kit "<li><a href='/#link'>link</a></li><li><a href='/#link2'>link2</a></li>"
      * @return string|null
      */
     abstract public function getMenuSidebar();

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3702952953295fc42db665b62052db83",
-    "content-hash": "d67ede50603094cd25c78cbc1ef27560",
+    "hash": "c1fb7ff883cb39fab929aab721fea94e",
+    "content-hash": "d4c9992aaebb19e3086459af2ed2c2f9",
     "packages": [
         {
             "name": "aizhar777/cell",
@@ -47,6 +47,39 @@
                 "laravel"
             ],
             "time": "2016-10-28 18:27:35"
+        },
+        {
+            "name": "aizhar777/numbers-to-words",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aizhar777/numbers-to-words.git",
+                "reference": "939ec6e63f53f9fc5b315db8c529925dcfa7f251"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aizhar777/numbers-to-words/zipball/939ec6e63f53f9fc5b315db8c529925dcfa7f251",
+                "reference": "939ec6e63f53f9fc5b315db8c529925dcfa7f251",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Aizhar777\\NumToWord\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aizhar777",
+                    "email": "aizharolexin@gmail.com"
+                }
+            ],
+            "description": "Laravel package for the translation of numbers to words",
+            "time": "2016-10-31 19:43:01"
         },
         {
             "name": "barryvdh/laravel-debugbar",

@@ -13,7 +13,8 @@
         "doctrine/dbal": "^2.5",
         "baum/baum": "~1.1",
         "donquixote/cellbrush": "^1.0",
-        "aizhar777/cell": "^1.0"
+        "aizhar777/cell": "^1.0",
+        "aizhar777/numbers-to-words": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

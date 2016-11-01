@@ -11,6 +11,8 @@ class UserModule extends Module
     public $name = 'Users';
     public $with_div = 6;
     protected $permission = 'view.user';
+    protected $view_roles = 'view.user';  //TODO: check permissions to view of roles
+    protected $view_perms = 'view.user';  //TODO: check permissions to view of perms
 
     /**
      * dropdown links
@@ -57,7 +59,25 @@ class UserModule extends Module
      */
     public function getMenuSidebar()
     {
-        return null;
+        $list = '';
+        if($this->check($this->view_roles)) //TODO: check permissions to view of roles
+            $list .= "<li><a href='" . route('user.roles') . "'>Roles</a></li>";
+        if($this->check($this->view_perms)) //TODO: check permissions to view of perms
+            $list .= "<li><a href='" . route('user.perms') . "'>Permissions</a></li>";
+
+        return $list;
+    }
+
+    /**
+     * Menu sidebar dropdown icon
+     * Font Awesome Icon
+     *
+     * @example fa-list
+     * @return string
+     */
+    public function getMenuSidebarIcon()
+    {
+        return 'fa-users';
     }
 
 

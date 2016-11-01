@@ -48,7 +48,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            @nts(423.75)
+                            @numToWords(423.75)
                         </div>
                     </div>
                 </div>

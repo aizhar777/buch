@@ -47,3 +47,12 @@
     float: right;
     min-width: 24px;
 }
+.perm_label{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 3px 5px;
+    background-color: #ebeff5;
+    color: #3c763d;
+    margin-right: 10px;
+    line-height: 35px;
+}

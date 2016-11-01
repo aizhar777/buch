@@ -11,6 +11,7 @@ class TestResourceController extends Controller
     public function test()
     {
         //var_dump($this->checkPerm('delete.client'));
+        //dd(\NumberToWords::getStr(125));
         return view('tests');
     }
 

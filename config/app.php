@@ -183,7 +183,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\NumberToStringServiceProvider::class,
+        Aizhar777\NumToWord\NumToWordServiceProvider::class,
 
     ],
 
@@ -236,7 +236,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class,
         'Cell' => \Aizhar777\Cell\Facades\Cell::class,
-        'NumberToString' => App\Library\Facades\NumberToStringFacade::class,
+        'NumbersToWords' => Aizhar777\NumToWord\Facades\NumberToWordsFacade::class,
 
     ],
 

@@ -27,6 +27,9 @@ class Log extends Model
      * @var array
      */
     protected $fillable = [
-        'log_type', 'description', 'user_id','params',
+        'log_type',
+        'description',
+        'user_id',
+        'params',
     ];
 }
