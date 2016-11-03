@@ -12,6 +12,8 @@ class PermissionsTableSeeder extends Seeder
      */
     protected $subjects = [
         'user',
+        'role',
+        'permission',
         'category',
         'client',
         'fieldParam',

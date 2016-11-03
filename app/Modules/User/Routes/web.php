@@ -45,13 +45,14 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
 
     // Roles
     Route::get('/roles', 'IndexController@rolesAction')->name('user.roles');
-    Route::get('/roles/{id}', 'IndexController@rolesShowAction')->where(['id' => '[0-9]+'])->name('user.roles.show');
-    Route::get('/roles/{slug}', 'IndexController@rolesShowBySlugAction')->where(['slug' => '[a-zA-Z]+'])->name('user.roles.show_slug');
     Route::get('/roles/create', 'IndexController@rolesCreateAction')->name('user.roles.create');
+    Route::get('/roles/{id}', 'IndexController@rolesShowAction')->where(['id' => '[0-9]+'])->name('user.roles.show');
+    Route::get('/roles/{slug}', 'IndexController@rolesShowBySlugAction')->where(['slug' => '[a-zA-Z_.-]+'])->name('user.roles.show_slug');
     Route::get('/roles/edit/{id}', 'IndexController@rolesEditAction')->where(['slug' => '[a-zA-Z]+'])->name('user.roles.edit');
 
     Route::post('/roles/store', 'DataController@rolesCreate')->name('user.roles.store');
     Route::put('/roles/update/{id}', 'DataController@rolesUpdate')->where(['id' => '[0-9]+'])->name('user.roles.update');
+    Route::put('/roles/update/{id}/permissions', 'DataController@rolesUpdatePermissions')->where(['id' => '[0-9]+'])->name('user.roles.update.perms');
     Route::delete('/roles/delete/{id}', 'DataController@rolesDelete')->where(['id' => '[0-9]+'])->name('user.roles.delete');
 
     // Permissions

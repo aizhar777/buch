@@ -63,6 +63,7 @@
                                     <thead>
                                     <tr>
                                         <th>UID</th>
+                                        <th>Role</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Date</th>

@@ -19,7 +19,7 @@ class IndexController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
+     * Display a Trades
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +32,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create trade
      *
      * @return \Illuminate\Http\Response
      */
@@ -56,7 +56,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store Trade.
      *
      * @param  CreateTradeRequest  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -74,7 +74,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show trade
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -100,7 +100,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Edit trade
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -127,7 +127,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Trade
      *
      * @param  UpdateTradeRequest  $request
      * @param  int  $id
@@ -149,7 +149,7 @@ class IndexController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove Trade
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

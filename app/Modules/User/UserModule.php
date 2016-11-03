@@ -11,8 +11,8 @@ class UserModule extends Module
     public $name = 'Users';
     public $with_div = 6;
     protected $permission = 'view.user';
-    protected $view_roles = 'view.user';  //TODO: check permissions to view of roles
-    protected $view_perms = 'view.user';  //TODO: check permissions to view of perms
+    protected $view_roles = 'view.role';
+    protected $view_perms = 'view.permission';
 
     /**
      * dropdown links
@@ -60,9 +60,11 @@ class UserModule extends Module
     public function getMenuSidebar()
     {
         $list = '';
-        if($this->check($this->view_roles)) //TODO: check permissions to view of roles
+        if($this->check($this->permission))
+            $list .= "<li><a href='" . route('user') . "'>Users</a></li>";
+        if($this->check($this->view_roles))
             $list .= "<li><a href='" . route('user.roles') . "'>Roles</a></li>";
-        if($this->check($this->view_perms)) //TODO: check permissions to view of perms
+        if($this->check($this->view_perms))
             $list .= "<li><a href='" . route('user.perms') . "'>Permissions</a></li>";
 
         return $list;

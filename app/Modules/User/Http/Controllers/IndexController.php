@@ -7,6 +7,8 @@ use App\Permission;
 use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class IndexController extends Controller
 {
@@ -19,7 +21,6 @@ class IndexController extends Controller
     public function userProfile($id = null)
     {
         $profile = $this->getCurrentUser();
-
         if ($id !== null and $profile->id != $id) {
             $user = User::findOrFail($id);
             return $this->showUser($user);
@@ -29,8 +30,10 @@ class IndexController extends Controller
     }
 
     /**
+     * Update user
+     *
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Response
      */
     public function userEdit($id)
     {
@@ -46,7 +49,7 @@ class IndexController extends Controller
      * Check permissions and Edit Action
      *
      * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Response
      */
     public function checkAndEditAction(User $user)
     {
@@ -59,7 +62,7 @@ class IndexController extends Controller
      * Edit user action
      *
      * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Response
      */
     public function editAction(User $user)
     {
@@ -108,6 +111,11 @@ class IndexController extends Controller
         ]);
     }
 
+    /**
+     * Users list
+     *
+     * @return Response
+     */
     public function usersList()
     {
         if(!$this->checkPerm('view.user'))
@@ -116,64 +124,134 @@ class IndexController extends Controller
         return view('user::index',['users' => $users]);
     }
 
+    /**
+     * Roles list
+     *
+     * @return Response
+     */
     public function rolesAction()
     {
-        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+        if(!$this->checkPerm('view.role'))
             return $this->noAccess();
 
         $roles = Role::paginate(10);
         return view('user::index_roles',['roles' => $roles]);
     }
 
+    /**
+     * Show role by id
+     *
+     * @param $id
+     * @return Response
+     */
     public function rolesShowAction($id)
     {
-        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+        if(!$this->checkPerm('show.role'))
             return $this->noAccess();
 
-        $role = Role::whereId($id)->firstOrFail();
+        $role = Role::whereId($id)->with('permissions')->firstOrFail();
 
         return $this->showRole($role);
     }
 
+    /**
+     * Show role by slug
+     *
+     * @param $slug
+     * @return Response
+     */
     public function rolesShowBySlugAction($slug)
     {
-        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+        if(!$this->checkPerm('show.role'))
             return $this->noAccess();
 
-        $role = Role::whereSlug($slug)->firstOrFail();
+        $role = Role::whereSlug($slug)->with('permissions')->firstOrFail();
 
         return $this->showRole($role);
     }
 
+    /**
+     * Show role
+     *
+     * @param Role $role
+     * @return Response
+     */
     public function showRole(Role $role)
     {
-        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+        if(!$this->checkPerm('show.role'))
             return $this->noAccess();
 
-        return view('user::show_role',['role' => $role]);
+        $permissions = Permission::all();
+        $rolePerms = $role->getPermissions();
+        return view('user::show_role',['role' => $role, 'permissions' => $permissions, 'rolePerms' => $rolePerms]);
     }
 
-    public function rolesCreateAction(){}
-    public function rolesEditAction(){}
+    /**
+     * Create role
+     * @param Request $request
+     * @return Response
+     */
+    public function rolesCreateAction(Request $request)
+    {
+        if(!$this->checkPerm('create.role'))
+            return $this->noAccess();
 
+        if($request->isXmlHttpRequest())
+            return view('user::ajax.create_role');
+        return view('user::create_role');
+    }
+
+    /**
+     * Update role
+     *
+     * @return Response
+     */
+    public function rolesEditAction()
+    {
+        if(!$this->checkPerm('create.role'))
+            return $this->noAccess();
+    }
+
+    /**
+     * Permissions list
+     *
+     * @return Response
+     */
     public function permissionAction()
     {
-        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of permissions
+        if(!$this->checkPerm('view.permission'))
             return $this->noAccess();
 
         $perms = Permission::paginate(10);
         return view('user::index_perms',['perms' => $perms]);
     }
 
+    /**
+     * Show Permission
+     *
+     * @param $id
+     * @return Response
+     */
     public function permissionShowAction($id)
     {
-        if(!$this->checkPerm('view.user')) //TODO: check permissions to view of roles
+        if(!$this->checkPerm('show.permission'))
             return $this->noAccess();
 
         $perm = Permission::whereId($id)->firstOrFail();
 
         return view('user::show_perm',['perm' => $perm]);
     }
-    public function permissionCreateAction(){}
-    public function rpermissionEditAction(){}
+
+    /**
+     * Create Permission
+     */
+    public function permissionCreateAction()
+    {}
+
+    /**
+     * Update permission
+     * @param $id
+     */
+    public function rpermissionEditAction($id)
+    {}
 }

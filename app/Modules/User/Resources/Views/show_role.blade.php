@@ -106,9 +106,24 @@
                             @endif
                             <div>
                                 <h3>Permissions:</h3>
-                                @foreach($role->permissions as $permission)
-                                    <a href="{{route('user.perms.show',['id' => $permission->id ])}}" class="btn btn-small btn-success"><i class="fa fa-check-circle"></i> {{$permission->name}} </a>
+                                <form action="{{route('user.roles.update.perms',['id' => $role->id])}}" method="post">
+                                    {{csrf_field()}}
+                                    {{method_field('PUT')}}
+                                @foreach($permissions as $permission)
+                                    <?php
+                                        $checked = false;
+                                        if(in_array($permission->slug, $rolePerms))
+                                            $checked = true;
+                                    ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="flat" name="permissions[{{$permission->slug}}]" value="{{$permission->id}}" @if($checked) checked @endif> {{$permission->name}}
+                                        </label>
+                                    </div>
                                 @endforeach
+                                    <button type="submit" class="btn btn-primary">Update</button>
+
+                                </form>
                             </div>
 
                         </div>
