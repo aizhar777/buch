@@ -17,31 +17,19 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
     Route::get('/list', 'IndexController@usersList')->name('user');
 
     # Profile or Show user
-    Route::get('/{id?}', 'IndexController@userProfile')
-        ->where([
-            'id' => '[0-9]+'
-        ])->name('user.profile');
+    Route::get('/{id?}', 'IndexController@userProfile')->where(['id' => '[0-9]+'])->name('user.profile');
 
     # Create
     Route::get('/create', 'IndexController@userCreate')->name('user.create');
     Route::post('/create', 'DataController@userCreate')->name('user.store');
 
     # Edit
-    Route::post('/edit/{id}', 'DataController@userEdit')
-        ->where([
-            'id' => '[0-9]+'
-        ])->name('user.edit.post');
-
-    Route::get('/edit/{id}', 'IndexController@userEdit')
-        ->where([
-            'id' => '[0-9]+'
-        ])->name('user.edit');
+    Route::get('/edit/{id}', 'IndexController@userEdit')->where(['id' => '[0-9]+'])->name('user.edit');
+    Route::put('/edit/{id}', 'DataController@userEdit')->where(['id' => '[0-9]+'])->name('user.edit.post');
+    Route::put('/edit/{id}/set/image/{image}', 'DataController@userUpdateImage')->where(['id' => '[0-9]+','image' => '[0-9]+'])->name('user.update.image');
 
     # Delete
-    Route::delete('/delete/{id}', 'DataController@userDelete')
-        ->where([
-            'id' => '[0-9]+'
-        ]);
+    Route::delete('/delete/{id}', 'DataController@userDelete')->where(['id' => '[0-9]+']);
 
     // Roles
     Route::get('/roles', 'IndexController@rolesAction')->name('user.roles');

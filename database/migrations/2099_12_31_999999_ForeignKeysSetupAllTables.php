@@ -140,6 +140,13 @@ class ForeignKeysSetupAllTables extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('restrict');
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('image_id')
+                ->references('id')->on('images')
+                ->onDelete('set null')
+                ->onUpdate('restrict');
+        });
     }
 
     /**

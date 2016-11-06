@@ -8,9 +8,11 @@ use App\Modules\User\Http\Requests\EditUserRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Modules\User\Http\Requests\UpdateImageProfileRequest;
 use App\Modules\User\Http\Requests\UpdateRolePermissionsRequest;
 use App\Role;
 use App\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
@@ -64,7 +66,9 @@ class DataController extends Controller
         $user->email = $request->get('email');
         $user->saveOrFail();
 
-        $user->createImage($request);
+        if(!$user->createImage($request)){
+            \Flash::warning('Failed to change current photo');
+        }
 
         $bFields = BFields::getInstance();
         $bFields->updateOrCreate($user, $request);
@@ -112,5 +116,58 @@ class DataController extends Controller
         }
 
         return redirect()->route('user.roles.show_slug',['slug' => $role->slug]);
+    }
+
+    /**
+     * @param $id
+     * @param $image
+     * @param UpdateImageProfileRequest $request
+     * @return RedirectResponse|string
+     */
+    public function userUpdateImage($id, $image, UpdateImageProfileRequest $request)
+    {
+        $result = null;
+        $currentUser = $this->getCurrentUser();
+        $update_ses = ($currentUser->id == $id);
+        if(!$update_ses && !$this->checkPerm('edit.user')){
+            if($request->isXmlHttpRequest()){
+                return json_encode([
+                    'status' => 'warning',
+                    'message' => 'Access is denied. You do not have permission for this operation!',
+                    'data' => []
+                ]);
+            }
+            \Flash::warning('Access is denied. You do not have permission for this operation!');
+            return $this->noAccess('Access is denied');
+        }
+
+        $user = User::whereId($id)->firstOrFail();
+
+        $imageModel = $user->photos()->where('id',$request->get('image'))->firstOrFail();
+        if($user->updateProfileImage($imageModel)){
+            if($request->isXmlHttpRequest()){
+                $result = json_encode([
+                    'status' => 'success',
+                    'message' => 'You\'r profile image updated!',
+                    'data' => $imageModel->toArray()
+                ]);
+            }else{
+                \Flash::success('You\'r profile image updated!');
+                $result = redirect()->route('user',['id' => $id]);
+            }
+        }else{
+            if($request->isXmlHttpRequest()){
+                $result = json_encode([
+                    'status' => 'error',
+                    'message' => 'You\'r profile image not updated!',
+                    'data' =>[]
+                ]);
+            }else{
+                \Flash::error('You\'r profile image not updated!');
+                $result = redirect()->route('user',['id' => $id]);
+            }
+        }
+
+        return $result;
     }
 }

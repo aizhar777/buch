@@ -5,6 +5,10 @@
     </div>
 
     <div class="x_content">
-        {!! $products !!}
+        @if(!empty($products))
+            {!! $products !!}
+        @else
+            <div class="alert alert-info">Products no</div>
+        @endif
     </div>
 </div>

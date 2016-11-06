@@ -79,6 +79,30 @@
 
                                     </tbody>
                                 </table>
+
+                                <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form method="post" id="add_products_push" action="{{route('trade.add.products')}}">
+                                                {{csrf_field()}}
+                                                {{method_field("PUT")}}
+                                                <input type="hidden" name="trade" value="null">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="exampleModalLabel">Add Product</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                        <p><i class="fa fa-refresh fa-spin fa-fw"></i> Wait..</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" onclick="" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" onclick="application.addProductFormSend(true);">Add products</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             @else
                                 <div class="alert alert-info">
                                     <h4>Trade not found</h4>

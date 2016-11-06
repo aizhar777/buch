@@ -57,11 +57,14 @@ $(document).ready(function(){
     $(".select2_group").select2({
         placeholder: "With Max Selection limit"
     });*/
+
     $(".select2_multiple").select2({
         placeholder: "With Max Selection limit 4",
         allowClear: true
     });
 
-    $( '#select_products' ).change(application.productTradeOptions);
+    $( '#add-product-modal' ).on("change","#select_products",application.productTradeOptions);
     // Select2 end
+
+    application.init();
 });

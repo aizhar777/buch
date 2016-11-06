@@ -3,6 +3,8 @@
 namespace App\Library\Traits;
 
 
+use App\User;
+
 trait CurrentUserModel
 {
     /**
@@ -11,7 +13,7 @@ trait CurrentUserModel
     public function getCurrentUser()
     {
         if(\Session::has('current.user')){
-            $user = session('current.user');
+            $user = \Session::get('current.user');
         }else{
             $user = \Auth::user();
             \Session::put('current.user',$user);
@@ -20,10 +22,14 @@ trait CurrentUserModel
     }
 
     /**
+     * Update current user in session
+     *
+     * @param User|null $user
      * @return void
      */
-    public function reloadCurrentUser()
+    public function reloadCurrentUser(User $user = null)
     {
+        \Session::remove('current.user');
         \Session::put('current.user', \Auth::user());
     }
 

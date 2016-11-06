@@ -76,7 +76,7 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{url('js/custom.min.js')}}"></script>
-<script src="{{url('js/dev.js')}}"></script>
 <script src="{{url('js/application.js')}}"></script>
+<script src="{{url('js/dev.js')}}"></script>
 </body>
 </html>

@@ -63,7 +63,7 @@ class IndexController extends Controller
      */
     public function store(CreateTradeRequest $request)
     {
-        $tradeCreated = Trade::createTradeAndAddProducts($request);
+        $tradeCreated = Trade::createTrade($request);
         if ($tradeCreated instanceof Trade){
             \Flash::success('Trade created!');
             return redirect()->route('trade');
@@ -111,14 +111,12 @@ class IndexController extends Controller
             return $this->noAccess('Not enough rights to view');
 
         $trade = Trade::whereId($id)->with('statuses','ppCode','client','supervisor','completer','products')->firstOrFail();
-        $products = Product::all();
         $users = User::all();
         $ppc = Ppc::all();
         $status = TradeStatus::all();
         $clients = Client::all();
         return view('trade::edit',[
             'trade' => $trade,
-            'products' => $products,
             'users' => $users,
             'codes' => $ppc,
             'clients' => $clients,

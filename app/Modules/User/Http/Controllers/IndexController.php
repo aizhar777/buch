@@ -95,17 +95,14 @@ class IndexController extends Controller
      */
     public function showProfile(User $user)
     {
-        if(empty($user->photos)) {
-            $images = null;
-            $pfoto = null;
-        }else{
-            $pfoto = $user->photos()->first();
+        $images = null;
+        if(empty($user->photos))
             $images = $user->photos;
-        }
+        $photo = $user->image;
         $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile',[
             'user'=> $user,
-            'photo'=> $pfoto,
+            'photo'=> $photo,
             'images'=> $images,
             'fields' => $fields
         ]);

@@ -34,10 +34,14 @@ class SignInController extends LoginController
      */
     protected function authenticated(Request $request, $user)
     {
+        \Session::remove('current.user');
+        $photo = $user->photos()->first();
+        $roles = $user->roles();
+
         event(new UserIsLogged($user));
         \Session::put('current.user',$user);
         \Session::put('current.perms',$user->getPermissions());
-        \Session::put('current.roles',$user->roles()->get());
-        \Session::put('current.image',$user->photos()->first()->src);
+        \Session::put('current.roles',$roles->get());
+        if(!empty($photo)) \Session::put('current.image',$photo->src);
     }
 }

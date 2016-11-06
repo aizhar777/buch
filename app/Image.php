@@ -26,8 +26,25 @@ class Image extends Model
         'imageable_type',
     ];
 
+    /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = [
+        'id',
+        'name',
+        'src',
+        'alt',
+    ];
+
     public function imageable()
     {
         return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

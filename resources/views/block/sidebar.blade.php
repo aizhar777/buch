@@ -17,7 +17,7 @@
         <!-- menu profile quick info -->
         <div class="profile" style="margin-bottom: 35px">
             <div class="profile_pic">
-                <img src="/upload/images/{{(\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name or 'User photo'}}" class="img-circle profile_img">
+                <img src="/upload/images/{{(\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name or 'User photo'}}" class="img-circle profile_img cur_pr_img">
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>

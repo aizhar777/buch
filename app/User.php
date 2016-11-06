@@ -30,7 +30,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'image_id',
     ];
 
     /**
@@ -49,27 +49,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        /*
-        $currentUser = $this->getCurrentUser();
-
-        if($currentUser->id == $this->id) {
-            if (\Session::has('current.roles')) {
-                $roles = session('current.roles');
-            }else{
-                $roles = $this->belongsToMany('\App\Role')->withTimestamps();
-                \Session::put('current.roles',$roles);
-            }
-        }else{*/
-            $roles = $this->belongsToMany('\App\Role')->withTimestamps();
-        //}
-
-        return $roles;
+        return $this->belongsToMany('\App\Role')->withTimestamps();
     }
 
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param  string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -98,7 +84,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function oversees()
     {
-        return $this->hasMany('App\Client','curator','id');
+        return $this->hasMany('App\Client', 'curator', 'id');
     }
 
     public function subdivisions()
@@ -116,27 +102,32 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->morphMany('App\Image', 'imageable');
     }
 
+    public function image()
+    {
+        return $this->hasOne('App\Image', 'id', 'image_id');
+    }
+
     public function trades()
     {
-        return $this->hasMany('App\Trade','id', 'client_id');
+        return $this->hasMany('App\Trade', 'id', 'client_id');
     }
 
     public function completedTrades()
     {
-        return $this->hasMany('App\Trade','id', 'completed_by_user');
+        return $this->hasMany('App\Trade', 'id', 'completed_by_user');
     }
 
-    public function createImage(Request $request)
+    public function createImage(Request $request, $updateImage = true)
     {
-        if(!$request->hasFile('user_image'))
+        if (!$request->hasFile('user_image'))
             return false;
 
         $file = $request->file('user_image');
         $destinationPath = base_path() . '/public/upload/images/';
-        $image_name = time() . "_". $this->table . "_" . $file->getClientOriginalName();
-        $userPhoto = $file->move($destinationPath , $image_name);
+        $image_name = time() . "_" . $this->table . "_" . $file->getClientOriginalName();
+        $userPhoto = $file->move($destinationPath, $image_name);
 
-        $image = Image::create([
+        $image = $this->image()->create([
             'name' => 'User Image',
             'src' => $image_name,
             'alt' => 'User Image',
@@ -144,9 +135,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             'imageable_type' => self::TYPE,
         ]);
 
-        if($image instanceof Image){
+        if ($image instanceof Image) {
+            if ($updateImage)
+                $this->updateProfileImage($image);
             return true;
-        }else{
+        } else {
             unlink($userPhoto->getPath());
             return false;
         }
@@ -159,8 +152,36 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function is_current()
     {
-        if($this->getCurrentUser()->id == $this->id)
+        if ($this->getCurrentUser()->id == $this->id)
             return true;
+        return false;
+    }
+
+    /**
+     * Update Profile photo
+     *
+     * @param bool $updateImage
+     * @param Image $image
+     * @return bool
+     */
+    public function updateProfileImage(Image $image, $updateImage = true)
+    {
+        if($this->image_id != $image->id){
+            $this->image_id = $image->id;
+            if ($this->save()){
+                if($this->is_current()){
+                    \Session::put('current.image', $image->src);
+                    \Session::remove('current.user');
+                }
+                return true;
+            }
+        }else {
+            if($this->is_current()){
+                \Session::put('current.image', $image->src);
+                \Session::remove('current.user');
+            }
+            return true;
+        }
         return false;
     }
 

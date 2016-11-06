@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Modules\Trade\Http\Requests;
+namespace App\Modules\User\Http\Requests;
 
 use App\Http\Requests\Request;
 use App\Library\Traits\CurrentUserModel;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTradeRequest extends FormRequest
+class UpdateImageProfileRequest extends FormRequest
 {
     use CurrentUserModel;
     /**
@@ -16,9 +16,9 @@ class CreateTradeRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!$this->checkPerm('create.trade'))
-            return false;
-        return true;
+        if($this->checkPerm('edit.user'))
+            return true;
+        return false;
     }
 
     /**
@@ -29,10 +29,7 @@ class CreateTradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'required|exists:trade_statuses,id',
-            'curator' => 'required|exists:users,id',
-            'client_id' => 'required|exists:clients,id',
-            'ppc' => 'required|exists:ppc,id',
+            'image' => 'required|exists:images,id'
         ];
     }
 }

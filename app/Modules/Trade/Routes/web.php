@@ -25,4 +25,5 @@ Route::group(['prefix' => 'trade', 'middleware' => ['debug', 'auth']], function(
     // AJAX
 
     Route::get('/{id}/get/products', 'AjaxController@getProducts')->where(['id' => '[0-9]+'])->name('trade.get.products');
+    Route::put('/add/products', 'AjaxController@addProducts')->where(['id' => '[0-9]+'])->name('trade.add.products');
 });

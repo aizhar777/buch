@@ -150,14 +150,39 @@
                                 @endif
                             </div>
                             <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($trade->created_at))}}</div>
+                            <div><b>Add products:</b><a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-product-modal" data-trade="{{$trade->id}}">Add</a></div>
+
+                            <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form method="post" id="add_products_push" action="{{route('trade.add.products')}}">
+                                            {{csrf_field()}}
+                                            {{method_field("PUT")}}
+                                            <input type="hidden" name="trade" value="null">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Add Product</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><i class="fa fa-refresh fa-spin fa-fw"></i> Wait..</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" onclick="application.addProductFormSend(false);">Add products</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
-
-                    <div id="trade_products_wrapper">
+                    <div>
                         <a href="{{route('trade.get.products',['id' => $trade->id])}}" data-load="none"
                            onclick="event.preventDefault();application.getTradeProducts();" id="show_trade_products">Show
                             trade products</a>
+                    </div>
+                    <div id="trade_products_wrapper">
                     </div>
 
                 </div>

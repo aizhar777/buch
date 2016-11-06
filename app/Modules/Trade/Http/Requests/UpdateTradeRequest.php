@@ -33,8 +33,6 @@ class UpdateTradeRequest extends FormRequest
             'ppc' => 'required|exists:ppc,id',
             'curator' => 'required|exists:users,id',
             'client_id' => 'required|exists:clients,id',
-            'products' => 'required|exists:products,id',
-            'product_options' => 'required|array',
             'payment_is_completed' => 'sometimes|boolean',
             'completed_by_user' => 'sometimes|boolean',
         ];

@@ -68,11 +68,10 @@
 
 
                             <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-
                                 <div class="profile_img">
                                     <div id="crop-avatar">
                                         <!-- Current avatar -->
-                                        <img class="img-responsive avatar-view" src="/upload/images/{{ $photo->src or 'user.png'}}" alt="Avatar" title="Change the avatar">
+                                        <img class="img-responsive avatar-view cur_pr_img" src="/upload/images/{{ $photo->src or 'user.png'}}" alt="Avatar" title="Change the avatar">
                                     </div>
                                 </div>
                                 <h3>{{$user->name or 'No name'}}</h3>
@@ -160,11 +159,11 @@
                                 <div class="col-md-55">
                                     <div class="thumbnail user_profile">
                                         <div class="image view user_profile view-first">
-                                            <img style="width: 100%; display: block;" src="/upload/images/{{$photo->src}}" alt="Photo #{{$photo->id}} - {{$user->name}}" />
+                                            <img style="width: 100%; display: block;" src="/upload/images/{{$photo->src}}" alt="Photo #{{$photo->id}} - {{$user->name}}"/>
                                             <div class="mask">
                                                 <p>{{$photo->name}}</p>
                                                 <div class="tools tools-bottom">
-                                                    <a href="#" title="Set as default"><i class="fa fa-user"></i></a>
+                                                    <a href="{{route('user.update.image',['id' => $user->id, 'image' => $photo->id])}}" title="Set as default" data-image-id="{{$photo->id}}" class="set_default_image"><i class="fa fa-user"></i></a>
                                                     <a href="#" title="Delete this photo"><i class="fa fa-times"></i></a>
                                                 </div>
                                             </div>

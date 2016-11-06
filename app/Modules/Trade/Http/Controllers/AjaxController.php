@@ -2,6 +2,7 @@
 
 namespace App\Modules\Trade\Http\Controllers;
 
+use App\Modules\Trade\Http\Requests\AddProductsToTradeRequest;
 use App\Trade;
 use Illuminate\Http\Request;
 
@@ -24,5 +25,40 @@ class AjaxController extends Controller
 
         $trade = Trade::whereId($id)->firstOrFail();
         return view('trade::ajax.trade_products',['products' => $trade->getProductsAsHtmlTable()]);
+    }
+
+    /**
+     * Add products
+     *
+     * @param AddProductsToTradeRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addProducts(AddProductsToTradeRequest $request)
+    {
+        $json = [];
+        try{
+            $trade = Trade::addProducts($request);
+            $response = $trade->getProductsAsHtmlTable();
+            $data = json_encode($trade->products->toArray());
+            $json = [
+                'status' => "success",
+                'message' => "Added",
+                "data" => $data
+            ];
+        }catch (\Exception $e){
+            $msg = "An unknown error occurred, please try again later!";
+            if(config('app.debug') == true)
+                $msg .= $e->getMessage();
+            $response = "<div class='alert alert-error'>" . $msg . "</div>";
+            $json = [
+                'status' => "error",
+                'message' => $msg,
+                "data" => []
+            ];
+        }
+        if((bool)$request->get('json')){
+            return $json;
+        }
+        return view('trade::ajax.trade_products',['products' => $response]);
     }
 }

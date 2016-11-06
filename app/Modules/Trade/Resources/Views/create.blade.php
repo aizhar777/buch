@@ -129,18 +129,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Select products</label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <select name="products[]" id="select_products" class="select2_multiple form-control" multiple="multiple">
-                                            @foreach($products as $product)
-                                                <option value="{{$product->id}}" data-balance="{{$product->balance}}">{{$product->name}} price: {{number_format($product->price)}}; ({{$product->balance}})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="options_block" style="margin: 0;padding: 0;"></div>
-
                             </div>
                         </div>
 

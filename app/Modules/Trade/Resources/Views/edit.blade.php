@@ -138,53 +138,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Select products</label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <select name="products[]" id="select_products"
-                                                class="select2_multiple form-control" multiple="multiple">
-                                            @foreach($products as $product)
-                                                <option value="{{$product->id}}" data-balance="{{$product->balance}}"
-                                                        @foreach($trade->products as $prd)
-                                                        @if($product->id == $prd->id)
-                                                        selected
-                                                        @endif
-                                                        @endforeach
-                                                >
-                                                    {{$product->name}}
-                                                    (
-                                                    price: {{number_format($product->price)}}
-                                                    @if(!$product->is_service)
-                                                         | {{$product->balance}}
-                                                    @endif
-                                                    )
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="options_block_edit" style="margin: 0;padding: 0;">
-                                    @foreach($trade->products as $tradeProduct)
-                                    <div class="form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            {{$tradeProduct->name}} @if(!$tradeProduct->is_service) ({{$tradeProduct->balance}}) @endif
-                                        </label>
-                                        <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <input
-                                                    type="number" min="1"
-                                                    @if(!$tradeProduct->is_service)
-                                                    max="{{$tradeProduct->balance}}"
-                                                    @endif
-                                                    name="product_options[{{$tradeProduct->id}}]"
-                                                    placeholder="Количество.."
-                                                    value="{{$tradeProduct->pivot->quantity}}"
-                                                    class="form-control"
-                                            >
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-
                             </div>
                         </div>
 

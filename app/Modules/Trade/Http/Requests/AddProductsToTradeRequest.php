@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 use App\Library\Traits\CurrentUserModel;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTradeRequest extends FormRequest
+class AddProductsToTradeRequest extends FormRequest
 {
     use CurrentUserModel;
     /**
@@ -16,7 +16,7 @@ class CreateTradeRequest extends FormRequest
      */
     public function authorize()
     {
-        if(!$this->checkPerm('create.trade'))
+        if(!$this->checkPerm('edit.trade'))
             return false;
         return true;
     }
@@ -29,10 +29,9 @@ class CreateTradeRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'required|exists:trade_statuses,id',
-            'curator' => 'required|exists:users,id',
-            'client_id' => 'required|exists:clients,id',
-            'ppc' => 'required|exists:ppc,id',
+            'trade' => 'required|exists:trades,id',
+            'products' => 'required|exists:products,id',
+            'product_options' => 'required|array',
         ];
     }
 }

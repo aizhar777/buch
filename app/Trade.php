@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Modules\Trade\Http\Requests\AddProductsToTradeRequest;
 use App\Modules\Trade\Http\Requests\CreateTradeRequest;
 use App\Modules\Trade\Http\Requests\UpdateTradeRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Trade extends Model
 {
@@ -70,15 +72,11 @@ class Trade extends Model
      * Create New Trade
      *
      * @param CreateTradeRequest $request
-     * @return bool|Trade
-     * @throws \Exception
+     * @return static
      */
-    public static function createTradeAndAddProducts(CreateTradeRequest $request)
+    public static function createTrade(CreateTradeRequest $request)
     {
-        $product_options = $request->get('product_options');
-        $products = $request->get('products');
-
-        $newPurchase = new Trade([
+        return self::create([
             'status' => $request->get('status'),
             'ppc' => $request->get('ppc'),
             'curator' => $request->get('curator'),
@@ -86,32 +84,6 @@ class Trade extends Model
             'payment_is_completed' => $request->get('payment_is_completed'),
             'completed_by_user' => $request->get('completed_by_user')
         ]);
-
-        \DB::beginTransaction();
-        try{
-            $newPurchase->saveOrFail();
-
-            foreach ($products as $productId){
-                if( !empty($product_options[$productId]) ){
-                    $newPurchase->products()->attach($productId, ['quantity' => $product_options[$productId]]);
-                }else{
-                    throw new \Exception('Empty product options');
-                }
-            }
-
-        }catch (\Exception $e){
-            \DB::rollBack();
-
-            if(config('app.debug')){
-                throw $e;
-            }
-
-            \Log::error($e->getMessage(),[$e->getLine(),$e->getTraceAsString()]);
-            return false;
-        }
-
-        \DB::commit();
-        return $newPurchase;
     }
 
     /**
@@ -123,10 +95,6 @@ class Trade extends Model
      */
     public static function updateTradeandProducts(UpdateTradeRequest $request, $id)
     {
-        $errors = [];
-
-        $product_options = $request->get('product_options');
-        $products = $request->get('products');
 
         $trade = self::whereId($id)->with('statuses','ppCode','client','supervisor','completer','products')->firstOrFail();
 
@@ -146,13 +114,7 @@ class Trade extends Model
             $trade->completed_by_user = $request->get('completed_by_user');
 
         if(!$trade->save())
-            $errors[] = 'Неудалось обновить trade c ID:'.$trade->id;
-        foreach ($products as $product){
-            if (!empty($product_options[$product]))
-                $trade->products()->updateExistingPivot($product, ['quantity' => $product_options[$product]]);
-        }
-        if(count($errors))
-            return $errors;
+            return false;
         return true;
     }
 
@@ -177,6 +139,22 @@ class Trade extends Model
             ])
             ->firstOrFail();
 
+        return $trade;
+    }
+
+    public static function addProducts(AddProductsToTradeRequest $request)
+    {
+        $trade = self::whereId($request->get('trade'))->firstOrFail();
+        $products = $request->get('products');
+        $product_options = $request->get('product_options');
+
+        foreach ($products as $productId){
+            if( !empty($product_options[$productId]) ){
+                $trade->products()->attach($productId, ['quantity' => $product_options[$productId]]);
+            }else{
+                throw new \Exception('Empty product options');
+            }
+        }
         return $trade;
     }
 
@@ -233,8 +211,7 @@ class Trade extends Model
                 ->tdOpenEnd('quantity', $product->pivot->quantity)
                 ->tdOpenEnd('stock', $product->stock->name)
                 ->tdOpenEnd('sub', $product->subdivision->name)
-                ->tdOpenEnd('sum', number_format($sum, 2, '.', ' '))
-            ;
+                ->tdOpenEnd('sum', number_format($sum, 2, '.', ' '));
 
             $id +=1;
             $total += (float)$sum;

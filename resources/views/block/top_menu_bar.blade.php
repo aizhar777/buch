@@ -16,7 +16,7 @@ if(\Session::has('current.user')){
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="/upload/images/{{ (\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name}}"> {{$user->email}}
+                        <img src="/upload/images/{{ (\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name}}" class="cur_pr_img"> {{$user->email}}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

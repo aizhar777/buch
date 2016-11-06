@@ -73,6 +73,7 @@
 
                                 <form action="{{route('user.edit.post',$user->id)}}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
 
                                     <div class="form-group">
                                         <label>You'r name</label>

@@ -43,17 +43,23 @@
                 <a href="{{route('products',['id' => $product->id])}}">{{$product->name}}</a>
             @endforeach
         @else
-            NONE?
+            <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-product-modal" data-trade="{{$trade->id}}">Add</a>
         @endif
     </th>
     <th>{{date('d.m.Y H:i', strtotime($trade->created_at))}}</th>
     <th>
+        <!-- Split button -->
         <div class="btn-group">
-            <a class="btn btn-small btn-primary" href="{{route('trade.show', ['id'=> $trade->id])}}"> View</a>
-            <a class="btn btn-small btn-primary" href="{{route('trade.edit', ['id'=> $trade->id])}}"> Edit</a>
-            <a class="btn btn-small btn-primary"
-               onclick="event.preventDefault();document.getElementById('trade-{{$trade->id}}-delete-form').submit();">
-                delete</a>
+            <a class="btn btn-sm btn-primary" href="{{route('trade.show', ['id'=> $trade->id])}}"> View</a>
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a data-toggle="modal" data-target="#add-product-modal" data-trade="{{$trade->id}}">Add products</a></li>
+                <li><a href="{{route('trade.edit', ['id'=> $trade->id])}}"> Edit</a></li>
+                <li><a onclick="event.preventDefault();document.getElementById('trade-{{$trade->id}}-delete-form').submit();">delete</a></li>
+            </ul>
         </div>
         @include('forms.delete_form', ['id' => $trade->id, 'slug' => 'trade'])
     </th>

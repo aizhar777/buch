@@ -6,6 +6,7 @@ use App\Client;
 use App\Modules\Products\Http\Requests\CreateProductRequest;
 use App\Modules\Products\Http\Requests\EditProductRequest;
 use App\Product;
+use App\Trade;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -56,5 +57,26 @@ class DataController extends Controller
             return redirect()->route('products',['id' => $id]);
         }
 
+    }
+
+    public function getProductsForm($id = null)
+    {
+        //todo: refactor!!!!
+        $result = $products = Product::with('stock','subdivision')->get();
+
+        if($id != null){
+            $result = [];
+            $ids = [];
+            $pr_isset = Trade::whereId($id)->firstOrFail()->products;
+
+            foreach ($pr_isset as $pr) $ids[] = $pr->id;
+
+            foreach ($products as $product){
+                if(!in_array($product->id, $ids)){
+                    $result[] = $product;
+                }
+            }
+        }
+        return view('products::ajax.products_form',['products' => $result]);
     }
 }
