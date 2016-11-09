@@ -107,6 +107,16 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+
+                                @if($settings->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$settings->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$settings->links()}}
+                                    @endif
+                                @endif
+
+
                             @else
                                 <div class="alert alert-info">
                                     <h4>Settings not found</h4>

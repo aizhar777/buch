@@ -76,7 +76,14 @@
 
                                     </tbody>
                                 </table>
-                                {{ $users->links() }}
+
+                                @if($users->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$users->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$users->links()}}
+                                    @endif
+                                @endif
                             @else
                                 <div class="alert alert-info">
                                     <h4>Users not found</h4>

@@ -108,6 +108,15 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+
+                                @if($clients->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$clients->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$clients->links()}}
+                                    @endif
+                                @endif
+
                             @else
                                 <div class="alert alert-info">
                                     <h4>Clients not found</h4>

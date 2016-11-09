@@ -27,7 +27,8 @@ class IndexController extends Controller
     {
         if(!$this->checkPerm('view.trade'))
             return $this->noAccess('Not enough rights to view');
-        $trades = Trade::all();
+
+        $trades = Trade::paginate($this->perPager());
         return view('trade::index',['trades' => $trades]);
     }
 

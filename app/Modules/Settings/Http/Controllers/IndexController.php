@@ -10,13 +10,19 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
+    /**
+     * Count items on page
+     *
+     * @var integer $countItems
+     */
+    public $countItems = 50;
 
-    public function view()
+    public function view(Request $request)
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('view.settings'))
             return $this->noAccess('Not enough rights to view');
-        $settings = Setting::all();
+
+        $settings = Setting::paginate($this->perPager());
         return view('settings::show',[
             'settings' => $settings
         ]);
@@ -24,7 +30,6 @@ class IndexController extends Controller
 
     public function create()
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('create.settings'))
             return $this->noAccess('Not enough rights to create');
         return view('settings::create');
@@ -32,7 +37,6 @@ class IndexController extends Controller
 
     public function edit($id)
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('edit.settings'))
             return $this->noAccess('Not enough rights to edit');
         return view('settings::edit');

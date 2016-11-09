@@ -2,18 +2,14 @@
 
 namespace App\Modules\Products\Http\Controllers;
 
-use App\Category;
 use App\Product;
 use App\Stock;
 use App\Subdivision;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-
     public function view($id = null)
     {
         if($id === null)
@@ -23,11 +19,10 @@ class IndexController extends Controller
 
     public function viewAll()
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('view.product'))
             return $this->noAccess('Not enough rights to view');
 
-        $products = Product::with('stock', 'subdivision')->take(10)->get();
+        $products = Product::with('stock', 'subdivision')->paginate($this->perPager());
         return view('products::show',[
             'products' => $products,
         ]);
@@ -35,7 +30,6 @@ class IndexController extends Controller
 
     public function viewOne($id)
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('show.product'))
             return $this->noAccess('Not enough rights to view');
 

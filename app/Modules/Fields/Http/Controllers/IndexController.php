@@ -14,11 +14,10 @@ class IndexController extends Controller
 
     public function show()
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('view.fieldParam'))
             return $this->noAccess('Insufficient permissions to view');
-
-        $felds = FieldParam::all()->take(10);
+        $this->perPager();
+        $felds = FieldParam::paginate($this->countItems);
         return view('fields::show',[
             'fields' => $felds,
         ]);
@@ -26,7 +25,6 @@ class IndexController extends Controller
 
     public function add()
     {
-        $user = $this->getCurrentUser();
         if(!$this->checkPerm('create.fieldParam'))
             return $this->noAccess('Insufficient rights to create');
 

@@ -25,7 +25,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.stock'))
             return $this->noAccess('Not enough rights to view');
 
-        $stocks = Stock::all()->take(10);
+        $stocks = Stock::paginate($this->perPager());
         return view('stock::index',[
             'stocks' => $stocks
         ]);

@@ -27,7 +27,8 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.client'))
             return $this->noAccess('Insufficient permissions to view');
 
-        $clients = Client::with('requisites', 'supervise')->take(40)->get();
+        $this->perPager();
+        $clients = Client::with('requisites', 'supervise')->paginate($this->countItems);
 
         return view('clients::show',[
             'clients' => $clients

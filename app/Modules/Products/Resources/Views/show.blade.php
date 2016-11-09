@@ -112,6 +112,14 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+
+                                @if($products->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$products->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$products->links()}}
+                                    @endif
+                                @endif
                             @else
                                 <div class="alert alert-info">
                                     <h4>Products not found</h4>

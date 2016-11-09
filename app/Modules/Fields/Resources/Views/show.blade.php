@@ -120,6 +120,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                @if($fields->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$fields->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$fields->links()}}
+                                    @endif
+                                @endif
+
                             @else
                                 <div class="alert alert-info">
                                     <h4>Fields not found</h4>

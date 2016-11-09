@@ -117,7 +117,8 @@ class IndexController extends Controller
     {
         if(!$this->checkPerm('view.user'))
             return $this->noAccess();
-        $users = User::paginate(10);
+
+        $users = User::paginate($this->perPager());
         return view('user::index',['users' => $users]);
     }
 

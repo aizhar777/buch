@@ -109,6 +109,15 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+
+                                @if($subdivisions->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$subdivisions->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$subdivisions->links()}}
+                                    @endif
+                                @endif
+
                             @else
                                 <div class="alert alert-info">
                                     <h4>Subdivision not found</h4>

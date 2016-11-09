@@ -80,6 +80,14 @@
                                     </tbody>
                                 </table>
 
+                                @if($trades->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$trades->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$trades->links()}}
+                                    @endif
+                                @endif
+
                                 <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">

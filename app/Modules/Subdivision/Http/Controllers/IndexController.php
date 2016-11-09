@@ -23,7 +23,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.subdivision'))
             return $this->noAccess('Not enough rights to view');
 
-        $subdivisions = Subdivision::all()->take(10);
+        $subdivisions = Subdivision::paginate($this->perPager());
         return view('subdivision::index',[
             'subdivisions' => $subdivisions
         ]);
