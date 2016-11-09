@@ -76,7 +76,14 @@
 
                                     </tbody>
                                 </table>
-                                {{ $roles->links() }}
+
+                                @if($roles->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$roles->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$roles->links()}}
+                                    @endif
+                                @endif
                             @else
                                 <div class="alert alert-info">
                                     <h4>Roles not found</h4>

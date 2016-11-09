@@ -76,7 +76,14 @@
 
                                     </tbody>
                                 </table>
-                                {{ $perms->links() }}
+
+                                @if($perms->total() > 1 )
+                                    @if(request()->has('items') && is_numeric(request('items')))
+                                        {{$perms->appends(['items' => request('items')])->links()}}
+                                    @else
+                                        {{$perms->links()}}
+                                    @endif
+                                @endif
                             @else
                                 <div class="alert alert-info">
                                     <h4>Permissions not found</h4>
