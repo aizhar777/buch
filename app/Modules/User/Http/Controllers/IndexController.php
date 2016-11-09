@@ -95,16 +95,30 @@ class IndexController extends Controller
      */
     public function showProfile(User $user)
     {
+        $roles = [];
+        $rolesArray = [];
+        $allRoles = [];
         $images = null;
         if(empty($user->photos))
             $images = $user->photos;
+        if($this->checkPerm('edit.role')){
+            $allRoles = Role::all();
+        }
+        foreach ($user->roles as $role) {
+            $rolesArray[] = $role->name;
+            $roles[] = $role->id;
+        }
+
         $photo = $user->image;
         $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile',[
             'user'=> $user,
             'photo'=> $photo,
             'images'=> $images,
-            'fields' => $fields
+            'fields' => $fields,
+            'allRoles' => $allRoles,
+            'userRoles' => $roles,
+            'userRolesArray' => $rolesArray
         ]);
     }
 
@@ -132,7 +146,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.role'))
             return $this->noAccess();
 
-        $roles = Role::paginate(10);
+        $roles = Role::paginate($this->perPager());
         return view('user::index_roles',['roles' => $roles]);
     }
 
@@ -181,7 +195,8 @@ class IndexController extends Controller
 
         $permissions = Permission::all();
         $rolePerms = $role->getPermissions();
-        return view('user::show_role',['role' => $role, 'permissions' => $permissions, 'rolePerms' => $rolePerms]);
+        $checkEditPerm = $this->checkPerm('edit.permission');
+        return view('user::show_role',['role' => $role, 'permissions' => $permissions, 'rolePerms' => $rolePerms, 'checkEditPerm' => $checkEditPerm]);
     }
 
     /**
@@ -220,7 +235,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.permission'))
             return $this->noAccess();
 
-        $perms = Permission::paginate(10);
+        $perms = Permission::paginate($this->perPager());
         return view('user::index_perms',['perms' => $perms]);
     }
 

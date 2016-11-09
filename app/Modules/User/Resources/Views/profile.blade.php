@@ -77,7 +77,24 @@
                                 <h3>{{$user->name or 'No name'}}</h3>
 
                                 <ul class="list-unstyled user_data">
-                                    <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
+                                    @can('edit.role')
+                                        <li>
+                                            <select name="user_role" class="select2_multiple form-control" multiple>
+                                                @foreach($allRoles as $aRl)
+                                                    <option value="{{$aRl->id}}" @if(in_array($aRl->id, $userRoles)) selected @endif >{{$aRl->name}}</option>
+                                                @endforeach
+                                                <option value="AK">Alaska</option>
+                                            </select>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <i class="fa fa-universal-access user-profile-icon"></i> @foreach($userRolesArray as $rlLabel) <span class="label label-default">{{$rlLabel}}</span> @endforeach
+                                        </li>
+                                    @endcan
+                                    <li>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
                                     </li>
 
                                     <li>
@@ -85,7 +102,7 @@
                                     </li>
 
                                     <li>
-                                        <i class="fa fa-email user-profile-icon"></i> {{$user->email or 'No Email'}}
+                                        <i class="fa fa-envelope user-profile-icon"></i> {{$user->email or 'No Email'}}
                                     </li>
 
 

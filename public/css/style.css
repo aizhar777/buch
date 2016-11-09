@@ -63,3 +63,12 @@
 #add_products_push p i{
 
 }
+
+
+div.phpdebugbar {
+    left: 230px !important;
+    width: calc(100% - 230px) !important;
+}
+div.phpdebugbar.phpdebugbar-closed{
+    width: auto !important;
+}

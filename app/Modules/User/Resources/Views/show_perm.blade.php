@@ -9,7 +9,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Permission {{$perm->name or 'Error'}}</h3>
+                    <h3>Permission {{trans("user::permissions.".$perm->name)}}</h3>
                 </div>
 
                 <div class="title_right">
@@ -46,7 +46,7 @@
                     <div class="x_panel">
                         <div class="x_title">
 
-                            <h2>Permission {{$perm->name}}</h2>
+                            <h2>Permission {{trans("user::permissions.".$perm->name)}}</h2>
 
                             <ul class="nav navbar-right panel_toolbox">
                                 <li>
@@ -73,7 +73,7 @@
                         <div class="x_content">
                             <div><b>ID:</b> {{$perm->id}}</div>
                             <div><b>SLUG:</b> {{$perm->slug}}</div>
-                            <div><b>Name:</b> {{$perm->name}}</div>
+                            <div><b>Name:</b> {{trans("user::permissions.".$perm->name)}}</div>
                             <div><b>Name:</b> {{$perm->description}}</div>
                             <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($perm->updated_at))}}</div>
                             <div>

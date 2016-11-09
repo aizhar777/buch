@@ -106,24 +106,31 @@
                             @endif
                             <div>
                                 <h3>Permissions:</h3>
+                                @if($checkEditPerm)
                                 <form action="{{route('user.roles.update.perms',['id' => $role->id])}}" method="post">
                                     {{csrf_field()}}
                                     {{method_field('PUT')}}
-                                @foreach($permissions as $permission)
-                                    <?php
-                                        $checked = false;
-                                        if(in_array($permission->slug, $rolePerms))
-                                            $checked = true;
-                                    ?>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" class="flat" name="permissions[{{$permission->slug}}]" value="{{$permission->id}}" @if($checked) checked @endif> {{$permission->name}}
-                                        </label>
+                                @endif
+                                    <div class="row">
+                                        @foreach($permissions as $permission)
+                                            <?php
+                                                $checked = false;
+                                                if(in_array($permission->slug, $rolePerms))
+                                                    $checked = true;
+                                            ?>
+                                            <div class="checkbox col-lg-3 col-md-4 col-sm-12">
+                                                <label>
+                                                    <input type="checkbox" class="flat" name="permissions[{{$permission->slug}}]" value="{{$permission->id}}" @if($checked) checked @endif @if(!$checkEditPerm) disabled @endif> {{trans("user::permissions.".$permission->name)}}
+                                                </label>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+
+                                @if($checkEditPerm)
                                     <button type="submit" class="btn btn-primary">Update</button>
 
                                 </form>
+                                @endif
                             </div>
 
                         </div>
