@@ -46,7 +46,7 @@ class IndexController extends Controller
 
     public function printCertificate(Trade $trade, $format, $output)
     {
-        return view('printer::certificate_of_completion', ['trade' => $trade]);
+        return view('printer::certificate_of_completion', ['trade' => $trade->toArray()]);
     }
 
     public function printOrder(Trade $trade, $format, $output)

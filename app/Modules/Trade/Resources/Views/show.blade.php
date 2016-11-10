@@ -89,7 +89,13 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="{{route('printer.trade',['id' => $trade->id, 'type' => 'check', 'format' => 'portrait'])}}">Print check (portrait)</a>
+                                            <a href="{{route('printer.trade',['id' => $trade->id, 'type' => 'check', 'format' => 'portrait'])}}">Check (portrait)</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('printer.trade',['id' => $trade->id, 'type' => 'invoice', 'format' => 'portrait'])}}">Invoice (portrait)</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('printer.trade',['id' => $trade->id, 'type' => 'certificate', 'format' => 'landscape'])}}">Certificate of completion (landscape)</a>
                                         </li>
                                     </ul>
 

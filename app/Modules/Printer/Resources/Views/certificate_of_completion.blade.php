@@ -474,7 +474,7 @@
         <td/>
         <td/>
         <td/>
-        <td colspan="26" rowspan="5" class="s10">{{$purchase['clients']['name'] or 'Empty'}}, {{$purchase['clients']['address'] or 'Empty'}}, {{$purchase['clients']['phone'] or ''}}</td>
+        <td colspan="26" rowspan="5" class="s10">{{$trade['client']['name'] or 'Empty'}}, {{$trade['client']['address'] or 'Empty'}}, {{$trade['client']['phone'] or ''}}</td>
         <td colspan="6" class="s6" style="font-size:1px">&nbsp;</td>
     </tr>
     <tr style="height:2px">
@@ -510,7 +510,7 @@
         <td colspan="2" class="s1">Заказчик:</td>
         <td/>
         <td/>
-        <td colspan="5" class="s5">{{$purchase['clients']['iin'] or 'Empty'}}</td>
+        <td colspan="5" class="s5">{{$trade['client']['requisites'][0]['bin'] or 'Empty'}}</td>
     </tr>
     <tr style="height:14px">
         <td/>
@@ -563,9 +563,9 @@
     </tr>
     <tr style="height:18px">
         <td colspan="3" class="s1">Исполнитель:</td>
-        <td colspan="26" class="s7">{{$purchase['company']['name'] or 'Empty'}}, {{$purchase['company']['address'] or 'Empty'}}, {{$purchase['company']['phone'] or 'Empty'}}</td>
+        <td colspan="26" class="s7">{{config('company.organization')}}, {{config('company.address')}}, {{config('company.phone')}}</td>
         <td/>
-        <td colspan="5" class="s5">{{$purchase['company']['iin'] or 'Empty'}}</td>
+        <td colspan="5" class="s5">{{config('company.iin')}}</td>
     </tr>
     <tr style="height:15px">
         <td/>
@@ -581,7 +581,7 @@
     </tr>
     <tr style="height:18px">
         <td colspan="4" class="s1">Договор (контракт)</td>
-        <td colspan="25" class="s8">{{$purchase['basis']['name'] or 'Empty'}}</td>
+        <td colspan="25" class="s8">{{$trade['basis']['name'] or 'Empty'}}</td> <!-- TODO: add basis of trade -->
         <td/>
         <td/>
         <td/>
@@ -667,8 +667,8 @@
     </tr>
     <tr style="height:15px">
         <td/>
-        <td colspan="3" class="s21">{{$purchase['id']}}</td>
-        <td colspan="5" class="s22">{{date('d.m.Y H:i', strtotime($purchase['created_at']))}}</td>
+        <td colspan="3" class="s21">{{$trade['id']}}</td>
+        <td colspan="5" class="s22">{{date('d.m.Y H:i', strtotime($trade['created_at']))}}</td>
         <td/>
         <td/>
         <td/>
@@ -745,19 +745,19 @@
     $quantity = 0;
     $summ = 0;
     ?>
-    @foreach($purchase['products'] as $product)
+    @foreach($trade['products'] as $product)
 
         <tr style="height:15px">
             <td class="s25">{{$iterr}}</td>
             <td colspan="10" class="s26">{{$product['name']}}</td>
-            <td colspan="2" class="s24" >{{date('d.m.Y H:i', strtotime($purchase['created_at']))}}</td>
+            <td colspan="2" class="s24" >{{date('d.m.Y H:i', strtotime($trade['created_at']))}}</td>
             <td colspan="3" class="s24" style="font-size:1px">&nbsp;</td>
             <td colspan="5" class="s24">{{$product['unit']}}</td>
             <td colspan="6" class="s24">{{$product['pivot']['quantity']}}</td>
-            <td colspan="6" class="s27">{{number_format ( $product['cost'], 2 )}}</td>
+            <td colspan="6" class="s27">{{number_format ( $product['price'], 2 )}}</td>
             <td class="s27">
                 <?php
-                $sum = ($product['pivot']['quantity'] * $product['cost']);
+                $sum = ($product['pivot']['quantity'] * $product['price']);
                 $summ += $sum;
                 echo number_format($sum,2);
                 ?>

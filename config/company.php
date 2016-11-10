@@ -6,6 +6,7 @@ return [
     'organization' => 'BUCH Test INC.',
     'iin' => '987654321098',
     'address' => '11301 West Olympic Boulevard Apt. 100 Los Angeles, CA 90064 USA',
+    'phone' => '+7 (123) 456 78 90',
     'bank' => 'JP Morgan Chase & Co.',
     'bik' => 'JPMCCUSA',
     'iic' => 'USA01234567890123456',
