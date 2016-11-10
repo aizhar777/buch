@@ -1,6 +1,8 @@
 <?php
 return [
 
+    'director' => 'John Doel',
+    'accountant' => null,
     'organization' => 'BUCH Test INC.',
     'iin' => '987654321098',
     'address' => '11301 West Olympic Boulevard Apt. 100 Los Angeles, CA 90064 USA',
@@ -26,6 +28,7 @@ return [
      * Certificate of VAT
      */
     'vat_certificate' => null,
+    'currency' => 'KZT',
     'test' => 'test',
 
 ];

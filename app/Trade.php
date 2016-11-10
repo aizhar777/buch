@@ -50,7 +50,7 @@ class Trade extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\Client','client_id');
+        return $this->belongsTo('App\Client','client_id')->with('requisites');
     }
 
     public function supervisor()
@@ -126,8 +126,6 @@ class Trade extends Model
      */
     public static function findByIdWithAllRelations($id)
     {
-        //$result = [];
-
         $trade = self::whereId($id)
             ->with([
                 'statuses',
