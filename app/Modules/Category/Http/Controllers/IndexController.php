@@ -23,7 +23,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.category'))
             return $this->noAccess('Not enough rights to view');
 
-        $cats = Category::all();
+        $cats = Category::paginate($this->perPager());
         return view('category::show',[
             'categories' => $cats
         ]);

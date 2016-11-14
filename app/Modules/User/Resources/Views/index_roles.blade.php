@@ -4,97 +4,78 @@
 
 @section('content')
 
-    <!-- page content -->
-    <div class="right_col" role="main">
-        <div class="">
-            <div class="page-title">
-                <div class="title_left">
-                    <h3>Roles list</h3>
-                </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Roles
+            <small>list</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="#">Users</a></li>
+            <li class="active">Roles</li>
+        </ol>
+    </section>
 
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+    <!-- Main content -->
+    <section class="content">
 
-                        <form action="" method="get">
-                            <div class="input-group">
-                                <input name="query" type="text" class="form-control" placeholder="Search in stock...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">Search</button>
-                                </span>
-                            </div>
-                        </form>
-                    </div>
+    @include('block.flash_messages')
+
+        <!-- Default box -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Roles</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fa fa-times"></i></button>
                 </div>
             </div>
+            <div class="box-body">
 
-            <div class="clearfix"></div>
+                @if(!empty($roles) and $roles->count() > 0)
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Slug</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-            <div class="row">
+                        @each('user::each.roles_table', $roles, 'role')
 
-                @include('block.flash_messages')
+                        </tbody>
+                    </table>
 
-                <div class="col-md-12 col-sm-12 col-xs-12">
-
-                    <div class="x_panel">
-
-                        <div class="x_title">
-
-                            <h2>List</h2>
-
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li>
-                                    <a title="Create new trade" href="{{route('user.roles.create')}}">
-                                        <i class="fa fa-user-plus"></i>
-                                    </a>
-                                </li>
-
-                            </ul>
-
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="x_content">
-
-                            @if(!empty($roles) and $roles->count() > 0)
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Slug</th>
-                                        <th>Description</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    @each('user::each.roles_table', $roles, 'role')
-
-                                    </tbody>
-                                </table>
-
-                                @if($roles->total() > 1 )
-                                    @if(request()->has('items') && is_numeric(request('items')))
-                                        {{$roles->appends(['items' => request('items')])->links()}}
-                                    @else
-                                        {{$roles->links()}}
-                                    @endif
-                                @endif
-                            @else
-                                <div class="alert alert-info">
-                                    <h4>Roles not found</h4>
-                                </div>
-                            @endif
-                        </div>
+                    @if($roles->total() > 1 )
+                        @if(request()->has('items') && is_numeric(request('items')))
+                            {{$roles->appends(['items' => request('items')])->links()}}
+                        @else
+                            {{$roles->links()}}
+                        @endif
+                    @endif
+                @else
+                    <div class="alert alert-info">
+                        <h4>Roles not found</h4>
                     </div>
-                </div>
-
+                @endif
             </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                Footer
+            </div>
+            <!-- /.box-footer-->
         </div>
-    </div>
-    <!-- /page content -->
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
 @endsection

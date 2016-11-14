@@ -50,7 +50,7 @@ class PermissionsTableSeeder extends Seeder
         foreach ($this->getSubjects() as $subject){
             foreach ($this->getPermissions() as $permission){
                 Permission::create([
-                    'name' => "permission.$subject.$permission",
+                    'name' => "permission-$subject-$permission",
                     'slug' => "$permission.$subject",
                     'description' => "$permission $subject permission",
                 ]);

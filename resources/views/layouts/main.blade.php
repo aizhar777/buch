@@ -10,73 +10,63 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> @yield('title', 'Home -') {{config('app.name')}}</title>
-
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
-    <link href="{{url('vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{url('vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="{{url('vendors/animate.css/animate.min.css')}}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{{url('vendors/nprogress/nprogress.css')}}" rel="stylesheet">
-    <!-- Select2 -->
-    <link href="{{url('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="{{url('vendors/iCheck/skins/flat/green.css')}}" rel="stylesheet">
-    <!-- Switchery -->
-    <link href="{{url('vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
-    <!-- PNotify -->
-    <link href="{{url('vendors/pnotify/dist/pnotify.css')}}" rel="stylesheet">
-    <link href="{{url('vendors/pnotify/dist/pnotify.buttons.css')}}" rel="stylesheet">
-    <link href="{{url('vendors/pnotify/dist/pnotify.nonblock.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{url('assets/css/site.css')}}">
+    <link rel="stylesheet" href="{{url('assets/css/skins/skin-black-light.css')}}">
+
+    <link rel="stylesheet" href="{{url('assets/plugins/pnotify/pnotify.min.css')}}">
+    <link rel="stylesheet" href="{{url('assets/plugins/iCheck/flat/_all.css')}}">
+    <link rel="stylesheet" href="{{url('assets/plugins/select2/select2.css')}}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <!-- Custom Theme Style -->
-    <link href="{{url('css/custom.css')}}" rel="stylesheet">
-    <link href="{{url('css/style.css')}}" rel="stylesheet">
-    <style>/*
-        body{
-            width: 99%;
-        }*/
+    <link href="{{url('assets/css/style.css')}}" rel="stylesheet">
+    <style>
         {!! $style or '' !!}
     </style>
 </head>
-<body class="nav-md">
-<div class="container body">
-    <div class="main_container">
 
-        @include('block.sidebar')
+<body class="@section('body-style') fixed sidebar-mini skin-black-light @show">
 
-        @include('block.top_menu_bar')
+<div class="wrapper">
+    @include('block.top_menu_bar')
 
+    @include('block.sidebar')
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
         @yield('content')
-
-        @include('block.footer')
-
     </div>
+    <!-- /.content-wrapper -->
+
+    @include('block.footer')
 </div>
 
 <!-- jQuery -->
-<script src="{{url('vendors/jquery/dist/jquery.min.js')}}"></script>
-<!-- Bootstrap -->
-<script src="{{url('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{url('vendors/fastclick/lib/fastclick.js')}}"></script>
-
-<script src="{{url('vendors/switchery/dist/switchery.min.js')}}"></script>
-<!-- NProgress -->
-<script src="{{url('vendors/nprogress/nprogress.js')}}"></script>
-<!-- Select2 -->
-<script src="{{url('vendors/select2/dist/js/select2.full.min.js')}}"></script>
-<!-- iCheck -->
-<script src="{{url('vendors/iCheck/icheck.min.js')}}"></script>
-<!-- PNotify -->
-<script src="{{url('vendors/pnotify/dist/pnotify.js')}}"></script>
-<script src="{{url('vendors/pnotify/dist/pnotify.buttons.js')}}"></script>
-<script src="{{url('vendors/pnotify/dist/pnotify.nonblock.js')}}"></script>
-
-<!-- Custom Theme Scripts -->
-<script src="{{url('js/custom.min.js')}}"></script>
-<script src="{{url('js/application.js')}}"></script>
-<script src="{{url('js/dev.js')}}"></script>
+<script src="{{url('assets/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{{url('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{url('assets/js/application.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{url('assets/js/app.js')}}"></script>
+<script src="{{url('assets/plugins/slimScroll/jquery.slimScroll.js')}}"></script>
+<script src="{{url('assets/plugins/select2/select2.js')}}"></script>
+<script src="{{url('assets/plugins/iCheck/icheck.js')}}"></script>
+<script src="{{url('assets/plugins/pnotify/pnotify.min.js')}}"></script>
+<script src="{{url('assets/js/dev.js')}}"></script>
 </body>
 </html>

@@ -2,132 +2,104 @@
 
 @section('content')
 
-    <!-- page content -->
-    <div class="right_col" role="main">
-        <div class="">
-            <div class="page-title">
-                <div class="title_left">
-                    <h3>Settings</h3>
-                </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Settings
+            <small>site</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="active">all</li>
+        </ol>
+    </section>
 
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                        </div>
-                    </div>
+    <!-- Main content -->
+    <section class="content">
+
+    @include('block.flash_messages')
+
+        <!-- Default box -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Title</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fa fa-times"></i></button>
+                    <a class="btn btn-box-tool" href="#{{route('settings')}}">Add settings</a>
                 </div>
             </div>
+            <div class="box-body">
 
-            <div class="clearfix"></div>
+                @if(!empty($settings) and $settings->count() > 0)
 
-            <div class="row">
-
-                @include('block.flash_messages')
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-
-                    <div class="x_panel">
-                        <div class="x_title">
-
-                            <h2>All</h2>
-
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-
-                                    <a href="#"
-                                       class="dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       role="button"
-                                       aria-expanded="false">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#{{route('settings')}}">Add settings</a>
-                                        </li>
-                                    </ul>
-
-                                </li>
-
-                            </ul>
-
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="x_content">
-
-                            @if(!empty($settings) and $settings->count() > 0)
-
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($settings as $setting)
-                                        <tr>
-                                            <th>{{$setting->name}}</th>
-                                            <th>
-                                                <div class="btn-group">
-                                                    @if($setting->is_bool)
-                                                        <div class="form-group">
-                                                            <label id="id_settings_{{$setting->slug}}">
-                                                                <input type="checkbox" onclick="application.updateSettings('{{$setting->slug}}');" class="js-switch" @if($setting->value) checked @endif />
-                                                                @if($setting->value)
-                                                                    <span class="check_label">ON</span>
-                                                                @else
-                                                                    <span class="check_label">OFF</span>
-                                                                @endif
-                                                            </label>
-                                                            <span id="helpBlock" class="help-block">{{$setting->description}}</span>
-                                                        </div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($settings as $setting)
+                            <tr>
+                                <th>{{$setting->name}}</th>
+                                <th>
+                                    <div class="btn-group">
+                                        @if($setting->is_bool)
+                                            <div class="form-group">
+                                                <label id="id_settings_{{$setting->slug}}">
+                                                    <input type="checkbox" class="settings_switch" data-slug="{{$setting->slug}}" @if($setting->value) checked @endif />
+                                                    @if($setting->value)
+                                                        <span class="check_label">ON</span>
                                                     @else
-                                                        <div class="input-group" id="id_settings_{{$setting->slug}}">
-                                                            <input type="text" class="form-control" value="{{$setting->value}}" placeholder="{{$setting->value}}">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-small btn-primary" onclick="application.updateSettings('{{$setting->slug}}');"><i class="fa fa-refresh"></i></button>
-                                                            </span>
-                                                        </div>
-                                                        <span id="helpBlock" class="help-block">{{$setting->description}}</span>
+                                                        <span class="check_label">OFF</span>
                                                     @endif
+                                                </label>
+                                                <span id="helpBlock" class="help-block">{{$setting->description}}</span>
+                                            </div>
+                                        @else
+                                            <div class="input-group" id="id_settings_{{$setting->slug}}">
+                                                <input type="text" class="form-control" value="{{$setting->value}}" placeholder="{{$setting->value}}">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-small btn-primary" onclick="application.updateSettings('{{$setting->slug}}');"><i class="fa fa-refresh"></i></button>
+                                                </span>
+                                            </div>
+                                            <span id="helpBlock" class="help-block">{{$setting->description}}</span>
+                                        @endif
 
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                    </div>
+                                </th>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
 
-                                @if($settings->total() > 1 )
-                                    @if(request()->has('items') && is_numeric(request('items')))
-                                        {{$settings->appends(['items' => request('items')])->links()}}
-                                    @else
-                                        {{$settings->links()}}
-                                    @endif
-                                @endif
-
-
-                            @else
-                                <div class="alert alert-info">
-                                    <h4>Settings not found</h4>
-                                </div>
-                            @endif
-                        </div>
+                @else
+                    <div class="alert alert-info">
+                        <h4>Settings not found</h4>
                     </div>
-                </div>
-
+                @endif
             </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+
+                @if($settings->total() > 1 )
+                    @if(request()->has('items') && is_numeric(request('items')))
+                        {{$settings->appends(['items' => request('items')])->links()}}
+                    @else
+                        {{$settings->links()}}
+                    @endif
+                @endif
+            </div>
+            <!-- /.box-footer-->
         </div>
-    </div>
-    <!-- /page content -->
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
 @endsection

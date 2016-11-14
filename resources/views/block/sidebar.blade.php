@@ -5,86 +5,67 @@
         $user = \Auth::user();
     }
 ?>
-<div class="col-md-3 left_col">
-    <div class="left_col scroll-view">
-        <div class="navbar nav_title" style="border: 0;">
-            <a href="/home" class="site_title">
-                <i class="glyphicon glyphicon-tasks"></i> <span>{{config('app.name')}}</span>
-            </a>
-        </div>
 
-        <div class="clearfix"></div>
-        <!-- menu profile quick info -->
-        <div class="profile" style="margin-bottom: 35px">
-            <div class="profile_pic">
-                <img src="/upload/images/{{(\Session::has('current.image'))? session('current.image') : 'user.png' }}" alt="{{$user->name or 'User photo'}}" class="img-circle profile_img cur_pr_img">
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="/upload/images/{{(\Session::has('current.image'))? session('current.image') : 'user.png' }}" class="img-circle cur_pr_img" alt="User Image">
             </div>
-            <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>{{$user->name or 'NO NAME'}}</h2>
+            <div class="pull-left info">
+                <p>{{$user->name}}</p>
+                <!-- Status -->
+                <a href="{{route('user.profile',['id' => $user->id])}}"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
-            <div class="clearfix"></div>
         </div>
-        <!-- /menu profile quick info -->
 
-        <!-- sidebar menu -->
-        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-
-            <!-- General DropDown menu
-            <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu">
-                    <li>
-                        <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="/home">Dashboard</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>-->
+        <!-- search form (Optional) -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+        </form>
+        <!-- /.search form -->
 
 
-             @if(\Module::count() > 0)
-                 <div class="menu_section">
-                     <h3>Modules</h3>
 
-                     @foreach(\Module::all() as $module)
-                         @if ($module['enabled'])
-                            <?php
+        @if(\Module::count() > 0)
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+            <li class="header">MODULES</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
 
-                            $name = $module['name'];
-                            $classModule = config('modules.namespace').$name.'\\'.$name.'Module';
-                            if(class_exists($classModule)){
-                                $mod = new $classModule();
-                                if(!empty($mod->menuSidebar())){
-                                    echo $mod->menuSidebar();
-                                }
-                            }
+            @foreach(\Module::all() as $module)
+                @if ($module['enabled'])
+                    <?php
 
-                            ?>
-                         @endif
-                     @endforeach
-                 </div>
-             @endif
+                    $name = $module['name'];
+                    $classModule = config('modules.namespace').$name.'\\'.$name.'Module';
+                    if(class_exists($classModule)){
+                        $mod = new $classModule();
+                        if(!empty($mod->menuSidebar())){
+                            echo $mod->menuSidebar();
+                        }
+                    }
 
-        </div>
-        <!-- /sidebar menu -->
+                    ?>
+                @endif
+            @endforeach
+        </ul>
+        <!-- /.sidebar-menu -->
+        @endif
 
-        <!-- /menu footer buttons -->
-        <div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a onclick="event.preventDefault();document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="top" title="Logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-        </div>
-        <!-- /menu footer buttons -->
-    </div>
-</div>
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -13,32 +13,45 @@ abstract class Module implements ModuleInterface
 
     protected $permission = null;
 
-    protected $_wrapper = '<div class="col-md-%1$s col-sm-%1$s col-xs-%1$s">%2$s</div>';
+    protected $with_div = 12;
+
+    protected $with_sm = 6;
+    protected $with_xs = 13;
+    protected $with_md = 4;
+/*
+      <!-- Default box -->
+
+
+        Title
+
+        <div class="box-body" style="display: block;">
+          Start creating your amazing application!
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer" style="display: block;">
+          Footer
+        </div>
+        <!-- /.box-footer-->
+*/
+
+    protected $_wrapper = '<div class="col-md-%1$s col-sm-%1$s col-xs-12"><div class="box">%2$s</div></div>';
 
     protected $_panel = '<div class="x_panel">%1$s %2$s</div>';
 
-    protected $_panel_header = '<div class="x_title"><h2>%1$s</h2> %2$s <div class="clearfix"></div></div>';
+    protected $_panel_header = '<div class="box-header with-border"><h3 class="box-title">%1$s</h3>
+          <div class="box-tools pull-right">%2$s
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+              <i class="fa fa-minus"></i></button></div></div>';
 
-    protected $_dropdown = '<ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle"  data-toggle="dropdown"  role="button"
-                                        aria-expanded="false">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                    %s
-                                    </ul>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                            </ul>';
+    protected $_dropdown = '<div class="btn-group"><button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa phpdebugbar-fa-arrow-down"></i></button><ul class="dropdown-menu" role="menu"> %s </ul></div>';
+
     protected $_content = '<div class="x_content">%s</div>';
 
-    protected $_sidebarMenu = '<ul class="nav side-menu"><li>
-                        <a><i class="fa %1$s"></i> %2$s <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            %3$s
-                        </ul></li></ul>';
+    protected $_sidebarMenu = '<li class="treeview">
+                <a href="#"><i class="fa %1$s"></i> <span> %2$s </span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">%3$s</ul></li>';
 
     /**
      * Module constructor.
@@ -92,8 +105,6 @@ abstract class Module implements ModuleInterface
             return false;
         return true;
     }
-
-    protected $with_div = 12;
 
     /**
      * Widget wrapper and data

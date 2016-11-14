@@ -32,7 +32,7 @@ class ClientsModule extends Module
      */
     protected function getContent()
     {
-        $tableOpen = '<table class="table table-hover"> <thead> <tr> <th>#ID</th> <th>Name</th> <th>E-Mail</th> <th>Phone</th> <th>Curator</th><th>Reg date</th></tr> </thead> <tbody> ';
+        $tableOpen = '<table class="table table-hover table-responsive"> <thead> <tr> <th>#ID</th> <th>Name</th> <th>E-Mail</th> <th>Phone</th> <th>Curator</th><th>Reg date</th></tr> </thead> <tbody> ';
         $tBody = '';
         $tbClose = '</tbody> </table>';
         $content = '<div class="alert alert-info">You have no clients!</div>';

@@ -12,7 +12,7 @@ class TestResourceController extends Controller
     {
         //var_dump($this->checkPerm('delete.client'));
         //dd(\NumberToWords::getStr(125));
-        return view('tests');
+        //return view('tests');
     }
 
     /**

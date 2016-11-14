@@ -37,7 +37,7 @@ class ProductsModule extends Module
      */
     protected function getContent()
     {
-        $tableOpen = '<table class="table table-hover"> <thead> <tr> 
+        $tableOpen = '<table class="table table-hover table-responsive"> <thead> <tr> 
             <th>#ID</th> 
             <th>Name</th> 
             <th>Description</th> 

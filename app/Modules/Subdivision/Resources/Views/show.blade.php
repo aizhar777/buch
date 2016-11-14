@@ -2,97 +2,68 @@
 
 @section('content')
 
-    <!-- page content -->
-    <div class="right_col" role="main">
-        <div class="">
-            <div class="page-title">
-                <div class="title_left">
-                    <h3>{{$subdivision->name or 'Error'}}</h3>
-                </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            {{$subdivision->name or 'Error'}}
+            <small>it all starts here</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
+        </ol>
+    </section>
 
-                <div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                        </div>
-                    </div>
+    <!-- Main content -->
+    <section class="content">
+
+        @include('block.flash_messages')
+
+        @if (count($errors) > 0)
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
+        @endif
 
-            <div class="clearfix"></div>
+        <!-- Default box -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Subdivision: {{$subdivision->name or 'Error'}}</h3>
 
-            <div class="row">
-
-                @if (count($errors) > 0)
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                @endif
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-
-                    @include('block.flash_messages')
-
-                    <div class="x_panel">
-                        <div class="x_title">
-
-                            <h2>Subdivision: {{$subdivision->name or 'Error'}}</h2>
-
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-
-                                    <a href="#"
-                                       class="dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       role="button"
-                                       aria-expanded="false">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="{{route('subdivision')}}">All subdivisions</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('subdivision.edit',['id' => $subdivision->id])}}">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a onclick="event.preventDefault();document.getElementById('subdivision-{{$subdivision->id}}-delete-form').submit();">Delete</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            @include('forms.delete_form', ['id' => $subdivision->id, 'slug' => 'subdivision'])
-
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="x_content">
-                            <div><b>Name:</b> {{$subdivision->name}}</div>
-                            <div><b>Slug:</b> {{$subdivision->slug}}</div>
-                            <div><b>Description:</b> {{$subdivision->description or 'Empty'}}</div>
-                            <div><b>Address:</b> {{$subdivision->address or 'None'}}</div>
-                            <div><b>Responsible:</b> {{$subdivision->user->name or 'None'}}</div>
-                            <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($subdivision->created_at))}}</div>
-                        </div>
-                    </div>
-
+                <div class="box-tools pull-right">
+                    <a class="btn btn-box-tool" href="{{route('subdivision')}}">All subdivisions</a>
+                    <a class="btn btn-box-tool" href="{{route('subdivision.edit',['id' => $subdivision->id])}}">Edit</a>
+                    <a class="btn btn-box-tool" onclick="event.preventDefault();document.getElementById('subdivision-{{$subdivision->id}}-delete-form').submit();">Delete</a>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fa fa-times"></i></button>
                 </div>
-
+                @include('forms.delete_form', ['id' => $subdivision->id, 'slug' => 'subdivision'])
             </div>
+            <div class="box-body">
+                <div><b>Name:</b> {{$subdivision->name}}</div>
+                <div><b>Slug:</b> {{$subdivision->slug}}</div>
+                <div><b>Description:</b> {{$subdivision->description or 'Empty'}}</div>
+                <div><b>Address:</b> {{$subdivision->address or 'None'}}</div>
+                <div><b>Responsible:</b> {{$subdivision->user->name or 'None'}}</div>
+                <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($subdivision->created_at))}}</div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                Footer
+            </div>
+            <!-- /.box-footer-->
         </div>
-    </div>
-    <!-- /page content -->
+        <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
 @endsection

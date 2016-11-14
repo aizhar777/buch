@@ -2,64 +2,47 @@
 
 <!-- Main Content -->
 @section('content')
-    <style>
-        body {
-            background-color: #ffffff;
-            width: 99%;
-        }
-    </style>
-
-    <div class="login">
-
-        <div class="login_wrapper">
-
-            @include('block.flash_messages')
-
-            <section class="login_content">
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-                <form method="POST" action="{{ url('/password/email') }}">
-                    {{ csrf_field() }}
-                    <h1>Reset Password</h1>
-
-                    <div class="{{ $errors->has('password') ? 'has-error' : '' }}">
-                        <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" autofocus>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-primary submit"> Send Password Reset Link</button>
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <div>
-                        @if ($errors->has('email'))
-                            <span class="help-block separator">
-                                    <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                                </span>
-                        @endif
-                    </div>
-
-                    <div class="separator">
-                        <p class="change_link">Already a member?
-                            <a href="{{ route('signInForm') }}" class="to_register"> Sign in </a>
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br/>
-
-                        <div>
-                            <h1><i class="fa fa-paw"></i> {{config('app.name')}}</h1>
-                            <p>©2016 All Rights Reserved. {{config('app.name')}} Privacy and Terms</p>
-                        </div>
-                    </div>
-                </form>
-            </section>
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#">{!! config('app.html_name') !!}</a>
         </div>
 
-        <div class="clearfix"></div>
-    </div>
 
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
+    <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Reset Password</p>
+
+            <form action="{{ url('/auth/forgot/email') }}" method="post">
+
+                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
+                    <input placeholder="Email" id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" autofocus required>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('email'))
+                        <span class="help-block separator">
+                            <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Reset</button>
+                    </div>
+                    <!-- /.col -->
+
+                </div>
+            </form>
+            <br>
+            <a href="{{ route('signInForm') }}" class="text-center">Already a member?</a>
+
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
 @endsection

@@ -127,7 +127,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $image_name = time() . "_" . $this->table . "_" . $file->getClientOriginalName();
         $userPhoto = $file->move($destinationPath, $image_name);
 
-        $image = $this->image()->create([
+        $image = Image::create([
             'name' => 'User Image',
             'src' => $image_name,
             'alt' => 'User Image',

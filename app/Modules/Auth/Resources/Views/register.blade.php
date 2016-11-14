@@ -1,81 +1,92 @@
 @extends('layouts.app')
 
+@section('title')
+    Register
+@stop
+
+@section('body-style')
+hold-transition register-page
+@stop
+
 @section('content')
-    <style>
-        body {
-            background-color: #ffffff;
-            width: 99%;
-        }
-    </style>
-
-    <div class="login">
-
-        <div class="login_wrapper">
-
-            @include('block.flash_messages')
-
-            <section class="login_content">
-                <form method="POST" action="{{ url('/auth/signup') }}">
-                    {{ csrf_field() }}
-                    <h1>Register</h1>
-
-                    <div class="{{ $errors->has('name') ? 'has-error' : '' }}">
-                        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"  placeholder="Name" autofocus required>
-                    </div>
-
-                    <div class="{{ $errors->has('email') ? 'has-error' : '' }}">
-                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"  placeholder="E-mail address" required>
-                    </div>
-
-                    <div class="{{ $errors->has('password') ? 'has-error' : '' }}">
-                        <input id="password" type="password" class="form-control" name="password"  placeholder="Password" required>
-                    </div>
-
-                    <div class="{{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  placeholder="Password confirmation" required>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-default submit">Register</button>
-                    </div>
-
-                    <div>
-                        @if ($errors->has('name'))
-                            <span class="help-block">
-                                <strong class="text-danger">{{ $errors->first('name') }}</strong>
-                            </span>
-                        @endif
-                        @if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="separator">
-                        <p class="change_link">Already a member?
-                            <a href="{{ route('signInForm') }}" class="to_register"> Sign in </a>
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br/>
-
-                        <div>
-                            <h1><i class="fa fa-paw"></i> {{config('app.name')}}</h1>
-                            <p>©2016 All Rights Reserved. {{config('app.name')}} Privacy and Terms</p>
-                        </div>
-                    </div>
-                </form>
-            </section>
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="#">{!! config('app.html_name') !!}</a>
         </div>
 
-        <div class="clearfix"></div>
+        @include('block.flash_messages')
+
+        <div class="register-box-body">
+            <p class="login-box-msg">Register a new membership</p>
+
+            <form action="{{ url('/auth/signup') }}" method="post">
+
+                <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
+                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"  placeholder="Name" autofocus required>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    @if ($errors->has('name'))
+                        <span class="help-block">
+                                <strong class="text-danger">{{ $errors->first('name') }}</strong>
+                            </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
+                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"  placeholder="E-mail address" required>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('email'))
+                        <span class="help-block">
+                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                            </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
+                    <input id="password" type="password" class="form-control" name="password"  placeholder="Password" required>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                            </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  placeholder="Password confirmation" required>
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox"> I agree to the <a href="#">terms</a>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-4">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                    </div>
+                    <!-- /.col -->
+
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+                    Facebook</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
+                    Google+</a>
+            </div>
+
+            <a href="{{ route('signInForm') }}" class="text-center">I already have a membership</a>
+        </div>
+        <!-- /.form-box -->
     </div>
-
-
+    <!-- /.register-box -->
 @endsection

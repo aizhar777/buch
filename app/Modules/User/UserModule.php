@@ -31,7 +31,7 @@ class UserModule extends Module
      */
     protected function getContent()
     {
-        $tableOpen = '<table class="table table-hover"> <thead> <tr> <th>#ID</th> <th>First Name</th> <th>E-Mail</th><th>Reg date</th></tr> </thead> <tbody> ';
+        $tableOpen = '<table class="table table-hover table-responsive"> <thead> <tr> <th>#ID</th> <th>First Name</th> <th>E-Mail</th><th>Reg date</th></tr> </thead> <tbody> ';
         $tBody = '';
         $tbClose = '</tbody> </table>';
 

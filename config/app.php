@@ -13,6 +13,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'BUCH'),
+    'html_name' => env('APP_HTML_NAME', '<b>BUCH</b> Accounting'),
+    'short_name' => env('APP_SHORT_NAME', '<b>BUCH</b> Accounting'),
 
     /*
     |--------------------------------------------------------------------------
@@ -173,6 +175,7 @@ return [
         Baum\Providers\BaumServiceProvider::class,         //https://github.com/etrepat/baum
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Aizhar777\Cell\CellServiceProvider::class, //self provider
+        Vinkla\Hashids\HashidsServiceProvider::class,
         //
 
         /*
@@ -237,6 +240,7 @@ return [
         'Shinobi' => Caffeinated\Shinobi\Facades\Shinobi::class,
         'Cell' => \Aizhar777\Cell\Facades\Cell::class,
         'NumbersToWords' => Aizhar777\NumToWord\Facades\NumberToWordsFacade::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
 
     ],
 
