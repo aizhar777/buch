@@ -140,7 +140,7 @@ if(\Session::has('current.user')){
 
                             <p>
                                 {{$user->name}} - {{$user->email}}
-                                <small>Member since Nov. 2012</small>
+                                <small>Member since {{date("M Y", strtotime($user->created_at))}}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
