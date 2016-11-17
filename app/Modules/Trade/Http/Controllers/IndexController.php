@@ -3,6 +3,7 @@
 namespace App\Modules\Trade\Http\Controllers;
 
 use App\Client;
+use App\Events\TradeCreated;
 use App\Modules\Trade\Http\Requests\CreateTradeRequest;
 use App\Modules\Trade\Http\Requests\UpdateTradeRequest;
 use App\Ppc;
@@ -25,11 +26,11 @@ class IndexController extends Controller
      */
     public function index()
     {
-        if(!$this->checkPerm('view.trade'))
+        if (!$this->checkPerm('view.trade'))
             return $this->noAccess('Not enough rights to view');
 
         $trades = Trade::paginate($this->perPager());
-        return view('trade::index',['trades' => $trades]);
+        return view('trade::index', ['trades' => $trades]);
     }
 
     /**
@@ -39,7 +40,7 @@ class IndexController extends Controller
      */
     public function create()
     {
-        if(!$this->checkPerm('create.trade'))
+        if (!$this->checkPerm('create.trade'))
             return $this->noAccess('Not enough rights to view');
 
         $products = Product::all();
@@ -47,7 +48,7 @@ class IndexController extends Controller
         $ppc = Ppc::all();
         $status = TradeStatus::all();
         $clients = Client::all();
-        return view('trade::create',[
+        return view('trade::create', [
             'products' => $products,
             'users' => $users,
             'codes' => $ppc,
@@ -59,13 +60,14 @@ class IndexController extends Controller
     /**
      * Store Trade.
      *
-     * @param  CreateTradeRequest  $request
+     * @param  CreateTradeRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateTradeRequest $request)
     {
         $tradeCreated = Trade::createTrade($request);
-        if ($tradeCreated instanceof Trade){
+        if ($tradeCreated instanceof Trade) {
+            event(new TradeCreated($tradeCreated, $this->getCurrentUser()));
             \Flash::success('Trade created!');
             return redirect()->route('trade');
         } else {
@@ -77,12 +79,12 @@ class IndexController extends Controller
     /**
      * Show trade
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        if(!$this->checkPerm('show.trade'))
+        if (!$this->checkPerm('show.trade'))
             return $this->noAccess('Not enough rights to view');
 
         $trade = Trade::whereId($id)
@@ -92,31 +94,32 @@ class IndexController extends Controller
                 'client',
                 'supervisor',
                 'completer',
+                'history',
             ])
             ->firstOrFail();
 
         $statuses = TradeStatus::all();
 
-        return view('trade::show',['trade' => $trade, 'statuses' => $statuses]);
+        return view('trade::show', ['trade' => $trade, 'statuses' => $statuses]);
     }
 
     /**
      * Edit trade
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        if(!$this->checkPerm('create.trade'))
+        if (!$this->checkPerm('create.trade'))
             return $this->noAccess('Not enough rights to view');
 
-        $trade = Trade::whereId($id)->with('statuses','ppCode','client','supervisor','completer','products')->firstOrFail();
+        $trade = Trade::whereId($id)->with('statuses', 'ppCode', 'client', 'supervisor', 'completer', 'products')->firstOrFail();
         $users = User::all();
         $ppc = Ppc::all();
         $status = TradeStatus::all();
         $clients = Client::all();
-        return view('trade::edit',[
+        return view('trade::edit', [
             'trade' => $trade,
             'users' => $users,
             'codes' => $ppc,
@@ -128,17 +131,17 @@ class IndexController extends Controller
     /**
      * Update Trade
      *
-     * @param  UpdateTradeRequest  $request
-     * @param  int  $id
+     * @param  UpdateTradeRequest $request
+     * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateTradeRequest $request, $id)
     {
         $result = Trade::updateTradeandProducts($request, $id);
 
-        if ($result && !is_array($result)){
+        if ($result && !is_array($result)) {
             \Flash::success('Trade updated!');
-            return redirect()->route('trade.show',['id' => $id]);
+            return redirect()->route('trade.show', ['id' => $id]);
         } else {
             $errors = '<p>Trade not updated!</p>';
             foreach ($result as $err) $errors .= "<p>$err</p>";
@@ -150,12 +153,12 @@ class IndexController extends Controller
     /**
      * Remove Trade
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        \Flash::warning('Removing trade unless provided. You can trade moved to the archive. TRADE_ID:'.$id);
+        \Flash::warning('Removing trade unless provided. You can trade moved to the archive. TRADE_ID:' . $id);
         return redirect()->back();
     }
 }

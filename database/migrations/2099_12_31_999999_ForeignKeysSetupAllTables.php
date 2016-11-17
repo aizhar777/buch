@@ -147,6 +147,13 @@ class ForeignKeysSetupAllTables extends Migration
                 ->onDelete('set null')
                 ->onUpdate('restrict');
         });
+
+        Schema::table('trade_history', function (Blueprint $table) {
+            $table->foreign('id_trade')
+                ->references('id')->on('trades')
+                ->onDelete('cascade')
+                ->onUpdate('restrict');
+        });
     }
 
     /**
@@ -223,6 +230,14 @@ class ForeignKeysSetupAllTables extends Migration
 
         Schema::table('images', function (Blueprint $table) {
             $table->dropForeign(['imageable_type']);
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['image_id']);
+        });
+
+        Schema::table('trade_history', function (Blueprint $table) {
+            $table->dropForeign(['id_trade']);
         });
 
 

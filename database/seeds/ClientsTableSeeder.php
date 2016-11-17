@@ -27,6 +27,7 @@ class ClientsTableSeeder extends Seeder
                     'legal_name' => $faker->company,
                     'bank' => 'АО Новый Интернет Банк',
                     'iik' => $this->getIIK(),
+                    'iin' => $this->getIIN(),
                     'bin' => $this->getBIN(),
                     'cbe' => 19,
                     'relation_id' => $client->id,
@@ -45,16 +46,27 @@ class ClientsTableSeeder extends Seeder
     public function getIIK()
     {
         $code = ['KZ','RU'];
-        $iik = '';
-        for($i=0; $i < 18; $i++){
-            $iik .= rand(0,9);
-        }
-
+        $iik = $this->numIterrator(18);
         return $code[rand(0,1)].$iik;
+    }
+
+    public function getIIN()
+    {
+        $code = ['KZ','RU'];
+        return $this->numIterrator(12);
+    }
+
+    public function numIterrator(int $num)
+    {
+        $res = '';
+        for($i=0; $i <= $num; $i++){
+            $res .= rand(0,9);
+        }
+        return $res;
     }
 
     public function getBIN()
     {
-        return 'BINNIBKZ';
+        return mb_strtolower(str_random(rand(8,9)));
     }
 }

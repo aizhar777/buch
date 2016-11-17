@@ -144,4 +144,43 @@ class Product extends Model
             return true;
         return false;
     }
+
+
+    /**
+     * Take one of the balance
+     *
+     * @return bool|null
+     */
+    public function takeItem($count = 1)
+    {
+        if($this->is_service) return true;
+        if ($this->balance > 0) {
+            $this->balance = ($this->balance - $count);
+            if ($this->save() !== false) {
+                return true;
+            }
+            return false;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Give one of the balance
+     *
+     * @return bool|null
+     */
+    public function giveItem($count = 1)
+    {
+        if($this->is_service) return true;
+        if ($this->balance > 0) {
+            $this->balance = ($this->balance + $count);
+            if ($this->save() !== false) {
+                return true;
+            }
+            return false;
+        } else {
+            return null;
+        }
+    }
 }

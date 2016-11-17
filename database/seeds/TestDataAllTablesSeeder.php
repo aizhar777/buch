@@ -12,7 +12,7 @@ class TestDataAllTablesSeeder extends Seeder
     public function run()
     {
         //Test data
-        $this->call(CategoryTableSeeder::class);
+        //$this->call(CategoryTableSeeder::class);
         $this->call(ClientsTableSeeder::class);
         $this->call(ProductsTableSeeeder::class);
     }

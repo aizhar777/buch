@@ -8,7 +8,7 @@ use App\User;
 trait CurrentUserModel
 {
     /**
-     * @return \App\User|mixed|null
+     * @return \App\User
      */
     public function getCurrentUser()
     {

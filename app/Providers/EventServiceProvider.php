@@ -22,15 +22,35 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\StockCreated' => [],
 
         // Trade
-        'App\Events\TradeCreated' => [],
-        'App\Events\TradeUpdated' => [],
-        'App\Events\TradeChangedCurator' => [],
-        'App\Events\TradeChangedStatus' => [],
-        'App\Events\TradeAddedProduct' => [],
-        'App\Events\TradeReducingOfItems' => [], // Уменьшение числа товаров --
-        'App\Events\TradeIncreaseOfItems' => [], // Увеличение числа товаров ++
-        'App\Events\TradeIsComplete' => [],
-        'App\Events\TradeMovedToArchive' => [],
+        'App\Events\TradeCreated' => [
+            'App\Listeners\TradeHistoryListenerOfCreated'
+        ],
+        'App\Events\TradeUpdated' => [
+            'App\Listeners\TradeHistoryListenerOfUpdated'
+        ],
+        'App\Events\TradeChangedCurator' => [
+            'App\Listeners\TradeHistoryListenerOfChangedCurator'
+        ],
+        'App\Events\TradeChangedStatus' => [
+            'App\Listeners\TradeHistoryListenerOfChangedStatus'
+        ],
+        'App\Events\TradeAddedProduct' => [
+            'App\Listeners\TradeHistoryListenerOfAddedProduct'
+        ],
+        'App\Events\TradeReducingOfItems' => [ // Уменьшение числа товаров --
+            'App\Listeners\TradeHistoryListenerOnReducingOfItems'
+
+        ],
+        'App\Events\TradeIncreaseOfItems' => [ // Увеличение числа товаров ++
+            'App\Listeners\TradeHistoryListenerOnIncreaseOfItems',
+            'App\Listeners\ProductIncreaseOfItems',
+        ],
+        'App\Events\TradeIsComplete' => [
+            'App\Listeners\TradeHistoryListenerIsComplete'
+        ],
+        'App\Events\TradeMovedToArchive' => [
+            'App\Listeners\TradeHistoryListenerOfMovedToArchive'
+        ],
 
         'App\Events\SubdivisionCreated' => [],
         'App\Events\FieldMapCreated' => [],

@@ -68,5 +68,6 @@
 <script src="{{url('assets/plugins/iCheck/icheck.js')}}"></script>
 <script src="{{url('assets/plugins/pnotify/pnotify.min.js')}}"></script>
 <script src="{{url('assets/js/dev.js')}}"></script>
+@yield('scripts')
 </body>
 </html>

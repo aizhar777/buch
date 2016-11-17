@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Events\TradeCreated;
+use App\Events\TradeIncreaseOfItems;
+use App\Library\Traits\CurrentUserModel;
 use App\Modules\Trade\Http\Requests\AddProductsToTradeRequest;
 use App\Modules\Trade\Http\Requests\CreateTradeRequest;
 use App\Modules\Trade\Http\Requests\UpdateTradeRequest;
@@ -10,6 +13,7 @@ use Illuminate\Http\Request;
 
 class Trade extends Model
 {
+    use CurrentUserModel;
     /**
      * The table associated with the model.
      *
@@ -61,6 +65,11 @@ class Trade extends Model
     public function completer()
     {
         return $this->belongsTo('App\User','completed_by_user');
+    }
+
+    public function history()
+    {
+        return $this->hasMany('App\TradeHistory', 'id_trade', 'id');
     }
 
     public function products()
@@ -140,6 +149,11 @@ class Trade extends Model
         return $trade;
     }
 
+    /**
+     * @param AddProductsToTradeRequest $request
+     * @return Model|static
+     * @throws \Exception
+     */
     public static function addProducts(AddProductsToTradeRequest $request)
     {
         $trade = self::whereId($request->get('trade'))->firstOrFail();
@@ -153,6 +167,7 @@ class Trade extends Model
                 throw new \Exception('Empty product options');
             }
         }
+        event(new TradeIncreaseOfItems($trade,$trade->getCurrentUser()));
         return $trade;
     }
 

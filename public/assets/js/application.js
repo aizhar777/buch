@@ -56,16 +56,21 @@ application.productTradeOptions = function() {
     var html = '';
     $( "#select_products option:selected" ).each(function() {
         var options = $( this );
-        html += application.getInputForTradeOptions(options.text(), options.val(),options.attr('data-balance'));
+        html += application.getInputForTradeOptions(options.text(), options.val(),options.attr('data-balance'),options.attr('data-service'));
     });
     blockOptions.html(st+html);
 };
 
-application.getInputForTradeOptions = function(title, id, max) {
+application.getInputForTradeOptions = function(title, id, max, is_service) {
+
+    var maximum = '';
+    if(is_service == '0'){
+        maximum = 'max="' + max + '"';
+    }
     return '<div class="form-group"><label>'
         + title
-        + '</label><input type="number" min="1" max="'
-        + max +'" name="product_options['
+        + '</label><input type="number" min="1" '
+        + maximum +' name="product_options['
         + id
         + ']" placeholder="Количество.." value="1" class="form-control"></div>';
 };

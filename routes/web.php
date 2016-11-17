@@ -19,10 +19,6 @@ Route::get('/login',  ['middleware'=>'debug',function () {
     return redirect()->route('signInForm');
 }]);
 
-Route::get('/home', function (){
-    return redirect(route('dashboard'), 301);
-});
-
 Route::get('/dashboard', 'HomeController@index')
     ->middleware(['debug','auth'])
     ->name('dashboard');
