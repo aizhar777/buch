@@ -36,74 +36,83 @@
             </div>
         @endif
 
-        <!-- Default box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Update {{$user->name or 'No name'}}</h3>
 
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fa fa-times"></i></button>
+    <!-- Custom Tabs (Pulled to the right) -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li>
+                    <a href="#tab_2" data-toggle="tab">Pass</a>
+                </li>
+                <li class="active">
+                    <a href="#tab_1" data-toggle="tab">User</a>
+                </li>
+                <li class="pull-left header"><i class="fa fa-user"></i> Update {{$user->name or 'No name'}}</li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <form action="{{route('user.edit.post',$user->id)}}" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+
+                        <div class="form-group">
+                            <label>You'r name</label>
+                            <input class="form-control" type="text" name="name" value="{{$user->name}}" placeholder="Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input class="form-control" type="file" name="user_image" placeholder="Change photo">
+                        </div>
+
+                        @if(!empty($fields))
+                            @foreach($fields as $key => $value)
+                                @if($value['is_many'])
+                                    @if(!$value['is_hidden'])
+                                        <div class="form-group">
+                                            <label>{{$key}}</label>
+                                            <select class="form-control" name="fields[{{$key}}]" id="{{$key}}" @if($value['is_required']) required @endif >
+                                                <option value="*">Select {{$key}}</option>
+                                                @foreach($value['default'] as $k => $v)
+                                                    <option value="{{$v}}" @if($v == $value['data']) selected="selected" @endif >{{$v}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
+                                @else
+                                    @if(!$value['is_hidden'])
+                                        <div class="form-group">
+                                            <label>{{$value['name']}}</label>
+                                            <input class="form-control" type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}" @if($value['is_required']) required @endif >
+                                        </div>
+                                    @endif
+                                @endif
+                            @endforeach
+                        @endif
+                        <div class="form-group">
+                            <button class="btn btn-default">Send</button>
+                        </div>
+                    </form>
                 </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    The European languages are members of the same family. Their separate existence is a myth.
+                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                    new common language would be desirable: one could refuse to pay expensive translators. To
+                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                    words. If several languages coalesce, the grammar of the resulting language is more simple
+                    and regular than that of the individual languages.
+                </div>
+                <!-- /.tab-pane -->
             </div>
-            <div class="box-body">
-                <form action="{{route('user.edit.post',$user->id)}}" method="post" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }}
-
-                    <div class="form-group">
-                        <label>You'r name</label>
-                        <input class="form-control" type="text" name="name" value="{{$user->name}}" placeholder="Name">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input class="form-control" type="file" name="user_image" placeholder="Change photo">
-                    </div>
-
-                    @if(!empty($fields))
-                        @foreach($fields as $key => $value)
-                            @if($value['is_many'])
-                                @if(!$value['is_hidden'])
-                                    <div class="form-group">
-                                        <label>{{$key}}</label>
-                                        <select class="form-control" name="fields[{{$key}}]" id="{{$key}}" @if($value['is_required']) required @endif >
-                                            <option value="*">Select {{$key}}</option>
-                                            @foreach($value['default'] as $k => $v)
-                                                <option value="{{$v}}" @if($v == $value['data']) selected="selected" @endif >{{$v}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
-                            @else
-                                @if(!$value['is_hidden'])
-                                    <div class="form-group">
-                                        <label>{{$value['name']}}</label>
-                                        <input class="form-control" type="text" name="fields[{{$key}}]" value="{{$value['data']}}" placeholder="{{$value['name']}}" @if($value['is_required']) required @endif >
-                                    </div>
-                                @endif
-                            @endif
-                        @endforeach
-                    @endif
-                    <div class="form-group">
-                        <button class="btn btn-default">Send</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                fasf
-            </div>
-            <!-- /.box-footer-->
+            <!-- /.tab-content -->
         </div>
-        <!-- /.box -->
+        <!-- nav-tabs-custom -->
 
     </section>
     <!-- /.content -->

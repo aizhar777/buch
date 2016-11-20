@@ -448,12 +448,12 @@
     </tr>
     <tr style="height:18px">
         <td/>
-        <td colspan="13" rowspan="2" class="s0">{{$purchase['company']['name'] or 'Empty'}}</td>
+        <td colspan="13" rowspan="2" class="s0">{{config('company.organization')}}</td>
         <td/>
         <td/>
         <td/>
         <td/>
-        <td colspan="3" rowspan="2" class="s0">{{$purchase['company']['name'] or 'Empty'}}</td>
+        <td colspan="3" rowspan="2" class="s0">{{config('company.organization')}}</td>
         <td/>
     </tr>
     <tr style="height:55px">
@@ -530,7 +530,7 @@
         <td/>
         <td/>
         <td rowspan="4" class="s3">ИИН(БИН):</td>
-        <td colspan="4" rowspan="2" class="s2">{{$purchase['company']['iin'] or 'Empty'}}</td>
+        <td colspan="4" rowspan="2" class="s2">{{config('company.iin')}}</td>
         <td/>
         <td/>
         <td/>
@@ -553,7 +553,7 @@
         <td/>
         <td/>
         <td rowspan="2" class="s3">ИИН(БИН):</td>
-        <td colspan="2" rowspan="2" class="s2">{{$purchase['company']['iin'] or 'Empty'}}</td>
+        <td colspan="2" rowspan="2" class="s2">{{config('company.iin')}}</td>
         <td/>
     </tr>
     <tr style="height:6px">
@@ -645,7 +645,7 @@
         <td/>
         <td/>
         <td/>
-        <td colspan="4" rowspan="5" class="s17">КВИТАНЦИЯ<br>к приходному кассовому ордеру<br>№ {{$purchase['id']}}</td>
+        <td colspan="4" rowspan="5" class="s17">КВИТАНЦИЯ<br>к приходному кассовому ордеру<br>№ {{$trade['id']}}</td>
     </tr>
     <tr style="height:1px">
         <td/>
@@ -669,8 +669,8 @@
     <tr style="height:18px">
         <td colspan="4" class="s4">ПРИХОДНЫЙ КАССОВЫЙ ОРДЕР</td>
         <td/>
-        <td colspan="6" class="s6">{{$purchase['id']}}</td>
-        <td colspan="3" class="s23">{{date('d.m.Y H:i', strtotime($purchase['created_at']))}}</td>
+        <td colspan="6" class="s6">{{$trade['id']}}</td>
+        <td colspan="3" class="s23">{{date('d.m.Y H:i', strtotime($trade['created_at']))}}</td>
         <td/>
         <td/>
         <td/>
@@ -726,7 +726,7 @@
         <td/>
         <td/>
         <td/>
-        <td colspan="3" class="s18">Принято от: {{$purchase['clients']['name'] or 'Empty'}}</td>
+        <td colspan="3" class="s18">Принято от: {{$trade['client']['name'] or 'Empty'}}</td>
         <td/>
     </tr>
     <tr style="height:3px">
@@ -742,7 +742,7 @@
         <td/>
         <td/>
         <td/>
-        <td colspan="3" rowspan="3" class="s18">Основание: {{$purchase['clients']['name'] or 'Empty'}}</td>
+        <td colspan="3" rowspan="3" class="s18">Основание: {{$trade['basis']['name'] or 'Empty'}}</td>
         <td/>
     </tr>
     <tr style="height:22px">
@@ -800,7 +800,7 @@
         <td/>
     </tr>
     <tr style="height:13px">
-        <td colspan="14" rowspan="2" class="s10">Принято от:{{$purchase['clients']['name'] or 'Empty'}}</td>
+        <td colspan="14" rowspan="2" class="s10">Принято от:{{$trade['client']['name'] or 'Empty'}}</td>
         <td/>
         <td/>
         <td/>
@@ -817,19 +817,19 @@
 
     $summ = 0;
     ?>
-    @foreach($purchase['products'] as $product)
+    @foreach($trade['products'] as $product)
                 <?php
                 $sum = ($product['pivot']['quantity'] * $product['cost']);
                 $summ += $sum;
                 ?>
     @endforeach
         <td colspan="3" rowspan="5" class="s19">
-            @if($purchase['company']['calc_option'] == 'NONE')
-                Сумма: {{number_format($summ,2, '.', ' ')}} ({{\Buch\Library\NumToString::getStr($summ)}}),Без НДС
+            @if(config('company.calc_option') == 'NONE')
+                Сумма: {{number_format($summ,2, '.', ' ')}} (@numToWords($summ)),Без НДС
             @else
-                Сумма: {{number_format(($summ + (($summ/100)*$purchase['company']['vat_rate'])),2, '.', ' ')}}
-                ({{\Buch\Library\NumToString::getStr($summ + (($summ/100)*$purchase['company']['vat_rate']))}})
-                В т.ч. НДС {{number_format((($summ/100)*$purchase['company']['vat_rate']),2, '.', ' ')}}
+                Сумма: {{number_format(($summ + (($summ/100) * config('company.vat_rate'))),2, '.', ' ')}}
+                (@numToWords($summ + (($summ/100) * config('company.vat_rate'))))
+                В т.ч. НДС {{number_format((($summ/100) * config('company.vat_rate')),2, '.', ' ')}}
             @endif
         </td>
         <td/>
@@ -855,7 +855,7 @@
         <td/>
     </tr>
     <tr style="height:17px">
-        <td colspan="14" class="s10">Основание: {{$purchase['basis']['name'] or 'Empty'}}</td>
+        <td colspan="14" class="s10">Основание: {{$trade['basis']['name'] or 'Empty'}}</td>
         <td/>
         <td/>
         <td/>
@@ -883,12 +883,12 @@
     </tr>
     <tr style="height:3px">
         <td colspan="14" rowspan="3" class="s11">
-            @if($purchase['company']['calc_option'] == 'NONE')
-                Сумма: {{number_format($summ,2, '.', ' ')}} ({{\Buch\Library\NumToString::getStr($summ)}}),Без НДС
+            @if(config('company.calc_option') == 'NONE')
+                Сумма: {{number_format($summ,2, '.', ' ')}} (@numToWords($summ)),Без НДС
             @else
-                Сумма: {{number_format(($summ + (($summ/100)*$purchase['company']['vat_rate'])),2, '.', ' ')}}
-                ({{\Buch\Library\NumToString::getStr($summ + (($summ/100)*$purchase['company']['vat_rate']))}})
-                В т.ч. НДС {{number_format((($summ/100)*$purchase['company']['vat_rate']),2, '.', ' ')}}
+                Сумма: {{number_format(($summ + (($summ/100) * config('company.vat_rate'))),2, '.', ' ')}}
+                ({@numToWords($summ + (($summ/100) * config('company.vat_rate'))))
+                В т.ч. НДС {{number_format((($summ/100) * config('company.vat_rate')),2, '.', ' ')}}
             @endif
         </td>
         <td/>
@@ -909,7 +909,7 @@
         <td/>
         <td/>
         <td/>
-        <td colspan="3" class="s20">{{date('d.m.Y H:i', strtotime($purchase['created_at']))}}</td>
+        <td colspan="3" class="s20">{{date('d.m.Y H:i', strtotime($trade['created_at']))}}</td>
         <td/>
     </tr>
     <tr style="height:7px">

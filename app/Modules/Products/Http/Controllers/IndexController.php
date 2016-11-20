@@ -22,7 +22,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('view.product'))
             return $this->noAccess('Not enough rights to view');
 
-        $products = Product::with('stock', 'subdivision')->paginate($this->perPager());
+        $products = Product::with('stock', 'subdivision')->orderBy('updated_at')->paginate($this->perPager());
         return view('products::show',[
             'products' => $products,
         ]);

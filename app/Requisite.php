@@ -32,6 +32,7 @@ class Requisite extends Model
         'legal_name',
         'bank',
         'iik',
+        'iin',
         'bin',
         'cbe',
         'relation_id',
@@ -93,6 +94,7 @@ class Requisite extends Model
         $newRequisite->legal_name = $request->get('legal_name');
         $newRequisite->bank = $request->get('bank');
         $newRequisite->iik = $request->get('iik');
+        $newRequisite->iin = $request->get('iin');
         $newRequisite->bin = $request->get('bin');
         $newRequisite->cbe = $request->get('cbe');
         $newRequisite->relation_id = $model->id;

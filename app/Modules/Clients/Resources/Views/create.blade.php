@@ -96,6 +96,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="requisite_iin" class="control-label col-md-3 col-sm-3 col-xs-12">IIN</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input name="iin" id="requisite_iin" type="text" class="form-control" placeholder="Client's iin" value="{{old('iin')}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="requisite_bank" class="control-label col-md-3 col-sm-3 col-xs-12">Bank</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input name="bank" id="requisite_bank" type="text" class="form-control" placeholder="Client's bank" value="{{old('bank')}}">

@@ -40,7 +40,7 @@ class IndexController extends Controller
         if(!$this->checkPerm('show.client'))
             return $this->noAccess('Insufficient permissions to view');
 
-        $client = Client::find($id)->firstOrFail();
+        $client = Client::whereId($id)->firstOrFail();
         $fields = BFields::getInstance()->all($client->id,$client::TYPE);
 
         return view('clients::showClient',[

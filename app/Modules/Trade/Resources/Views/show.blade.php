@@ -59,9 +59,10 @@
                 <h3 class="box-title">Trade № {{$trade->id or 'Error'}} <a href="#" class="btn btn-sm btn-default" data-toggle="modal" data-target="#add-product-modal" data-trade="{{$trade->id}}">Add product</a></h3>
 
                 <div class="box-tools pull-right">
-                    <a class="btn btn-box-tool" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'check', 'format' => 'portrait'])}}">Check (portrait)</a>
-                    <a class="btn btn-box-tool" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'invoice', 'format' => 'portrait'])}}">Invoice (portrait)</a>
-                    <a class="btn btn-box-tool" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'certificate', 'format' => 'landscape'])}}">Certificate of completion (landscape)</a>
+                    <a class="btn btn-box-tool" target="_blank" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'check', 'format' => 'portrait'])}}">Check (portrait)</a>
+                    <a class="btn btn-box-tool" target="_blank" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'order', 'format' => 'portrait'])}}">Order (portrait)</a>
+                    <a class="btn btn-box-tool" target="_blank" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'invoice', 'format' => 'portrait'])}}">Invoice (portrait)</a>
+                    <a class="btn btn-box-tool" target="_blank" href="{{route('printer.trade',['id' => $trade->id, 'type' => 'certificate', 'format' => 'landscape'])}}">Certificate of completion (landscape)</a>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>

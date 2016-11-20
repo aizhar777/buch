@@ -35,7 +35,7 @@ class CreateProductRequest extends FormRequest
             'cost' => 'required|numeric',
             'is_service' => 'required|boolean',
             'balance' => 'required|integer|min:0',
-            'stock' => 'required|exists:categories,id',
+            'stock' => 'required|exists:stocks,id',
             'subdivision' => 'required|exists:subdivisions,id',
         ];
     }

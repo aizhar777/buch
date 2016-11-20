@@ -7,6 +7,8 @@ use App\Library\Module;
 
 class ReportsModule extends Module
 {
+    public $name = 'Reports';
+    protected $permission = 'view.trade';
     /**
      * dropdown links
      *

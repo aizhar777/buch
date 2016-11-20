@@ -96,7 +96,6 @@
                     <form action="{{route('user.roles.update.perms',['id' => $role->id])}}" method="post">
                         {{csrf_field()}}
                         {{method_field('PUT')}}
-                        @endif
                         <div class="row">
                             @foreach($permissions as $permission)
                                 <?php

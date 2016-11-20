@@ -42,6 +42,7 @@ class CreateClientAndRequisiteRequest extends FormRequest
             'legal_name' => 'required',
             'bank' => 'required',
             'iik' => 'required|alpha_num',
+            'iin' => 'required|alpha_num',
             'bin' => 'required|alpha_num',
             'cbe' => 'required|numeric',
         ];
