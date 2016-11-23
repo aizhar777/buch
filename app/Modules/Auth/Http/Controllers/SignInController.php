@@ -13,7 +13,7 @@ class SignInController extends LoginController
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Show the application's login form.

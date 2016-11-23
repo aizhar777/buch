@@ -7,6 +7,14 @@ use App\User;
 
 class SignUpController extends RegisterController
 {
+
+    /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/dashboard';
+
     /**
      * Show the application registration form.
      *
