@@ -79,7 +79,7 @@
                 <div class="form-group">
                     <label for="is_responsible_subdivision" class="control-label col-md-3 col-sm-3 col-xs-12">Add responseble for subdivision</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <input name="is_responsible"  id="is_responsible_subdivision" type="checkbox" @if(!empty(old('is_responsible'))) checked @endif >
+                        <input name="is_responsible"  id="is_responsible_subdivision" type="checkbox" @if( !empty(old('is_responsible')) ) checked @endif >
                     </div>
                 </div>
 

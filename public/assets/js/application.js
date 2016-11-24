@@ -90,6 +90,7 @@ application.getTradeProducts = function () {
 
 application.init = function () {
     this.listeners();
+    this.showOrHideSubs();
 };
 
 application.getSelf = function () {
@@ -114,6 +115,36 @@ application.listeners = function () {
         });
         self.productTradeOptions();
     });
+
+    $('#is_responsible').on("ifToggled", function (event) {
+        //var obj = $(this);
+        $("#stock_responsible_wrap").toggle(this.checked);
+    });
+
+    $('#category_subcategory').on("ifToggled", function (event) {
+        //var obj = $(this);
+        $("#wrapper_category_parent").toggle(this.checked);
+    });
+
+    $('#is_responsible_subdivision').on("ifToggled", function (event) {
+        //var obj = $(this);
+        $("#subdivision_responsible_wrap").toggle(this.checked);
+    });
+
+};
+
+application.showOrHideSubs = function () {
+    this.showOrHide($('#category_subcategory'), $('#wrapper_category_parent'));
+    this.showOrHide($('#is_responsible'), $('#stock_responsible_wrap'));
+    this.showOrHide($('#is_responsible_subdivision'), $('#subdivision_responsible_wrap'));
+};
+
+application.showOrHide = function (obj, wrp) {
+    if(obj.prop('checked')) {
+        wrp.show();
+    } else {
+        wrp.hide();
+    }
 };
 
 application.setProfileImage = function (event) {
