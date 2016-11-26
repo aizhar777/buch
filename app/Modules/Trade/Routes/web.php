@@ -26,4 +26,6 @@ Route::group(['prefix' => 'trade', 'middleware' => ['debug', 'auth']], function(
 
     Route::get('/{id}/get/products', 'AjaxController@getProducts')->where(['id' => '[0-9]+'])->name('trade.get.products');
     Route::put('/add/products', 'AjaxController@addProducts')->where(['id' => '[0-9]+'])->name('trade.add.products');
+
+    Route::put('/update/{id}/amount', 'AjaxController@updateProductQuantity')->where(['id' => '[0-9]+'])->name('trade.update.product.amount');
 });

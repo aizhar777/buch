@@ -39,4 +39,5 @@ Route::group(['prefix' => 'products', 'middleware' => ['debug', 'auth']], functi
         ->name('products.delete');
 
     Route::get('/get/form/{id?}', 'DataController@getProductsForm')->where(['id' => '[0-9]+'])->name('products.get.form');
+
 });

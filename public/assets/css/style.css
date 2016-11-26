@@ -10,3 +10,7 @@
     border-radius: 0;
     padding: 6px 0;
 }
+
+.trade-produvct-amount{
+    cursor: pointer;
+}

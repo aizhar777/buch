@@ -45,6 +45,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\TradeHistoryListenerOnIncreaseOfItems',
             'App\Listeners\ProductIncreaseOfItems',
         ],
+        'App\Events\TradeIncreasingTheQuantityProduct' => [ // Увеличение количества товара ++
+        ],
+        'App\Events\TradeReducingTheQuantityProduct' => [ // Увеличение количества товара ++
+        ],
         'App\Events\TradeIsComplete' => [
             'App\Listeners\TradeHistoryListenerIsComplete'
         ],

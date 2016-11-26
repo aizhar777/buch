@@ -30,6 +30,7 @@ return [
      */
     'vat_certificate' => null,
     'currency' => 'KZT',
+    'update_balans_product' => true,
     'test' => 'test',
 
 ];

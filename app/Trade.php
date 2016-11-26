@@ -4,9 +4,12 @@ namespace App;
 
 use App\Events\TradeCreated;
 use App\Events\TradeIncreaseOfItems;
+use App\Events\TradeIncreasingTheQuantityProduct;
+use App\Events\TradeReducingTheQuantityProduct;
 use App\Library\Traits\CurrentUserModel;
 use App\Modules\Trade\Http\Requests\AddProductsToTradeRequest;
 use App\Modules\Trade\Http\Requests\CreateTradeRequest;
+use App\Modules\Trade\Http\Requests\UpdateAmountProductsInTrade;
 use App\Modules\Trade\Http\Requests\UpdateTradeRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -195,8 +198,13 @@ class Trade extends Model
                 'quantity',
                 'stock',
                 'sub',
-                'sum'
+                'sum',
+                'action'
             ]);
+
+        $action = '
+        <!-- Single button -->
+        ';
 
         $products->thead()
             ->addRowName('head row')
@@ -207,7 +215,8 @@ class Trade extends Model
             ->th('head row', 'quantity', 'Amount')
             ->th('head row', 'stock', 'Stock')
             ->th('head row', 'sub', 'Subdivision')
-            ->th('head row', 'sum', 'Sum');
+            ->th('head row', 'sum', 'Sum')
+            ->th('head row', 'action', 'Action');
 
         $id = 1;
         $total = 0.00;
@@ -224,7 +233,8 @@ class Trade extends Model
                 ->tdOpenEnd('quantity', $product->pivot->quantity)
                 ->tdOpenEnd('stock', $product->stock->name)
                 ->tdOpenEnd('sub', $product->subdivision->name)
-                ->tdOpenEnd('sum', number_format($sum, 2, '.', ' '));
+                ->tdOpenEnd('sum', number_format($sum, 2, '.', ' '))
+                ->tdOpenEnd('action', $action);
 
             $id +=1;
             $total += (float)$sum;
@@ -233,5 +243,39 @@ class Trade extends Model
         $html = $products->render();
         $html .= '<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">TOTAL: '.number_format($total, 2, '.', ' ').'</p>';
         return $html;
+    }
+
+    /**
+     * Update quantity in pivot table
+     *
+     * @param UpdateAmountProductsInTrade $request
+     * @return Trade|null
+     */
+    public static function updateProductQuantity(UpdateAmountProductsInTrade $request)
+    {
+        $trade = self::where('id', '=',$request->get('trade'))->with('products')->firstOrFail();
+        $product = $trade->products()->where('products_id', '=', $request->get('product'))->firstOrFail();
+        $amount = $request->get('amount');
+        $quantity = $product->pivot->quantity;
+        if($quantity == $amount) return null;
+        elseif($quantity > $amount) {
+            $balance = ($quantity - $amount);
+            $product->balance += $balance;
+            $event = new TradeReducingTheQuantityProduct($product, $amount);
+        }else{
+            $balance = ($amount - $quantity);
+            $product->balance -= $balance;
+            $event = new TradeIncreasingTheQuantityProduct($product, $amount);
+        }
+
+        if(config('company.update_balans_product')){
+            $product->save();
+        }
+
+        $trade->products()->updateExistingPivot($product->id, ['quantity' => $amount]);
+
+        event($event);
+
+        return $trade;
     }
 }

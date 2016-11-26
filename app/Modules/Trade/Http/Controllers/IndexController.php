@@ -87,16 +87,7 @@ class IndexController extends Controller
         if (!$this->checkPerm('show.trade'))
             return $this->noAccess('Not enough rights to view');
 
-        $trade = Trade::whereId($id)
-            ->with([
-                'statuses',
-                'ppCode',
-                'client',
-                'supervisor',
-                'completer',
-                'history',
-            ])
-            ->firstOrFail();
+        $trade = Trade::findByIdWithAllRelations($id);
 
         $statuses = TradeStatus::all();
 

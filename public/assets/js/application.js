@@ -82,9 +82,10 @@ application.getTradeProducts = function () {
     wrp_box.append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
     $.get(link.attr('href'), function(data) {
         wrp.html(data);
-        console.log('products loaded');
         link.html('Update products');
         wrp_box.find('.overlay').remove();
+        console.log('products loaded');
+        $('#trade_products_wrapper').trigger('trade.products.loaded');
     });
 };
 
@@ -131,6 +132,11 @@ application.listeners = function () {
         $("#subdivision_responsible_wrap").toggle(this.checked);
     });
 
+    $('#trade_products_wrapper').bind('trade.products.loaded', function(event){
+        $(this).find('#products_table').DataTable();
+        $(this).find('.trade-produvct-amount').dblclick(self.showAmountProducts);
+    });
+
 };
 
 application.showOrHideSubs = function () {
@@ -145,6 +151,30 @@ application.showOrHide = function (obj, wrp) {
     } else {
         wrp.hide();
     }
+};
+
+application.showAmountProducts = function () {
+    $(this).hide();
+    $(this).next().show();
+};
+
+application.updateAmountProducts = function (obj) {
+    var form = $(obj).parent().parent().parent();
+    var data = form.serialize();
+    $(obj).html("<i class='fa fa-refresh fa-spin fa-fw'></i>");
+    form.find('input,button').prop('disabled', true);
+    $.ajax({
+        url: form.attr('action'),
+        method: "PUT",
+        data: data
+    }).done(function (data) {
+        data = JSON.parse(data);
+        form.find('input,button').prop('disabled', false);
+        $(obj).html("<i class='ion ion-checkmark'></i>");
+        form.hide();
+        form.prev().html(form.find('input[name=amount]').val()).show();
+        application.message(data.title ,data.message, data.status);
+    });
 };
 
 application.setProfileImage = function (event) {

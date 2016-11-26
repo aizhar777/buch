@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -11,17 +11,17 @@ $(document).ready(function(){
         allowClear: true
     });
     $(".select2").select2();
-/*
-    $(".select2_group").select2({
-        placeholder: "With Max Selection limit"
-    });*/
+    /*
+     $(".select2_group").select2({
+     placeholder: "With Max Selection limit"
+     });*/
 
     $(".select2_multiple").select2({
         placeholder: "With Max Selection limit 4",
         allowClear: true
     });
 
-    $( '#add-product-modal' ).on("change","#select_products",application.productTradeOptions);
+    $('#add-product-modal').on("change", "#select_products", application.productTradeOptions);
     // Select2 end
 
     $('input').iCheck({
@@ -33,6 +33,9 @@ $(document).ready(function(){
         checkboxClass: 'icheckbox_flat-blue',
         radioClass: 'iradio_flat-blue'
     });
+
+
+    //$('#products_table').DataTable();
 
     application.init();
 });

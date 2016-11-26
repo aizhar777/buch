@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{url('assets/plugins/datatables/dataTables.bootstrap.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{url('assets/css/site.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/skins/skin-black-light.css')}}">
@@ -61,6 +63,11 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="{{url('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{url('assets/js/application.js')}}"></script>
+
+<!-- DataTables -->
+<script src="{{url('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{url('assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{url('assets/js/app.js')}}"></script>
 <script src="{{url('assets/plugins/slimScroll/jquery.slimScroll.js')}}"></script>

@@ -3,6 +3,7 @@
 namespace App\Modules\Trade\Http\Controllers;
 
 use App\Modules\Trade\Http\Requests\AddProductsToTradeRequest;
+use App\Modules\Trade\Http\Requests\UpdateAmountProductsInTrade;
 use App\Trade;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,8 @@ class AjaxController extends Controller
         if(!$this->checkPerm('show.trade'))
             return $this->noAccess('Not enough rights to view');
 
-        $trade = Trade::whereId($id)->firstOrFail();
-        return view('trade::ajax.trade_products',['products' => $trade->getProductsAsHtmlTable()]);
+        $trade = Trade::findByIdWithAllRelations($id);
+        return view('trade::ajax.trade_products',['products' => $trade->products, 'trade_id' => $trade->id]);
     }
 
     /**
@@ -60,5 +61,37 @@ class AjaxController extends Controller
             return $json;
         }
         return view('trade::ajax.trade_products',['products' => $response]);
+    }
+
+    public function updateProductQuantity(UpdateAmountProductsInTrade $request)
+    {
+        $json = [];
+        if(Trade::updateProductQuantity($request)){
+            if($request->ajax()){
+                $result = json_encode([
+                    'status' => "success",
+                    'title' => "Update",
+                    'message' => "Quantity of successfully updated",
+                    "data" => []
+                ]);
+            }else{
+                \Flash::success('Quantity updated');
+                $result = redirect()->route('trade.show',['id' => $request->get('trade')]);
+            }
+        }else{
+            if($request->ajax()){
+                $result = json_encode([
+                    'status' => "error",
+                    'title' => "Update",
+                    'message' => "Can not update quantity of the product, try again later",
+                    "data" => []
+                ]);
+            }else{
+                \Flash::error('Can not update quantity of the product, try again later');
+                $result = redirect()->route('trade.show',['id' => $request->get('trade')]);
+            }
+        }
+
+        return $result;
     }
 }
