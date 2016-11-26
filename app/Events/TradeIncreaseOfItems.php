@@ -31,15 +31,21 @@ class TradeIncreaseOfItems
     protected $user;
 
     /**
+     * @var array $products
+     */
+    public $products;
+
+    /**
      * Create a new event instance.
      *
      * @param Trade $trade
      * @param User|null $user
      */
-    public function __construct(Trade $trade, User $user = null)
+    public function __construct(Trade $trade, User $user = null, $products = null)
     {
         $this->trade = $trade;
         $this->user = $user;
+        $this->products = $products;
     }
 
     /**

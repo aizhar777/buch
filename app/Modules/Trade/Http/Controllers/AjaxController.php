@@ -48,7 +48,7 @@ class AjaxController extends Controller
         }catch (\Exception $e){
             $msg = "An unknown error occurred, please try again later!";
             if(config('app.debug') == true)
-                $msg .= $e->getMessage();
+                $msg .= '<p>' . $e->getMessage() .' '. $e->getFile() . ' on line ' . $e->getLine() . '</p>';
             $response = "<div class='alert alert-error'>" . $msg . "</div>";
             $json = [
                 'status' => "error",

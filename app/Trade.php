@@ -167,7 +167,7 @@ class Trade extends Model
                 throw new \Exception('Empty product options');
             }
         }
-        event(new TradeIncreaseOfItems($trade,$trade->getCurrentUser()));
+        event(new TradeIncreaseOfItems($trade,$trade->getCurrentUser(), $product_options));
         return $trade;
     }
 
