@@ -30,7 +30,7 @@ trait CurrentUserModel
     public function reloadCurrentUser(User $user = null)
     {
         \Session::remove('current.user');
-        \Session::put('current.user', \Auth::user());
+        \Session::put('current.user', User::getCurrentWithAllRealtionsOrAuthUser());
     }
 
     /**

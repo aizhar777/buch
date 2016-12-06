@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="{{url('assets/plugins/pnotify/pnotify.min.css')}}">
     <link rel="stylesheet" href="{{url('assets/plugins/iCheck/flat/_all.css')}}">
     <link rel="stylesheet" href="{{url('assets/plugins/select2/select2.css')}}">
+    <link rel="stylesheet" href="{{url('assets/plugins/jQuery.filer-1.3.0/css/jquery.filer.css')}}">
+    <link rel="stylesheet" href="{{url('assets/plugins/jQuery.filer-1.3.0/css/themes/jquery.filer-dragdropbox-theme.css')}}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,6 +76,7 @@
 <script src="{{url('assets/plugins/select2/select2.js')}}"></script>
 <script src="{{url('assets/plugins/iCheck/icheck.js')}}"></script>
 <script src="{{url('assets/plugins/pnotify/pnotify.min.js')}}"></script>
+<script src="{{url('assets/plugins/jQuery.filer-1.3.0/js/jquery.filer.min.js')}}"></script>
 <script src="{{url('assets/js/dev.js')}}"></script>
 @yield('scripts')
 </body>

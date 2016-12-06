@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Image;
 use App\Product;
 use App\Trade;
 use Illuminate\Http\Request;
@@ -9,25 +10,18 @@ use App\Http\Requests;
 
 class TestResourceController extends Controller
 {
-    public function test()
+    public function test(Request $request)
     {
-        $products = Product::all()->toArray();
-        //dd($products);
-        print '$products = [<br>';
-        foreach ($products as $product){
-            print '[<br>';
-
-            foreach ($product as $key => $val){
-                if($key == 'id' or $key == 'created_at' or $key == 'updated_at') continue;
-                print '"' . $key . '" => "' . $val . '",<br>';
-            }
-
-            print '],<br>';
+        $rand = rand(1,13);
+        if($request->has('id')){
+            echo $request->get('id');
+            $image = Image::find((integer)$request->get('id'));
         }
-        print '];<br>';
-        //var_dump($this->checkPerm('delete.client'));
-        //dd(\NumberToWords::getStr(125));
-        //return view('tests');
+        else {
+            echo $rand;
+            $image = Image::find($rand);
+        }
+        dd($image->toArray());
     }
 
     /**

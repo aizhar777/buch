@@ -42,10 +42,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'password', 'remember_token',
     ];
 
+
     /**
      * Users can have many roles.
      *
-     * @return Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
@@ -89,12 +90,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function subdivisions()
     {
-        return $this->hasMany('App\Subdivision');
+        return $this->hasMany('App\Subdivision', 'id', 'responsible');
     }
 
     public function stock()
     {
-        return $this->hasMany('App\Stock');
+        return $this->hasMany('App\Stock', 'id', 'responsible');
     }
 
     public function photos()
@@ -145,6 +146,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
     }
 
+    public function findAllImages()
+    {
+        return Image::where('imageable_id', $this->id)->where('imageable_type',self::TYPE)->get();
+    }
+
     /**
      * Is current user
      *
@@ -155,6 +161,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($this->getCurrentUser()->id == $this->id)
             return true;
         return false;
+    }
+
+    /**
+     * Get current user with all relations or Auth::user()
+     */
+    public static function getCurrentWithAllRealtionsOrAuthUser()
+    {
+        $user = \Auth::user();
+        $uAllR = self::whereId($user->id)->with([
+            'requisites',
+            'oversees',
+            'subdivisions',
+            'stock',
+            'photos',
+            'image',
+            'trades',
+            'completedTrades'
+        ])->firstOrFail();
+        if($uAllR instanceof User)
+            return $uAllR;
+        return $user;
     }
 
     /**

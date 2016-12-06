@@ -137,6 +137,7 @@ application.listeners = function () {
         $(this).find('.trade-produvct-amount').dblclick(self.showAmountProducts);
     });
 
+    $('#upload_images').filer(self.getUploadSettingsObj());
 };
 
 application.showOrHideSubs = function () {
@@ -156,6 +157,36 @@ application.showOrHide = function (obj, wrp) {
 application.showAmountProducts = function () {
     $(this).hide();
     $(this).next().show();
+};
+
+application.onSuccessUploadImages = function (data, el) {
+    var parent = el.find(".jFiler-jProgressBar").parent();
+    var response = JSON.parse(data);
+    var elem = {
+        success: "<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success "+ response.message +"</div>",
+        error: "<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error "+ response.message +"</div>",
+        warning: "<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Warning "+ response.message +"</div>"
+    };
+    if(response.status == "success"){
+        el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+            $(elem.success).hide().appendTo(parent).fadeIn("slow");
+        });
+    }else if (response.status == "warning"){
+        el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+            $(elem.warning).hide().appendTo(parent).fadeIn("slow");
+        });
+    }else {
+        el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+            $(elem.error).hide().appendTo(parent).fadeIn("slow");
+        });
+    }
+};
+
+application.onErrorUploadImages = function (el) {
+    var parent = el.find(".jFiler-jProgressBar").parent();
+    el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+        $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");
+    });
 };
 
 application.updateAmountProducts = function (obj) {
@@ -236,4 +267,68 @@ application.addProductFormSend = function (asJson) {
         }
     });
     $('div.modal').modal('hide');
+};
+
+application.getUploadSettingsObj = function () {
+    var form = $('#upload-images-form');
+    return {
+        limit: 10,
+        maxSize: 6,
+        extensions: ["jpg", "png", "gif"],
+        showThumbs: true,
+        theme: "dragdropbox",
+        templates: {
+            box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
+            item: '<li class="jFiler-item">\
+                        <div class="jFiler-item-container">\
+                            <div class="jFiler-item-inner">\
+                                <div class="jFiler-item-thumb">\
+                                    <div class="jFiler-item-status"></div>\
+                                    <div class="jFiler-item-thumb-overlay">\
+										<div class="jFiler-item-info">\
+											<div style="display:table-cell;vertical-align: middle;">\
+												<span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name}}</b></span>\
+												<span class="jFiler-item-others">{{fi-size2}}</span>\
+											</div>\
+										</div>\
+									</div>\
+                                    {{fi-image}}\
+                                </div>\
+                                <div class="jFiler-item-assets jFiler-row">\
+                                    <ul class="list-inline pull-left">\
+                                        <li>{{fi-progressBar}}</li>\
+                                    </ul>\
+                                    <ul class="list-inline pull-right">\
+                                        <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+                                    </ul>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </li>',
+            progressBar: '<div class="bar"></div>',
+            itemAppendToEnd: false,
+            removeConfirmation: false,
+            _selectors: {
+                list: '.jFiler-items-list',
+                item: '.jFiler-item',
+                progressBar: '.bar',
+                remove: '.jFiler-item-trash-action'
+            }
+        },
+        uploadFile: {
+            url: form.attr('action'), //URL to which the request is sent {String}
+            data: form, //Data to be sent to the server {Object}
+            type: 'POST', //The type of request {String}
+            enctype: 'multipart/form-data', //Request enctype {String}
+            synchron: false, //Upload synchron the files
+            beforeSend: null, //A pre-request callback function {Function}
+            success: application.onSuccessUploadImages, //A function to be called if the request succeeds {Function}
+            error: application.onErrorUploadImages, //A function to be called if the request fails {Function}
+            statusCode: null, //An object of numeric HTTP codes {Object}
+            onProgress: null, //A function called while uploading file with progress percentage {Function}
+            onComplete: function () {
+                application.message('Upload Info', 'All images uploaded', 'info')
+            }
+        }
+    };
 };

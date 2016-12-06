@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Http\Controllers;
 
+use App\Image;
 use App\Library\BFields;
 use App\Modules\User\Http\Requests\CreateRoleRequest;
 use App\Modules\User\Http\Requests\EditUserRequest;
@@ -169,5 +170,72 @@ class DataController extends Controller
         }
 
         return $result;
+    }
+
+    public function uploaderImages(Request $request)
+    {
+        if(!$request->hasFile('files')){
+            if($request->isXmlHttpRequest()){
+                return json_encode([
+                    'status' => 'error',
+                    'message' => 'empty request',
+                    'data' => []
+                ]);
+            }
+            \Flash::warning('empty request');
+            return redirect()->back();
+        }
+
+        $result = null;
+        $currentUser = $this->getCurrentUser();
+        if(!$this->checkPerm('edit.user')){
+            if($request->isXmlHttpRequest()){
+                return json_encode([
+                    'status' => 'warning',
+                    'message' => 'Access is denied. You do not have permission for this operation!',
+                    'data' => []
+                ]);
+            }
+            \Flash::warning('Access is denied. You do not have permission for this operation!');
+            return $this->noAccess('Access is denied');
+        }
+
+        $file = $request->file('files')[0];
+        $destinationPath = base_path() . '/public/upload/images/';
+        $image_name = time() . "_" . $file->getClientOriginalName();
+        $userPhoto = $file->move($destinationPath, $image_name);
+
+        $image = Image::create([
+            'name' => 'User Image',
+            'src' => $image_name,
+            'alt' => 'User Image',
+            'imageable_id' => $currentUser->id,
+            'imageable_type' => $currentUser::TYPE,
+        ]);
+
+        if ($image instanceof Image) {
+            $this->reloadCurrentUser();
+            if($request->isXmlHttpRequest()){
+                return json_encode([
+                    'status' => 'success',
+                    'message' => 'Image uploaded',
+                    'data' => $image->toArray()
+                ]);
+            }
+            \Flash::success('Image uploaded');
+            return redirect()->back();
+        } else {
+            unlink($userPhoto->getPath());
+            if($request->isXmlHttpRequest()){
+                return json_encode([
+                    'status' => 'error',
+                    'message' => 'Image not upload',
+                    'data' => []
+                ]);
+            }
+            \Flash::warning('Image not upload');
+            return redirect()->back();
+        }
+
     }
 }

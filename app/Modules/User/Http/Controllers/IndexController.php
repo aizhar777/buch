@@ -98,9 +98,6 @@ class IndexController extends Controller
         $roles = [];
         $rolesArray = [];
         $allRoles = [];
-        $images = null;
-        if(empty($user->photos))
-            $images = $user->photos;
         if($this->checkPerm('edit.role')){
             $allRoles = Role::all();
         }
@@ -109,12 +106,14 @@ class IndexController extends Controller
             $roles[] = $role->id;
         }
 
+        //dd($user->findAllImages());
+
         $photo = $user->image;
         $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile',[
             'user'=> $user,
             'photo'=> $photo,
-            'images'=> $images,
+            'images'=> $user->photos,
             'fields' => $fields,
             'allRoles' => $allRoles,
             'userRoles' => $roles,
