@@ -154,46 +154,49 @@
                     </ul>
                     <div class="tab-content">
                         <div class="active tab-pane" id="activity">
+                            @if($user->is_current())
                             <div>
                                 Media gallery emelents <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#add-new-image">Add new photo</button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="add-new-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal fade" id="add-new-image" tabindex="-1" role="dialog" aria-labelledby="addNewImage">
                                     <div class="modal-dialog" role="document">
                                         <form action="{{route('user.upload')}}" method="post" enctype="multipart/form-data" id="upload-images-form">
                                             {{csrf_field()}}
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                    <h4 class="modal-title" id="myModalLabel">Upload images</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <input type="file" name="files[]" id="upload_images" multiple="multiple">
                                                 </div>
-                                                <div class="modal-footer">
+                                                <!--<div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <br>
-                        @if($user->photos->count() > 0)
-
+                            @if($images->count() > 0)
                             <!-- =============================================================================== -->
                                 <div class="row">
                                     {{--  @each('user::each.profile_images', $user->photos, 'photo') --}}
-                                    @foreach($user->photos as $photo)
+                                    @foreach($images as $photo)
                                         <div class="col-sm-12 col-md-6 col-lg-4">
                                             <div class="item_image">
                                                 <div class="image_wrap">
                                                     <img class="img-responsive" src="/upload/images/{{$photo->src}}" alt="Photo #{{$photo->id}} - {{$user->name}}"/>
                                                 </div>
                                                 <p>{{$photo->name}}</p>
+                                                @if($user->is_current())
                                                 <div class="links">
                                                     <a href="{{route('user.update.image',['id' => $user->id, 'image' => $photo->id])}}" title="Set as default" data-image-id="{{$photo->id}}" class="set_default_image"><i class="fa fa-user"></i></a>
-                                                    <a href="#" title="Set as default"><i class="fa fa-cog"></i></a>
+                                                    <a href="#" title="Set as default"><i class="fa fa-trash"></i></a>
                                                 </div>
+                                                @endif
                                             </div>
                                            {{-- <div class="profile_gal_image">
                                                 <p>{{$photo->name}}</p>

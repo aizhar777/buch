@@ -67,10 +67,6 @@ class DataController extends Controller
         $user->email = $request->get('email');
         $user->saveOrFail();
 
-        if(!$user->createImage($request)){
-            \Flash::warning('Failed to change current photo');
-        }
-
         $bFields = BFields::getInstance();
         $bFields->updateOrCreate($user, $request);
 
@@ -188,7 +184,7 @@ class DataController extends Controller
 
         $result = null;
         $currentUser = $this->getCurrentUser();
-        if(!$this->checkPerm('edit.user')){
+        if(!\Auth::check()){
             if($request->isXmlHttpRequest()){
                 return json_encode([
                     'status' => 'warning',

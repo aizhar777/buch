@@ -64,11 +64,6 @@
                             <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
                         </div>
 
-                        <div class="form-group">
-                            <label>Image</label>
-                            <input class="form-control" type="file" name="user_image" placeholder="Change photo">
-                        </div>
-
                         @if(!empty($fields))
                             @foreach($fields as $key => $value)
                                 @if($value['is_many'])

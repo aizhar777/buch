@@ -137,7 +137,18 @@ application.listeners = function () {
         $(this).find('.trade-produvct-amount').dblclick(self.showAmountProducts);
     });
 
-    $('#upload_images').filer(self.getUploadSettingsObj());
+    var filer_default_opts = self.getUploadSettingsObj();
+    $('#upload_images').filer({
+        //limit: 10,
+        //maxSize: 6,
+        extensions: ["jpeg","jpg", "png", "gif"],
+        changeInput: filer_default_opts.changeInput2,
+        showThumbs: true,
+        theme: "dragdropbox",
+        templates: filer_default_opts.templates,
+        dragDrop: filer_default_opts.dragDrop,
+        uploadFile: filer_default_opts.uploadFile
+    });
 };
 
 application.showOrHideSubs = function () {
@@ -272,42 +283,68 @@ application.addProductFormSend = function (asJson) {
 application.getUploadSettingsObj = function () {
     var form = $('#upload-images-form');
     return {
-        limit: 10,
-        maxSize: 6,
-        extensions: ["jpg", "png", "gif"],
-        showThumbs: true,
-        theme: "dragdropbox",
+        changeInput2: '<div class="jFiler-input-dragDrop">' +
+            '<div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-cloud-up-o"></i></div>' +
+            '<div class="jFiler-input-text"><h3>Перетащите сюда</h3> ' +
+            '<span style="display:inline-block; margin: 15px 0">или</span>' +
+            '</div><a class="jFiler-input-choose-btn btn-custom blue-light">Выберите файлы</a></div></div>',
         templates: {
             box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
-            item: '<li class="jFiler-item">\
-                        <div class="jFiler-item-container">\
-                            <div class="jFiler-item-inner">\
-                                <div class="jFiler-item-thumb">\
-                                    <div class="jFiler-item-status"></div>\
-                                    <div class="jFiler-item-thumb-overlay">\
-										<div class="jFiler-item-info">\
-											<div style="display:table-cell;vertical-align: middle;">\
-												<span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name}}</b></span>\
-												<span class="jFiler-item-others">{{fi-size2}}</span>\
-											</div>\
-										</div>\
-									</div>\
-                                    {{fi-image}}\
-                                </div>\
-                                <div class="jFiler-item-assets jFiler-row">\
-                                    <ul class="list-inline pull-left">\
-                                        <li>{{fi-progressBar}}</li>\
-                                    </ul>\
-                                    <ul class="list-inline pull-right">\
-                                        <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
-                                    </ul>\
+            item: '<li class="jFiler-item" style="width:49%">\
+                            <div class="jFiler-item-container">\
+                                <div class="jFiler-item-inner">\
+                                    <div class="jFiler-item-thumb">\
+                                        <div class="jFiler-item-status"></div>\
+                                        <div class="jFiler-item-thumb-overlay">\
+    										<div class="jFiler-item-info">\
+    											<div style="display:table-cell;vertical-align: middle;">\
+    												<span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name}}</b></span>\
+    												<span class="jFiler-item-others">{{fi-size2}}</span>\
+    											</div>\
+    										</div>\
+    									</div>\
+                                        {{fi-image}}\
+                                    </div>\
+                                    <div class="jFiler-item-assets jFiler-row">\
+                                        <ul class="list-inline pull-left">\
+                                            <li>{{fi-progressBar}}</li>\
+                                        </ul>\
+                                        <ul class="list-inline pull-right">\
+                                            <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+                                        </ul>\
+                                    </div>\
                                 </div>\
                             </div>\
-                        </div>\
-                    </li>',
+                        </li>',
+            itemAppend: '<li class="jFiler-item" style="width:49%">\
+                                <div class="jFiler-item-container">\
+                                    <div class="jFiler-item-inner">\
+                                        <div class="jFiler-item-thumb">\
+                                            <div class="jFiler-item-status"></div>\
+                                            <div class="jFiler-item-thumb-overlay">\
+        										<div class="jFiler-item-info">\
+        											<div style="display:table-cell;vertical-align: middle;">\
+        												<span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name}}</b></span>\
+        												<span class="jFiler-item-others">{{fi-size2}}</span>\
+        											</div>\
+        										</div>\
+        									</div>\
+                                            {{fi-image}}\
+                                        </div>\
+                                        <div class="jFiler-item-assets jFiler-row">\
+                                            <ul class="list-inline pull-left">\
+                                                <li><span class="jFiler-item-others">{{fi-icon}}</span></li>\
+                                            </ul>\
+                                            <ul class="list-inline pull-right">\
+                                                <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+                                            </ul>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </li>',
             progressBar: '<div class="bar"></div>',
             itemAppendToEnd: false,
-            removeConfirmation: false,
+            removeConfirmation: true,
             _selectors: {
                 list: '.jFiler-items-list',
                 item: '.jFiler-item',
@@ -315,19 +352,33 @@ application.getUploadSettingsObj = function () {
                 remove: '.jFiler-item-trash-action'
             }
         },
+        dragDrop: {},
         uploadFile: {
-            url: form.attr('action'), //URL to which the request is sent {String}
-            data: form, //Data to be sent to the server {Object}
-            type: 'POST', //The type of request {String}
-            enctype: 'multipart/form-data', //Request enctype {String}
-            synchron: false, //Upload synchron the files
-            beforeSend: null, //A pre-request callback function {Function}
-            success: application.onSuccessUploadImages, //A function to be called if the request succeeds {Function}
-            error: application.onErrorUploadImages, //A function to be called if the request fails {Function}
-            statusCode: null, //An object of numeric HTTP codes {Object}
-            onProgress: null, //A function called while uploading file with progress percentage {Function}
+            url: form.attr('action'),
+            data: form,
+            type: 'POST',
+            enctype: 'multipart/form-data',
+            beforeSend: function(){},
+            success: application.onSuccessUploadImages,
+            error: application.onErrorUploadImages,
+            statusCode: null,
+            onProgress: null,
             onComplete: function () {
                 application.message('Upload Info', 'All images uploaded', 'info')
+            }
+        },
+        captions: {
+            button: "Выберите файлы",
+            feedback: "Выберите файлы для загрузки",
+            feedback2: "файлы были выбраны",
+            drop: "Перетащите сюда файлы, что-бы загрузить",
+            removeConfirmation: "Вы уверены, что хотите удалить этот файл?",
+            errors: {
+                filesLimit: "Только {{fi-limit}} файлы могут быть загружены.",
+                filesType: "Только изображения могут быть загружены.",
+                filesSize: "{{fi-name}} слишком велик! Пожалуйста, загрузите файл до {{fi-fileMaxSize}} МБ.",
+                filesSizeAll: "Файлы, которые вы выбрали слишком велики! Пожалуйста, выбирите файлы до {{fi-maxSize}} МБ.",
+                folderUpload: "Вам не разрешено загружать папки."
             }
         }
     };

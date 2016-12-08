@@ -148,7 +148,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function findAllImages()
     {
-        return Image::where('imageable_id', $this->id)->where('imageable_type',self::TYPE)->get();
+        return Image::where('imageable_id', $this->id)->where('imageable_type',self::TYPE)->orderBy('created_at', 'desc')->get();
     }
 
     /**

@@ -16,9 +16,7 @@ class UpdateImageProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        if($this->checkPerm('edit.user'))
-            return true;
-        return false;
+        return \Auth::check();
     }
 
     /**

@@ -106,14 +106,12 @@ class IndexController extends Controller
             $roles[] = $role->id;
         }
 
-        //dd($user->findAllImages());
-
         $photo = $user->image;
         $fields = BFields::getInstance()->all($user->id,$user::TYPE);
         return View('user::profile',[
             'user'=> $user,
             'photo'=> $photo,
-            'images'=> $user->photos,
+            'images'=> $user->findAllImages(),
             'fields' => $fields,
             'allRoles' => $allRoles,
             'userRoles' => $roles,
