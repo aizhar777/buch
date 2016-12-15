@@ -1,0 +1,21 @@
+<?php
+return [
+    'admin' => 'Администратор',
+    'profile' => 'Профиль',
+    'password' => 'Пароль',
+    'user_profile_image' => 'Изображение профиля пользователя',
+    'images' => 'Изображения',
+    'other' => 'Другое',
+    'info' => 'Информация',
+    'gallery' => 'Галлерея',
+    'add' => 'Добавить',
+    'uploads_images' => 'Загрузка изображений',
+    'photo' => 'Фото',
+    'set_default_image' => 'Установить как главное фото профиля',
+    'oversees' => 'Курирует клиентов',
+    'completed_trades' => 'Закрыл сделки',
+    'trade_with_client' => 'Сделка с :NAME',
+    'requisites_not_found' => 'Реквизиты отсутствуют',
+    'add_requisite' => 'Добавить реквизиты',
+    //'test' => 'test',
+];

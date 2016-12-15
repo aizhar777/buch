@@ -1,20 +1,20 @@
 @extends('layouts.main')
 
-@section('title') Edit User @endsection
+@section('title') {{trans('modules.menu.context.edit')}} {{$user->name or trans('modules.empty')}} @endsection
 
 @section('content')
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{$user->name or 'No name'}}
-            <small>{{$user->email or ''}}</small>
+            {{$user->name or trans('modules.empty')}}
+            <small>{{$user->email or trans('modules.empty')}}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dasboard</a></li>
-            <li><a href="{{route('user')}}">Users</a></li>
-            <li><a href="{{route('user',['id' => $user->id])}}">{{$user->name or 'No name'}}</a></li>
-            <li class="active">Edit</li>
+            <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{route('user')}}">{{trans('modules.breadcrumbs.users')}}</a></li>
+            <li><a href="{{route('user.profile',['id' => $user->id])}}">{{$user->name or trans('modules.empty')}}</a></li>
+            <li class="active">{{trans('modules.menu.context.edit')}}</li>
         </ol>
     </section>
 
@@ -41,12 +41,12 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
                 <li>
-                    <a href="#tab_2" data-toggle="tab">Pass</a>
+                    <a href="#tab_2" data-toggle="tab">{{trans('user::profile.password')}}</a>
                 </li>
                 <li class="active">
-                    <a href="#tab_1" data-toggle="tab">User</a>
+                    <a href="#tab_1" data-toggle="tab">{{trans('user::profile.profile')}}</a>
                 </li>
-                <li class="pull-left header"><i class="fa fa-user"></i> Update {{$user->name or 'No name'}}</li>
+                <li class="pull-left header"><i class="fa fa-user"></i> {{trans('modules.menu.context.update')}} {{$user->name or trans('modules.empty')}}</li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
@@ -55,13 +55,13 @@
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
-                            <label>You'r name</label>
-                            <input class="form-control" type="text" name="name" value="{{$user->name}}" placeholder="Name">
+                            <label>{{trans('user::form.you_name')}}</label>
+                            <input class="form-control" type="text" name="name" value="{{$user->name}}" placeholder="{{trans('user::form.name')}}">
                         </div>
 
                         <div class="form-group">
-                            <label>Email</label>
-                            <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="E-Mail">
+                            <label>{{trans('user::form.you_email')}}</label>
+                            <input class="form-control" type="text" name="email" value="{{$user->email}}" placeholder="{{trans('user::form.email')}}">
                         </div>
 
                         @if(!empty($fields))
@@ -89,7 +89,7 @@
                             @endforeach
                         @endif
                         <div class="form-group">
-                            <button class="btn btn-default">Send</button>
+                            <button class="btn btn-default">{{trans('modules.menu.context.update')}}</button>
                         </div>
                     </form>
                 </div>

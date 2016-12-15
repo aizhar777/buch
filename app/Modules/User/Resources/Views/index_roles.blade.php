@@ -7,13 +7,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Roles
-            <small>list</small>
+            {{trans('user::module.roles')}}
+            <small>{{trans('user::module.list')}}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Users</a></li>
-            <li class="active">Roles</li>
+            <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{route('user')}}">{{trans('modules.breadcrumbs.users')}}</a></li>
+            <li class="active">{{trans('modules.breadcrumbs.roles')}}</li>
         </ol>
     </section>
 
@@ -25,13 +25,10 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Roles</h3>
+                <h3 class="box-title">{{trans('user::module.roles')}}</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fa fa-times"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
             <div class="box-body">
@@ -41,11 +38,11 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Slug</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>{{trans('user::form.name')}}</th>
+                            <th>{{trans('user::form.slug')}}</th>
+                            <th>{{trans('user::form.description')}}</th>
+                            <th>{{trans('user::form.date')}}</th>
+                            <th>{{trans('user::form.action')}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,28 +51,27 @@
 
                         </tbody>
                     </table>
-
-                    @if($roles->total() > 1 )
-                        @if(request()->has('items') && is_numeric(request('items')))
-                            {{$roles->appends(['items' => request('items')])->links()}}
-                        @else
-                            {{$roles->links()}}
-                        @endif
-                    @endif
                 @else
                     <div class="alert alert-info">
-                        <h4>Roles not found</h4>
+                        <h4>{{trans('user::role_and_perms.roles_not_found')}}</h4>
                     </div>
                 @endif
             </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                Footer
-            </div>
-            <!-- /.box-footer-->
+            @if($roles->total() > 1 )
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="allTotal">{{trans('user::module.total',['total' => $roles->total()])}}</div>
+
+                    @if(request()->has('items') && is_numeric(request('items')))
+                        {{$roles->appends(['items' => request('items')])->links()}}
+                    @else
+                        {{$roles->links()}}
+                    @endif
+                </div>
+                <!-- /.box-footer-->
+            @endif
         </div>
         <!-- /.box -->
-
     </section>
     <!-- /.content -->
 @endsection

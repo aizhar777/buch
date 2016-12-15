@@ -44,7 +44,7 @@
     </style>
 </head>
 
-<body class="@section('body-style') fixed sidebar-mini skin-black-light @show">
+<body class="@section('body-style') sidebar-mini skin-black-light @show">
 
 <div class="wrapper">
     @include('block.top_menu_bar')

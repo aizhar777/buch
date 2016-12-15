@@ -54,4 +54,9 @@
 }
 .jFiler-input-dragDrop{
     width: 100%;
+    margin: 0 auto;
+}
+.allTotal{
+    display: inline-block;
+    padding: 5px 0;
 }

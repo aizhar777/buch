@@ -6,11 +6,11 @@
     <th>{{date('d-m-Y H:i', strtotime($role->updated_at))}}</th>
     <th>
         <div class="btn-group">
-            <a href="{{route('user.roles.show_slug',['slug' => $role->slug])}}" class="btn btn-small btn-default" title="Go to the view of {{$role->name}}"><i class="fa fa-eye"></i></a>
-            <a href="{{route('user.roles.edit',['id' => $role->id])}}" class="btn btn-small btn-default"><i class="fa fa-pencil-square-o"></i></a>
+            <a href="{{route('user.roles.show_slug',['slug' => $role->slug])}}" class="btn btn-small btn-default" title="{{trans('user::role_and_perms.go_view_role',['role' => $role->name])}}"><i class="fa fa-eye"></i></a>
+            {{--
+            <a href="{{route('user.roles.edit',['id' => $role->id])}}" class="btn btn-small btn-default" title="{{trans('user::role_and_perms.go_edit_role',['role' => $role->name])}}"><i class="fa fa-pencil-square-o"></i></a>
             <a href="#" class="btn btn-small btn-default"><i class="fa fa-info"></i></a>
-            <a href="#" class="btn btn-small btn-default"><i class="fa fa-info"></i></a>
-            <a href="#" class="btn btn-small btn-default"><i class="fa fa-info"></i></a>
+            --}}
         </div>
     </th>
 </tr>

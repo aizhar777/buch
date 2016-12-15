@@ -383,3 +383,7 @@ application.getUploadSettingsObj = function () {
         }
     };
 };
+
+application.ajax = function (obj, done) {
+    $.ajax(obj).done(done);
+};
