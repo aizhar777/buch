@@ -11,6 +11,7 @@ class UserModule extends Module
     public $name = 'Users';
     public $with_div = 6;
     protected $permission = 'view.user';
+    protected $create_user = 'create.user';
     protected $view_roles = 'view.role';
     protected $view_perms = 'view.permission';
 
@@ -61,7 +62,9 @@ class UserModule extends Module
     {
         $list = '';
         if($this->check($this->permission))
-            $list .= "<li><a href='" . route('user') . "'>Users</a></li>";
+            $list .= "<li><a href='" . route('user') . "'>All</a></li>";
+        if($this->check($this->create_user))
+            $list .= "<li><a href='" . route('user.create') . "'>Create new</a></li>";
         if($this->check($this->view_roles))
             $list .= "<li><a href='" . route('user.roles') . "'>Roles</a></li>";
         if($this->check($this->view_perms))

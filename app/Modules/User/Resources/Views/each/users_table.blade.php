@@ -1,18 +1,25 @@
+
 <tr>
     <th>#{{$user->id}}</th>
     <th>
-        @if($user->isRole('admin'))
-            <span class="label label-info">{{$user->roles()->first()->name}}</span>
-        @elseif($user->isRole('accountant'))
-            <span class="label label-warning">{{$user->roles()->first()->name}}</span>
-        @elseif($user->isRole('manager'))
-            <span class="label label-primary">{{$user->roles()->first()->name}}</span>
+        @if($user->roles()->first() != null)
+            @if($user->isRole('admin'))
+                <span class="label label-info">{{$user->roles()->first()->name}}</span>
+            @elseif($user->isRole('accountant'))
+                <span class="label label-warning">{{$user->roles()->first()->name}}</span>
+            @elseif($user->isRole('manager'))
+                <span class="label label-primary">{{$user->roles()->first()->name}}</span>
+            @else
+                <span class="label label-default">{{$user->roles()->first()->name}}</span>
+            @endif
         @else
-            <span class="label label-default">{{$user->roles()->first()->name}}</span>
+            ERROR
         @endif
     </th>
-    <th>{{$user->name or 'None'}}</th>
-    <th>{{$user->email or 'None'}}</th>
+    <th>{{$user->name or trans('user::module.empty')}}</th>
+    <th>{{$user->surname or trans('user::module.empty')}}</th>
+    <th>{{$user->patronymic or trans('user::module.empty')}}</th>
+    <th>{{$user->email or trans('user::module.empty')}}</th>
     <th>{{date('d-m-Y H:i', strtotime($user->updated_at))}}</th>
     <th>
         <div class="btn-group">

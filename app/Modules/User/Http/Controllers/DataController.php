@@ -5,12 +5,16 @@ namespace App\Modules\User\Http\Controllers;
 use App\Image;
 use App\Library\BFields;
 use App\Modules\User\Http\Requests\CreateRoleRequest;
+use App\Modules\User\Http\Requests\CreateUserRequest;
+use App\Modules\User\Http\Requests\CreateUserRequisiteRequest;
 use App\Modules\User\Http\Requests\EditUserRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Http\Requests\UpdateImageProfileRequest;
 use App\Modules\User\Http\Requests\UpdateRolePermissionsRequest;
+use App\Modules\User\Http\Requests\UpdateUserPasswordRequest;
+use App\Requisite;
 use App\Role;
 use App\User;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +22,60 @@ use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
+    /**
+     * Create a user
+     *
+     * @param CreateUserRequest $request
+     * @return RedirectResponse
+     */
+    public function userCreate(CreateUserRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'patronymic' => $request->patronymic,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        foreach ($request->get('roles') as $roleID){
+            $user->assignRole($roleID);
+        }
+
+        if($user instanceof User){
+            \Flash::success(trans('user::module.messages.user.created_successfully'));
+            return redirect()->route('user.profile',['id' => $user->id]);
+        }else{
+            \Flash::error(trans('user::module.messages.user.could_not_create'));
+            return redirect()->back();
+        }
+
+    }
+
+    /**
+     * Create requisite for user
+     *
+     * @param $id
+     * @param CreateUserRequisiteRequest $request
+     * @return RedirectResponse
+     */
+    public function createUserRequisite($id, CreateUserRequisiteRequest $request)
+    {
+        $user = User::where('id',$id)->firstOrFail();
+        $requisite = $user->createRequisite($request);
+        if ($requisite instanceof Requisite){
+            \Flash::success(trans('user::profile.messages.requisite_created_successfully'));
+            if ($user->is_current()) {
+                $this->reloadCurrentUser($user);
+            }
+            return redirect()->route('user.profile',['id' => $user->id]);
+        }else{
+            return redirect()
+                ->route('user.edit',['id' => $user->id, 'tab' => 'requisite'])
+                ->withErrors(['requisite_not_created' => trans('user::profile.messages.requisite_not_created')]);
+        }
+    }
+
     /**
      * Update User action
      *
@@ -36,6 +94,34 @@ class DataController extends Controller
             }
         }
         abort(404);
+    }
+
+    /**
+     * Update user password
+     *
+     * @param $id
+     * @param UpdateUserPasswordRequest $request
+     * @return RedirectResponse
+     */
+    public function updatePassword($id, UpdateUserPasswordRequest $request)
+    {
+        $user = User::where('id',$id)->firstOrFail();
+
+        if (\Auth::validate(['email' => $user->email, 'password' => $request->get('current_password')])) {
+            $user->password = bcrypt($request->get('password'));
+
+            if ($user->save()){
+                \Flash::success(trans('user::profile.auth.password_updated'));
+                return redirect()->route('user.profile',['id' => $user->id]);
+            }else{
+                \Flash::success(trans('user::profile.auth.password_not_updated'));
+                return redirect()->route('user.profile',['id' => $user->id]);
+            }
+        }
+
+        return redirect()->route('user.edit',['id' => $id, 'tab' => 'password'])->withErrors([
+            'current_password' => trans('user::profile.auth.password_is_not_valid')
+        ]);
     }
 
     /**

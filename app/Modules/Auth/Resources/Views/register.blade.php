@@ -26,8 +26,28 @@ hold-transition register-page
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block">
-                                <strong class="text-danger">{{ $errors->first('name') }}</strong>
-                            </span>
+                            <strong class="text-danger">{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback {{ $errors->has('surname') ? 'has-error' : '' }}">
+                    <input id="surname" type="text" class="form-control" name="surname" value="{{ old('surname') }}"  placeholder="Surname" required>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    @if ($errors->has('surname'))
+                        <span class="help-block">
+                            <strong class="text-danger">{{ $errors->first('surname') }}</strong>
+                        </span>
+                    @endif
+                </div>
+
+                <div class="form-group has-feedback {{ $errors->has('patronymic') ? 'has-error' : '' }}">
+                    <input id="patronymic" type="text" class="form-control" name="patronymic" value="{{ old('patronymic') }}"  placeholder="Patronymic" required>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    @if ($errors->has('patronymic'))
+                        <span class="help-block">
+                            <strong class="text-danger">{{ $errors->first('patronymic') }}</strong>
+                        </span>
                     @endif
                 </div>
 
@@ -36,8 +56,8 @@ hold-transition register-page
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block">
-                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                            </span>
+                            <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                        </span>
                     @endif
                 </div>
 
@@ -46,8 +66,8 @@ hold-transition register-page
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     @if ($errors->has('password'))
                         <span class="help-block">
-                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                            </span>
+                            <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                        </span>
                     @endif
                 </div>
 

@@ -18,11 +18,8 @@
         </ol>
     </section>
 
-    <!-- Main content -->
-    <section class="content">
-
-    @include('block.flash_messages')
-
+    <div>
+        @include('block.flash_messages')
 
         @if (count($errors) > 0)
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -35,28 +32,43 @@
                 </div>
             </div>
         @endif
+    </div>
 
-
+    <!-- Main content -->
+    <section class="content">
     <!-- Custom Tabs (Pulled to the right) -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
-                <li>
-                    <a href="#tab_2" data-toggle="tab">{{trans('user::profile.password')}}</a>
+                <li class="@if(request('tab') == 'requisite') active @endif">
+                    <a href="#tab_requisite" data-toggle="tab">{{trans('user::profile.requisite')}}</a>
                 </li>
-                <li class="active">
+                <li class="@if(request('tab') == 'password') active @endif">
+                    <a href="#tab_update_password" data-toggle="tab">{{trans('user::profile.password')}}</a>
+                </li>
+                <li class="@if(request('tab') == 'profile' || request('tab') == null) active @endif">
                     <a href="#tab_1" data-toggle="tab">{{trans('user::profile.profile')}}</a>
                 </li>
                 <li class="pull-left header"><i class="fa fa-user"></i> {{trans('modules.menu.context.update')}} {{$user->name or trans('modules.empty')}}</li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
-                    <form action="{{route('user.edit.post',$user->id)}}" method="post" enctype="multipart/form-data">
+                <div class="tab-pane @if(request('tab') == 'profile' || request('tab') == null) active @endif " id="tab_1">
+                    <form action="{{route('user.edit.post',$user->id)}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>{{trans('user::form.you_name')}}</label>
                             <input class="form-control" type="text" name="name" value="{{$user->name}}" placeholder="{{trans('user::form.name')}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{trans('user::form.you_surname')}}</label>
+                            <input class="form-control" type="text" name="surname" value="{{$user->surname}}" placeholder="{{trans('user::form.surname')}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{trans('user::form.you_patronymic')}}</label>
+                            <input class="form-control" type="text" name="patronymic" value="{{$user->patronymic}}" placeholder="{{trans('user::form.patronymic')}}">
                         </div>
 
                         <div class="form-group">
@@ -94,14 +106,79 @@
                     </form>
                 </div>
                 <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_2">
-                    The European languages are members of the same family. Their separate existence is a myth.
-                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                    new common language would be desirable: one could refuse to pay expensive translators. To
-                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                    words. If several languages coalesce, the grammar of the resulting language is more simple
-                    and regular than that of the individual languages.
+                <div class="tab-pane @if(request('tab') == 'password') active @endif " id="tab_update_password">
+                    <form action="{{ route('user.update.pass', ['id' => $user->id]) }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+
+                        <div class="form-group">
+                          <label for="current_password">{{ trans('user::form.current_password') }}</label>
+                          <input name="current_password" type="password" class="form-control" id="current_password" placeholder="">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="password">{{ trans('user::form.password') }}</label>
+                          <input name="password" type="password" class="form-control" id="password" placeholder="">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="confirm_password">{{ trans('user::form.confirm_password') }}</label>
+                          <input name="password_confirmation" type="password" class="form-control" id="confirm_password" placeholder="">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">{{trans('modules.menu.context.update')}}</button>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane @if(request('tab') == 'requisite') active @endif " id="tab_requisite">
+                    <h3>{{trans('user::profile.add_requisite')}}</h3>
+                    <form action="{{route('user.create.requisite',['id' => $user->id])}}" method="post">
+                        {{csrf_field()}}
+
+                        <div class="form-group">
+                            <label for="requisite_legal_name">{{ trans('user::form.requisite.legal_name') }}</label>
+                            <input name="legal_name" value="{{old('legal_name')}}" type="text" class="form-control" id="requisite_legal_name" placeholder="{{ trans('user::form.requisite.legal_name') }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="requisite_iin">{{ trans('user::form.requisite.iin') }}</label>
+                            <input name="iin" value="{{old('iin')}}" type="text" class="form-control" id="requisite_iin" placeholder="{{ trans('user::form.requisite.iin') }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="requisite_bank">{{ trans('user::form.requisite.bank') }}</label>
+                            <input name="bank" value="{{old('bank')}}" type="text" class="form-control" id="requisite_bank" placeholder="{{ trans('user::form.requisite.bank') }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="requisite_bin">{{ trans('user::form.requisite.bin') }}</label>
+                            <input name="bin" value="{{old('bin')}}" type="text" class="form-control" id="requisite_bin" placeholder="{{ trans('user::form.requisite.bin') }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="requisite_iik">{{ trans('user::form.requisite.iik') }}</label>
+                            <input name="iik" value="{{old('iik')}}" type="text" class="form-control" id="requisite_iik" placeholder="{{ trans('user::form.requisite.iik') }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="requisite_cbe">{{ trans('user::form.requisite.cbe') }}</label>
+                            <input name="cbe" value="{{old('cbe')}}" type="text" class="form-control" id="requisite_cbe" placeholder="{{ trans('user::form.requisite.cbe') }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">{{trans('modules.menu.context.create')}}</button>
+                        </div>
+
+                    </form>
                 </div>
                 <!-- /.tab-pane -->
             </div>

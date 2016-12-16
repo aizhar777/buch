@@ -164,6 +164,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * User full name
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
+    }
+
+    /**
      * Get current user with all relations or Auth::user()
      */
     public static function getCurrentWithAllRealtionsOrAuthUser()
@@ -212,4 +222,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return false;
     }
 
+    public function createRequisite(Request $request)
+    {
+        $requisite = $this->requisites()->create([
+            'relation_id'   => $this->id,
+            'relation_type' => self::TYPE,
+            'legal_name'    => $request->get('legal_name'),
+            'bank'          => $request->get('bank'),
+            'iik'           => $request->get('iik'),
+            'iin'           => $request->get('iin'),
+            'bin'           => $request->get('bin'),
+            'cbe'           => $request->get('cbe'),
+        ]);
+        if ($requisite instanceof Requisite)
+            return $requisite;
+        return false;
+    }
 }

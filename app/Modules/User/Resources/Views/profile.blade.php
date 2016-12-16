@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
-@section('title') {{$user->name or trans('modules.empty')}} @endsection
+@section('title') {{$user->getFullName()}} @endsection
 
 @section('content')
 
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1> {{$user->name or trans('modules.empty')}} {{$user->email or trans('modules.empty')}}</h1>
+        <h1> {{$user->surname or trans('user::module.empty')}} {{$user->name or trans('user::module.empty')}} {{$user->email or trans('user::module.empty')}}</h1>
         <ol class="breadcrumb">
             <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('modules.breadcrumbs.dashboard')}}</a></li>
             <li><a href="{{route('user')}}">{{trans('modules.breadcrumbs.users')}}</a></li>
@@ -23,11 +23,9 @@
         @if (count($errors) > 0)
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="callout callout-danger">
-                    <p>
-                        @foreach ($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
-                    </p>
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
                 </div>
             </div>
         @endif
@@ -194,7 +192,7 @@
                                             </div>
                                             <div id="subdivision_info" class="panel-collapse collapse">
                                                 <div class="box-body">
-                                                    <a href="#" class="btn btn-primary">{{trans('user::profile.add_requisite')}}</a>
+                                                    <a href="{{route('user.edit',['id' => $user->id, 'tab' => 'requisite'])}}" class="btn btn-primary">{{trans('user::profile.add_requisite')}}</a>
                                                     <hr>
                                                     @if($user->requisites->count() > 0)
                                                         @foreach($user->requisites as $req)

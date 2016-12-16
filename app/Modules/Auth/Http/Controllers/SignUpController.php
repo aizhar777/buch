@@ -26,6 +26,23 @@ class SignUpController extends RegisterController
     }
 
     /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return \Validator::make($data, [
+            'name' => 'required|max:255',
+            'surname' => 'required|max:255',
+            'patronymic' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+    }
+
+    /**
      * Create a new user instance after a valid registration. And add role Visitor.
      *
      * @param  array  $data
@@ -35,6 +52,8 @@ class SignUpController extends RegisterController
     {
         $user = User::create([
             'name' => $data['name'],
+            'surname' => $data['name'],
+            'patronymic' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

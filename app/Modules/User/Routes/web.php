@@ -22,11 +22,13 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
     # Create
     Route::get('/create', 'IndexController@userCreate')->name('user.create');
     Route::post('/create', 'DataController@userCreate')->name('user.store');
+    Route::post('/create/requisite/{id}', 'DataController@createUserRequisite')->where(['id' => '[0-9]+'])->name('user.create.requisite');
     Route::post('/images/upload', 'DataController@uploaderImages')->name('user.upload');
 
     # Edit
     Route::get('/edit/{id}', 'IndexController@userEdit')->where(['id' => '[0-9]+'])->name('user.edit');
     Route::put('/edit/{id}', 'DataController@userEdit')->where(['id' => '[0-9]+'])->name('user.edit.post');
+    Route::put('/update/password/{id}', 'DataController@updatePassword')->where(['id' => '[0-9]+'])->name('user.update.pass');
     Route::put('/edit/{id}/set/image/{image}', 'DataController@userUpdateImage')->where(['id' => '[0-9]+','image' => '[0-9]+'])->name('user.update.image');
     //Route::get('/edit/{id}/set/image/{image}', 'DataController@userUpdateImage')->where(['id' => '[0-9]+','image' => '[0-9]+']);
 

@@ -22,6 +22,7 @@
                 <h3 class="box-title">{{trans('modules.breadcrumbs.users')}}</h3>
 
                 <div class="box-tools pull-right">
+                    <a href="{{ route('user.create') }}" class="btn btn-box-tool"><i class="fa fa-user-plus"></i></a>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>

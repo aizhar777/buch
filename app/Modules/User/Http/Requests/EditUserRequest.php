@@ -42,6 +42,17 @@ class EditUserRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'max:255',
+                'regex:/^[a-zA-Zа-яёА-ЯЁ\s\-]+$/u',
+            ],
+            'surname' => [
+                'required',
+                'max:255',
+                'regex:/^[a-zA-Zа-яёА-ЯЁ\s\-]+$/u',
+            ],
+            'patronymic' => [
+                'required',
+                'max:255',
                 'regex:/^[a-zA-Zа-яёА-ЯЁ\s\-]+$/u',
             ],
             'email:'.$pattern,

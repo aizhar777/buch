@@ -119,7 +119,7 @@
                     <div class="form-group">
                         <label for="requisite_bin" class="control-label col-md-3 col-sm-3 col-xs-12">BIN</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input name="bin" id="requisite_bin" type="text" class="form-control" placeholder="Client's bin" value="{{old('bin')}}">
+                            <input name="iik" id="requisite_bin" type="text" class="form-control" placeholder="Client's bin" value="{{old('bin')}}">
                         </div>
                     </div>
 

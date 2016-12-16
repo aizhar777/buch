@@ -16,16 +16,15 @@ class IndexController extends Controller
      * User profile action
      *
      * @param null $id
-     * @return \Response
+     * @return Response
      */
     public function userProfile($id = null)
     {
-        $profile = $this->getCurrentUser();
-        if ($id !== null and $profile->id != $id) {
-            $user = User::findOrFail($id);
+        $user = User::where('id',$id)->firstOrFail();
+        if ($id != null and !$user->is_current()) {
             return $this->showUser($user);
         } else {
-            return $this->showProfile($profile);
+            return $this->showProfile($user);
         }
     }
 
@@ -77,7 +76,7 @@ class IndexController extends Controller
      * Show user
      *
      * @param User $user
-     * @return array
+     * @return Response
      */
     public function showUser(User $user)
     {
@@ -91,7 +90,7 @@ class IndexController extends Controller
      * Show Current user profile
      *
      * @param User $user
-     * @return User
+     * @return Response
      */
     public function showProfile(User $user)
     {
@@ -250,6 +249,20 @@ class IndexController extends Controller
         $perm = Permission::whereId($id)->firstOrFail();
 
         return view('user::show_perm',['perm' => $perm]);
+    }
+
+    /**
+     * Create a user action
+     *
+     * @return Response
+     */
+    public function userCreate()
+    {
+        if(!$this->checkPerm('create.user'))
+            return $this->noAccess();
+        $roles = Role::all();
+
+        return view('user::createUser',['roles' => $roles]);
     }
 
     /**
