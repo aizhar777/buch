@@ -87,6 +87,6 @@ class ClientsModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-users';
+        return 'fa fa-users';
     }
 }

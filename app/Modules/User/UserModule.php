@@ -8,12 +8,28 @@ use App\User;
 
 class UserModule extends Module
 {
-    public $name = 'Users';
+    public $name = 'user::module.module_name';
     public $with_div = 6;
     protected $permission = 'view.user';
     protected $create_user = 'create.user';
     protected $view_roles = 'view.role';
     protected $view_perms = 'view.permission';
+    protected $link_format = '<li><a href="%1$s">%2$s</a></li>';
+    protected $icon_class = 'fa fa-users';
+    protected $module_links = [
+        'view.user' => [
+            ['user', 'user::module.module_links.all']
+        ],
+        'create.user' => [
+            ['user.create', 'user::module.module_links.create']
+        ],
+        'view.role' => [
+            ['user.roles', 'user::module.module_links.roles']
+        ],
+        'view.permission' => [
+            ['user.perms', 'user::module.module_links.permissions']
+        ],
+    ];
 
     /**
      * dropdown links
@@ -55,34 +71,19 @@ class UserModule extends Module
     /**
      * Menu sidebar dropdown
      *
-     * @example Return the links kit "<li><a href='/#link'>link</a><a href='/#link2'>link2</a></li>"
      * @return string|null
      */
     public function getMenuSidebar()
     {
         $list = '';
-        if($this->check($this->permission))
-            $list .= "<li><a href='" . route('user') . "'>All</a></li>";
-        if($this->check($this->create_user))
-            $list .= "<li><a href='" . route('user.create') . "'>Create new</a></li>";
-        if($this->check($this->view_roles))
-            $list .= "<li><a href='" . route('user.roles') . "'>Roles</a></li>";
-        if($this->check($this->view_perms))
-            $list .= "<li><a href='" . route('user.perms') . "'>Permissions</a></li>";
-
+        foreach ($this->module_links as $permission => $array_links){
+            if($this->check($permission)){
+                foreach ($array_links as $link) {
+                    $list .= sprintf($this->link_format, route($link[0]), trans($link[1]));
+                }
+            }
+        }
         return $list;
-    }
-
-    /**
-     * Menu sidebar dropdown icon
-     * Font Awesome Icon
-     *
-     * @example fa-list
-     * @return string
-     */
-    public function getMenuSidebarIcon()
-    {
-        return 'fa-users';
     }
 
 

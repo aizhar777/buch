@@ -50,7 +50,7 @@ class TradeModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-money'; //
+        return 'fa fa-money'; //
     }
 
 }

@@ -6,6 +6,13 @@ window.application = {
     "get_products_form":"/products/get/form"
 };
 
+/**
+ * Notification
+ *
+ * @param {string} title the headline of the message
+ * @param {string} message message text
+ * @param {string} type message type
+ */
 application.message = function (title, message, type) {
     new PNotify({
         title: title,
@@ -15,6 +22,11 @@ application.message = function (title, message, type) {
     });
 };
 
+/**
+ * Update settings
+ *
+ * @param {string} slug settings slug
+ */
 application.updateSettings = function (slug) {
     var self = this;
     var value = '';
@@ -111,7 +123,7 @@ application.listeners = function () {
     modal.on('show.bs.modal', self.addProductModal);
     modal.on('products.loaded', function () {
         $(this).find('.select2_multiple').select2({
-            placeholder: "With Max Selection limit 4",
+            //placeholder: "With Max Selection limit 4",
             allowClear: true
         });
         self.productTradeOptions();
@@ -149,6 +161,10 @@ application.listeners = function () {
         dragDrop: filer_default_opts.dragDrop,
         uploadFile: filer_default_opts.uploadFile
     });
+
+    // Profile requisites
+    //$('#requisites_table').DataTable();
+    $('.user_requisites').dblclick(self.showUserRequisitesForm)
 };
 
 application.showOrHideSubs = function () {
@@ -168,6 +184,17 @@ application.showOrHide = function (obj, wrp) {
 application.showAmountProducts = function () {
     $(this).hide();
     $(this).next().show();
+};
+
+application.showUserRequisitesForm = function () {
+    $(this).hide();
+    $(this).next().show();
+};
+
+application.hideUserRequisitesForm = function (obj) {
+    var tr = $(obj).parent().parent().parent().parent();
+    tr.find('.user_requisites').show();
+    tr.find('form').hide();
 };
 
 application.onSuccessUploadImages = function (data, el) {
@@ -215,6 +242,25 @@ application.updateAmountProducts = function (obj) {
         $(obj).html("<i class='ion ion-checkmark'></i>");
         form.hide();
         form.prev().html(form.find('input[name=amount]').val()).show();
+        application.message(data.title ,data.message, data.status);
+    });
+};
+
+application.updateUserRequisite = function (obj) {
+    var form = $(obj).parent().parent().parent();
+    var data = form.serialize();
+    $(obj).html("<i class='fa fa-refresh fa-spin fa-fw'></i>");
+    form.find('input,button').prop('disabled', true);
+    $.ajax({
+        url: form.attr('action'),
+        method: "PUT",
+        data: data
+    }).done(function (data) {
+        data = JSON.parse(data);
+        form.find('input,button').prop('disabled', false);
+        $(obj).html("<i class='ion ion-checkmark'></i>");
+        form.hide();
+        form.prev().html(form.find('input[class=form-control]').val()).show();
         application.message(data.title ,data.message, data.status);
     });
 };

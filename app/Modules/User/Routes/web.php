@@ -22,7 +22,6 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
     # Create
     Route::get('/create', 'IndexController@userCreate')->name('user.create');
     Route::post('/create', 'DataController@userCreate')->name('user.store');
-    Route::post('/create/requisite/{id}', 'DataController@createUserRequisite')->where(['id' => '[0-9]+'])->name('user.create.requisite');
     Route::post('/images/upload', 'DataController@uploaderImages')->name('user.upload');
 
     # Edit
@@ -34,6 +33,10 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
 
     # Delete
     Route::delete('/delete/{id}', 'DataController@userDelete')->where(['id' => '[0-9]+']);
+
+    # Requisites
+    Route::post('/create/requisite/{id}', 'DataController@createUserRequisite')->where(['id' => '[0-9]+'])->name('user.create.requisite');
+    Route::put('/requisites/update/{id}', 'DataController@requisitesUpdate')->where(['id' => '[0-9]+'])->name('user.req.update');
 
     // Roles
     Route::get('/roles', 'IndexController@rolesAction')->name('user.roles');

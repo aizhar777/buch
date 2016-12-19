@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\User\Http\Requests\UpdateImageProfileRequest;
 use App\Modules\User\Http\Requests\UpdateRolePermissionsRequest;
 use App\Modules\User\Http\Requests\UpdateUserPasswordRequest;
+use App\Modules\User\Http\Requests\UpdateUserRequisitesRequest;
 use App\Requisite;
 use App\Role;
 use App\User;
@@ -73,6 +74,48 @@ class DataController extends Controller
             return redirect()
                 ->route('user.edit',['id' => $user->id, 'tab' => 'requisite'])
                 ->withErrors(['requisite_not_created' => trans('user::profile.messages.requisite_not_created')]);
+        }
+    }
+
+    public function requisitesUpdate($id, UpdateUserRequisitesRequest $request)
+    {
+        $user = User::where('id',$id)->firstOrFail();
+        $requisite = $user->requisites()->where('id',$request->get('req_id'))->firstOrFail();
+        if($request->has('legal_name'))
+            $requisite->legal_name = $request->get('legal_name');
+        if($request->has('bank'))
+            $requisite->bank = $request->get('bank');
+        if($request->has('iik'))
+            $requisite->iik = $request->get('iik');
+        if($request->has('iin'))
+            $requisite->iin = $request->get('iin');
+        if($request->has('bin'))
+            $requisite->bin = $request->get('bin');
+        if($request->has('cbe'))
+            $requisite->cbe = $request->get('cbe');
+
+        if($requisite->save()){
+            if ($request->ajax()){
+                return json_encode([
+                    'status' => 'success',
+                    'title' => trans('user::profile.messages.updated_successfully'),
+                    'message' => trans('user::profile.messages.requisite_updated_successfully'),
+                ]);
+            }else{
+                \Flash::success(trans('user::profile.messages.requisite_updated_successfully'));
+                return redirect()->route('user.prodile',['id' => $id]);
+            }
+        }
+
+        if ($request->ajax()){
+            return json_encode([
+                'status' => 'error',
+                'title' => trans('user::profile.messages.not_updated'),
+                'message' => trans('user::profile.messages.requisite_not_updated'),
+            ]);
+        }else{
+            \Flash::success(trans('user::profile.messages.requisite_not_updated'));
+            return redirect()->back();
         }
     }
 

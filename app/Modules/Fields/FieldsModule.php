@@ -62,7 +62,7 @@ class FieldsModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-list-alt';
+        return 'fa fa-list-alt';
     }
 
 

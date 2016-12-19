@@ -56,7 +56,7 @@ class StockModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-hdd-o';
+        return 'fa fa-hdd-o';
     }
 
 

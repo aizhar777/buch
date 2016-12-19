@@ -70,12 +70,11 @@
                                 @foreach($fields as $key => $value)
                                     @if(is_array($value['data']))
                                         @if(!$value['is_hidden'])
-                                            <p>{{$value['name']}}:</p>
-                                            @foreach($value['data'] as $v) {{$v}} @endforeach
+                                            <p><b>{{$value['name']}}:</b> @foreach($value['data'] as $v) {{$v}} @endforeach </p>
                                         @endif
                                     @else
                                         @if(!$value['is_hidden'])
-                                            <p>{{$value['name']}}</p> {{$value['data']}}
+                                            <p><b>{{$value['name']}}:</b> {{$value['data']}}</p>
                                         @endif
                                     @endif
                                 @endforeach
@@ -194,15 +193,7 @@
                                                 <div class="box-body">
                                                     <a href="{{route('user.edit',['id' => $user->id, 'tab' => 'requisite'])}}" class="btn btn-primary">{{trans('user::profile.add_requisite')}}</a>
                                                     <hr>
-                                                    @if($user->requisites->count() > 0)
-                                                        @foreach($user->requisites as $req)
-                                                            <span class="label label-default">{{$req->bank}}</span>
-                                                        @endforeach
-                                                    @else
-                                                        <div class="alert alert-info">
-                                                            <p>{{trans('user::profile.requisites_not_found')}}</p>
-                                                        </div>
-                                                    @endif
+                                                    @include('user::blocks.user_requisites',['requisites' => $user->requisites, 'user_id' => $user->id])
                                                 </div>
                                             </div>
                                         </div>

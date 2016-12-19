@@ -1,3 +1,14 @@
+body {
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.skin-black-light .sidebar-menu > li > a {
+    border-left: 3px solid transparent;
+    font-weight: 400;
+}
+
+
+
 .select2-selection__rendered {
     line-height: 22px !important;
 }

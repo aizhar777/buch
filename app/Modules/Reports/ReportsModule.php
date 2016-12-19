@@ -51,7 +51,7 @@ class ReportsModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-file-text';
+        return 'fa fa-file-text';
     }
 
 }

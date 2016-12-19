@@ -116,6 +116,6 @@ class ProductsModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-product-hunt';
+        return 'fa fa-product-hunt';
     }
 }

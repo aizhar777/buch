@@ -18,6 +18,7 @@ abstract class Module implements ModuleInterface
     protected $with_sm = 6;
     protected $with_xs = 13;
     protected $with_md = 4;
+    protected $icon_class = 'fa fa-list';
 /*
       <!-- Default box -->
 
@@ -33,6 +34,8 @@ abstract class Module implements ModuleInterface
         </div>
         <!-- /.box-footer-->
 */
+    protected $li_link = '<li><a href="%1$s">%2$s</a></li>';
+    protected $link = '<a href="%1$s">%2$s</a>';
 
     protected $_wrapper = '<div class="col-md-%1$s col-sm-%1$s col-xs-12"><div class="box">%2$s</div></div>';
 
@@ -49,7 +52,7 @@ abstract class Module implements ModuleInterface
     protected $_content = '<div class="x_content">%s</div>';
 
     protected $_sidebarMenu = '<li class="treeview">
-                <a href="#"><i class="fa %1$s"></i> <span> %2$s </span>
+                <a href="#"><i class="%1$s"></i> <span> %2$s </span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">%3$s</ul></li>';
 
@@ -81,7 +84,7 @@ abstract class Module implements ModuleInterface
     public function menuSidebar()
     {
         if($this->check() && $this->getMenuSidebar() != null)
-            return sprintf($this->_sidebarMenu, $this->getMenuSidebarIcon(), $this->name, $this->getMenuSidebar());
+            return sprintf($this->_sidebarMenu, $this->getMenuSidebarIcon(), trans($this->name), $this->getMenuSidebar());
         return null;
     }
 
@@ -133,7 +136,7 @@ abstract class Module implements ModuleInterface
      */
     protected function getPanelHeader()
     {
-        return sprintf($this->_panel_header, $this->name, $this->getPanelHeaderDropdown());
+        return sprintf($this->_panel_header, trans($this->name), $this->getPanelHeaderDropdown());
     }
 
     /**
@@ -188,7 +191,7 @@ abstract class Module implements ModuleInterface
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-list';
+        return $this->icon_class;
     }
 
 

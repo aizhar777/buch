@@ -49,7 +49,7 @@ class SubdivisionModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-briefcase';
+        return 'fa fa-briefcase';
     }
 
 }

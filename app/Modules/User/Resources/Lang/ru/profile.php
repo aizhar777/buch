@@ -28,8 +28,12 @@ return [
     ],
 
     'messages' => [
+        'updated_successfully' => 'Обновлено успешно',
+        'not_updated' => 'Не обновлено',
         'requisite_created_successfully' => 'Реквизиты успешно добавлены',
         'requisite_not_created' => 'Не удалось добавить реквизиты',
+        'requisite_updated_successfully' => 'Реквизиты были успешно изменены',
+        'requisite_not_updated' => 'Неудалось изменить реквизиты',
     ],
 
     'errors' => [

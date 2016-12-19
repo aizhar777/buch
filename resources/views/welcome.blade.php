@@ -80,14 +80,14 @@
                 </div>
             @else
                 <div class="top-right links">
-                    <a href="{{url('/home')}}">{{Auth::user()->email}}</a>
+                    <a href="{{ route('dashboard') }}">{{Auth::user()->email}}</a>
                 </div>
 
             @endif
 
             <div class="content">
                 <div class="title m-b-md">
-                    BUCH
+                    <a href="{{ route('dashboard') }}"style="color: #636b6f;text-decoration: none;">BUCH</a>
                 </div>
 
                 <div class="links">

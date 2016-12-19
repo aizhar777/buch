@@ -50,7 +50,7 @@ class SettingsModule extends Module
      */
     public function getMenuSidebarIcon()
     {
-        return 'fa-cogs';
+        return 'fa fa-cogs';
     }
 
 }
