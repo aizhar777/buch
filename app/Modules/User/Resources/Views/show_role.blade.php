@@ -35,7 +35,7 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">{{$role->name}}</h3>
+                <h3 class="box-title">{{$role->name}} <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="{{trans('modules.menu.context.edit')}}"><i class="fa fa-edit"></i></a></h3>
 
                 <div class="box-tools pull-right">
                     <div class="button-group">

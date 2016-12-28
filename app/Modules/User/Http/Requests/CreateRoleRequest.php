@@ -31,8 +31,8 @@ class CreateRoleRequest extends FormRequest
         return [
             'name' => 'required',
             'slug' => 'required|alpha_dash|unique:roles,slug',
-            'description' => '',//TODO: validate description
-            'special' => 'sometimes|required|accepted',
+            'create_has_role' => 'sometimes|required|accepted',
+            'has_role' => 'required_with:create_has_role|exists:roles,slug',
             //
         ];
     }

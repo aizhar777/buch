@@ -209,16 +209,34 @@ class DataController extends Controller
      * Create role
      *
      * @param CreateRoleRequest $request
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function rolesCreate(CreateRoleRequest $request)
     {
-        $role = Role::create($request->all());
+        $role = Role::create([
+            'name' => $request->input('name'),
+            'slug' => $request->input('slug'),
+            'description' => $request->input('description'),
+            'special' => null
+        ]);
+
+        if($request->has('create_has_role')){
+            $rolePerms = Role::whereSlug($request->get('has_role'))->first();
+            $permissions = [];
+
+            foreach ($rolePerms->permissions as $permission) {
+                $permissions[]  = $permission->id;
+            }
+
+            $role->syncPermissions($permissions);
+        }
+
+
         if($role instanceof Role){
-            \Flash::success('New role "' . $role->name . '" created!');
+            \Flash::success(trans('user::module.role.created_successfully',['name' => $role->name]));
             return redirect()->route('user.roles.show_slug',['slug' => $role->slug]);
         }else{
-            \Flash::error('Role not created!');
+            \Flash::error(trans('user::module.role.could_not_create',['name' => $request->input('name')]));
             return redirect()->back()->withInput($request->all());
         }
     }

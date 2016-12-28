@@ -28,7 +28,9 @@
                 <h3 class="box-title">{{trans('user::module.roles')}}</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    <a href="{{ route('user.roles.create') }}" class="btn btn-box-tool" data-toggle="tooltip" title="{{trans('user::role_and_perms.create_role')}}">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
             <div class="box-body">

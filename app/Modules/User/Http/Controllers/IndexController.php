@@ -205,9 +205,10 @@ class IndexController extends Controller
         if(!$this->checkPerm('create.role'))
             return $this->noAccess();
 
+        $roles = Role::all();
         if($request->isXmlHttpRequest())
-            return view('user::ajax.create_role');
-        return view('user::create_role');
+            return view('user::ajax.create_role',['roles' => $roles]);
+        return view('user::create_role',['roles' => $roles]);
     }
 
     /**

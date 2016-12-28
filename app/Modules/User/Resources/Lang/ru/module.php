@@ -32,5 +32,10 @@ return [
             'created_successfully' => 'Пользователь успешно создан!',
             'could_not_create' => 'Не удалось создать пользователя',
         ],
+        'role' => [
+            'created' => 'Новая группа создана',
+            'created_successfully' => 'Группа :name успешно создана!',
+            'could_not_create' => 'Не удалось создать группу :name',
+        ],
     ],
 ];

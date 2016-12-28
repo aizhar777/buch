@@ -17,15 +17,18 @@ $(document).ready(function () {
      });*/
 
     $(".select2_multiple").select2({
-        placeholder: "With Max Selection limit 4",
+        placeholder: "select",
         allowClear: true
     });
 
     $('#add-product-modal').on("change", "#select_products", application.productTradeOptions);
     // Select2 end
 
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
+    $('input[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue'
+    });
+
+    $('input[type=radio]').iCheck({
         radioClass: 'iradio_flat-blue'
     });
 

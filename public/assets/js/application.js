@@ -112,7 +112,6 @@ application.getSelf = function () {
 
 application.listeners = function () {
     var self = this;
-    var modal = $('#add-product-modal');
     $('.set_default_image').on( "click", self.setProfileImage);
 
     $('input.settings_switch').on("ifClicked", function (event) {
@@ -120,6 +119,7 @@ application.listeners = function () {
         self.updateSettings(settings.attr('data-slug'));
     });
 
+    var modal = $('#add-product-modal');
     modal.on('show.bs.modal', self.addProductModal);
     modal.on('products.loaded', function () {
         $(this).find('.select2_multiple').select2({
@@ -132,6 +132,12 @@ application.listeners = function () {
     $('#is_responsible').on("ifToggled", function (event) {
         //var obj = $(this);
         $("#stock_responsible_wrap").toggle(this.checked);
+    });
+
+    // Группа как
+    $('#role_special').on("ifToggled", function (event) {
+        //var obj = $(this);
+        $("#has-role-create").toggle(this.checked);
     });
 
     $('#category_subcategory').on("ifToggled", function (event) {
@@ -171,6 +177,7 @@ application.showOrHideSubs = function () {
     this.showOrHide($('#category_subcategory'), $('#wrapper_category_parent'));
     this.showOrHide($('#is_responsible'), $('#stock_responsible_wrap'));
     this.showOrHide($('#is_responsible_subdivision'), $('#subdivision_responsible_wrap'));
+    this.showOrHide($('#role_special'), $('#has-role-create'));
 };
 
 application.showOrHide = function (obj, wrp) {
