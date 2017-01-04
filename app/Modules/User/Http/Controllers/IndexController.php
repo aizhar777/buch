@@ -53,7 +53,7 @@ class IndexController extends Controller
     public function checkAndEditAction(User $user)
     {
         if(!$this->checkPerm('edit.user'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
         return $this->editAction($user);
     }
 
@@ -81,7 +81,7 @@ class IndexController extends Controller
     public function showUser(User $user)
     {
         if(!$this->checkPerm('show.user'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
         return $this->showProfile($user);
     }
 
@@ -126,7 +126,7 @@ class IndexController extends Controller
     public function usersList()
     {
         if(!$this->checkPerm('view.user'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $users = User::paginate($this->perPager());
         return view('user::index',['users' => $users]);
@@ -140,7 +140,7 @@ class IndexController extends Controller
     public function rolesAction()
     {
         if(!$this->checkPerm('view.role'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $roles = Role::paginate($this->perPager());
         return view('user::index_roles',['roles' => $roles]);
@@ -155,7 +155,7 @@ class IndexController extends Controller
     public function rolesShowAction($id)
     {
         if(!$this->checkPerm('show.role'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $role = Role::whereId($id)->with('permissions')->firstOrFail();
 
@@ -171,7 +171,7 @@ class IndexController extends Controller
     public function rolesShowBySlugAction($slug)
     {
         if(!$this->checkPerm('show.role'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $role = Role::whereSlug($slug)->with('permissions')->firstOrFail();
 
@@ -187,7 +187,7 @@ class IndexController extends Controller
     public function showRole(Role $role)
     {
         if(!$this->checkPerm('show.role'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $permissions = Permission::all();
         $rolePerms = $role->getPermissions();
@@ -203,7 +203,7 @@ class IndexController extends Controller
     public function rolesCreateAction(Request $request)
     {
         if(!$this->checkPerm('create.role'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $roles = Role::all();
         if($request->isXmlHttpRequest())
@@ -214,12 +214,16 @@ class IndexController extends Controller
     /**
      * Update role
      *
+     * @param string $slug
      * @return Response
      */
-    public function rolesEditAction()
+    public function rolesEditAction($slug)
     {
-        if(!$this->checkPerm('create.role'))
-            return $this->noAccess();
+        if(!$this->checkPerm('edit.role'))
+            return $this->noAccess( trans('user::module.messages.access_denied') );
+        $role = Role::where('slug', $slug)->firstOrFail();
+
+        return view('user::edit_role',['role' => $role]);
     }
 
     /**
@@ -230,7 +234,7 @@ class IndexController extends Controller
     public function permissionAction()
     {
         if(!$this->checkPerm('view.permission'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $perms = Permission::paginate($this->perPager());
         return view('user::index_perms',['perms' => $perms]);
@@ -245,7 +249,7 @@ class IndexController extends Controller
     public function permissionShowAction($id)
     {
         if(!$this->checkPerm('show.permission'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
 
         $perm = Permission::whereId($id)->firstOrFail();
 
@@ -260,7 +264,7 @@ class IndexController extends Controller
     public function userCreate()
     {
         if(!$this->checkPerm('create.user'))
-            return $this->noAccess();
+            return $this->noAccess( trans('user::module.messages.access_denied') );
         $roles = Role::all();
 
         return view('user::createUser',['roles' => $roles]);
@@ -276,6 +280,6 @@ class IndexController extends Controller
      * Update permission
      * @param $id
      */
-    public function rpermissionEditAction($id)
+    public function permissionEditAction($id)
     {}
 }

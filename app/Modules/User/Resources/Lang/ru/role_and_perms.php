@@ -1,5 +1,6 @@
 <?php
 return [
+    'new_role' => 'Новая группа',
     'create_role' => 'Создать новую группу',
     'go_view_role' => 'Перейти к просмотру :role',
     'go_edit_role' => 'Перейти к редактированию :role',

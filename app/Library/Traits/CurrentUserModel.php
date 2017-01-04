@@ -52,7 +52,8 @@ trait CurrentUserModel
     /**
      * Check permission on current user
      *
-     * @param $permission
+     * @param string $permission
+     * @param boolean $full
      * @return bool
      */
     public function checkPerm($permission, $full = false)

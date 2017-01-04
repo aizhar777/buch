@@ -19,10 +19,12 @@
 
     <!-- Main content -->
     <section class="content">
+        @include('block.flash_messages')
 
         @if (count($errors) > 0)
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -35,13 +37,16 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">{{$role->name}} <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="{{trans('modules.menu.context.edit')}}"><i class="fa fa-edit"></i></a></h3>
+                <h3 class="box-title">{{ $role->name }} <a href="{{ route('user.roles.edit',['slug' => $role->slug]) }}" class="btn btn-box-tool" data-toggle="tooltip" title="{{ trans('user::role_and_perms.go_edit_role',['role' => $role->name]) }}"><i class="fa fa-edit"></i></a></h3>
 
                 <div class="box-tools pull-right">
                     <div class="button-group">
-                        <a class="btn btn-box-tool" href="{{route('user.roles')}}" title="{{trans('modules.menu.view.roles')}}"><i class="fa fa-th-list"></i></a>
+                        <a class="btn btn-box-tool" href="{{ route('user.roles.edit',['slug' => $role->slug]) }}" title="{{ trans('modules.menu.context.edit') }}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-box-tool" href="{{ route('user.roles') }}" title="{{ trans('modules.menu.view.roles') }}"><i class="fa fa-th-list"></i></a>
+                        <button onclick="event.preventDefault();document.getElementById('role-{{$role->id}}-delete-form').submit();" class="btn btn-box-tool" title="{{ trans('modules.menu.context.delete') }}"><i class="fa fa-trash"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                     </div>
+                    @include('forms.role_delete_form',['id' => $role->id])
                 </div>
             </div>
             <div class="box-body">

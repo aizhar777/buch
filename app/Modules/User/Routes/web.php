@@ -43,7 +43,7 @@ Route::group(['prefix' => 'user','middleware'=> ['debug','auth']], function() {
     Route::get('/roles/create', 'IndexController@rolesCreateAction')->name('user.roles.create');
     Route::get('/roles/{id}', 'IndexController@rolesShowAction')->where(['id' => '[0-9]+'])->name('user.roles.show');
     Route::get('/roles/{slug}', 'IndexController@rolesShowBySlugAction')->where(['slug' => '[a-zA-Z_.-]+'])->name('user.roles.show_slug');
-    Route::get('/roles/edit/{id}', 'IndexController@rolesEditAction')->where(['slug' => '[a-zA-Z]+'])->name('user.roles.edit');
+    Route::get('/roles/edit/{slug}', 'IndexController@rolesEditAction')->where(['slug' => '[a-zA-Z_.-]+'])->name('user.roles.edit');
 
     Route::post('/roles/store', 'DataController@rolesCreate')->name('user.roles.store');
     Route::put('/roles/update/{id}', 'DataController@rolesUpdate')->where(['id' => '[0-9]+'])->name('user.roles.update');

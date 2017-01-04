@@ -11,18 +11,17 @@
 |
 */
 
-Route::get('/', ['middleware'=>'debug',function () {
-    return view('welcome');
-}])->name('public');
+Route::get('/', config('app.home_route'))->middleware(['debug','auth'])->name('public');
 
-Route::get('/login',  ['middleware'=>'debug',function () {
-    return redirect()->route('signInForm');
-}]);
-
-Route::get('/dashboard', 'HomeController@index')
+Route::get('/dashboard', 'HomeController@dashboard')
     ->middleware(['debug','auth'])
     ->name('dashboard');
 
 
 #---- TEST -----#
 Route::get('/test', 'TestResourceController@test');
+
+
+Route::get('/login', function () {
+    return redirect()->route('signInForm');
+});

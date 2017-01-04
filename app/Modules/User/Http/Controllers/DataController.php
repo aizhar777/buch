@@ -13,6 +13,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Http\Requests\UpdateImageProfileRequest;
 use App\Modules\User\Http\Requests\UpdateRolePermissionsRequest;
+use App\Modules\User\Http\Requests\UpdateRoleRequest;
 use App\Modules\User\Http\Requests\UpdateUserPasswordRequest;
 use App\Modules\User\Http\Requests\UpdateUserRequisitesRequest;
 use App\Requisite;
@@ -177,7 +178,7 @@ class DataController extends Controller
     protected function updateProfile($id, Request $request)
     {
         if(!$this->checkPerm('edit.user'))
-            return $this->noAccess('Not enough rights to edit user');
+            return $this->noAccess( trans('user::module.messages.access_denied') );
         $user = User::whereId($id)->firstOrFail();
 
         return $this->updateUser($user, $request);
@@ -254,12 +255,37 @@ class DataController extends Controller
 
         $role->syncPermissions($request->get('permissions'));
         if($role->save()){
-            \Flash::success('Permissions updated for the role of "' . $role->name . '"!');
+            \Flash::success(trans('user::module.messages.permission.updated_for_role',['name' => $role->name]));
         }else{
-            \Flash::error('Could not update permissions for the ' . $role->slug . ' role!');
+            \Flash::error(trans('user::module.messages.permission.could_not_updated_for_role',['name' => $role->name]));
         }
 
         return redirect()->route('user.roles.show_slug',['slug' => $role->slug]);
+    }
+
+    /**
+     * Update role attributes
+     *
+     * @param $id
+     * @param UpdateRoleRequest $request
+     * @return RedirectResponse
+     */
+    public function rolesUpdate($id, UpdateRoleRequest $request)
+    {
+        $role = Role::where('id',$id)->firstOrFail();
+        $updateData = [
+            'name' => $request->input('name'),
+            'slug' => $request->input('slug'),
+            'description' => $request->input('description')
+        ];
+        if($role->update($updateData)){
+            \Flash::success(trans('user::module.messages.role.updated_successfully',['name' => $role->name]));
+            $result = redirect()->route('user.roles.show_slug',['slug' => $role->slug]);
+        }else{
+            \Flash::error(trans('user::module.messages.role.could_not_updated',['name' => $role->name]));
+            $result = redirect()->back()->withInput($request->all());
+        }
+        return $result;
     }
 
     /**
@@ -277,12 +303,12 @@ class DataController extends Controller
             if($request->isXmlHttpRequest()){
                 return json_encode([
                     'status' => 'warning',
-                    'message' => 'Access is denied. You do not have permission for this operation!',
+                    'message' => trans('user::module.messages.access_denied'),
                     'data' => []
                 ]);
             }
-            \Flash::warning('Access is denied. You do not have permission for this operation!');
-            return $this->noAccess('Access is denied');
+            \Flash::warning( trans('user::module.messages.access_denied') );
+            return $this->noAccess( trans('user::module.messages.access_denied') );
         }
 
         $user = User::whereId($id)->firstOrFail();
@@ -292,22 +318,22 @@ class DataController extends Controller
             if($request->isXmlHttpRequest()){
                 $result = json_encode([
                     'status' => 'success',
-                    'message' => 'You\'r profile image updated!',
+                    'message' => trans('user::module.messages.user.image_updated_successfully'),
                     'data' => $imageModel->toArray()
                 ]);
             }else{
-                \Flash::success('You\'r profile image updated!');
+                \Flash::success( trans('user::module.messages.user.image_updated_successfully') );
                 $result = redirect()->route('user',['id' => $id]);
             }
         }else{
             if($request->isXmlHttpRequest()){
                 $result = json_encode([
                     'status' => 'error',
-                    'message' => 'You\'r profile image not updated!',
+                    'message' => trans('user::module.messages.user.image_could_not_updated'),
                     'data' =>[]
                 ]);
             }else{
-                \Flash::error('You\'r profile image not updated!');
+                \Flash::error( trans('user::module.messages.user.image_could_not_updated') );
                 $result = redirect()->route('user',['id' => $id]);
             }
         }
@@ -335,12 +361,12 @@ class DataController extends Controller
             if($request->isXmlHttpRequest()){
                 return json_encode([
                     'status' => 'warning',
-                    'message' => 'Access is denied. You do not have permission for this operation!',
+                    'message' => trans('user::module.messages.access_denied'),
                     'data' => []
                 ]);
             }
-            \Flash::warning('Access is denied. You do not have permission for this operation!');
-            return $this->noAccess('Access is denied');
+            \Flash::warning( trans('user::module.messages.access_denied') );
+            return $this->noAccess( trans('user::module.messages.access_denied') );
         }
 
         $file = $request->file('files')[0];
@@ -361,24 +387,38 @@ class DataController extends Controller
             if($request->isXmlHttpRequest()){
                 return json_encode([
                     'status' => 'success',
-                    'message' => 'Image uploaded',
+                    'message' => trans('user::module.messages.user.image_uploaded_successfully'),
                     'data' => $image->toArray()
                 ]);
             }
-            \Flash::success('Image uploaded');
+            \Flash::success(trans('user::module.messages.user.image_uploaded_successfully'));
             return redirect()->back();
         } else {
             unlink($userPhoto->getPath());
             if($request->isXmlHttpRequest()){
                 return json_encode([
                     'status' => 'error',
-                    'message' => 'Image not upload',
+                    'message' => trans('user::module.messages.user.image_could_not_upload'),
                     'data' => []
                 ]);
             }
-            \Flash::warning('Image not upload');
+            \Flash::warning(trans('user::module.messages.user.image_could_not_upload'));
             return redirect()->back();
         }
 
+    }
+
+
+    public function rolesDelete($id)
+    {
+        $role = Role::where('id', $id)->firstOrFail();
+        if($role->delete()){
+            \Flash::success(trans('user::module.messages.role.deleted_successfully',['name' => $role->name]));
+            $result = redirect()->route('user.roles');
+        }else{
+            \Flash::error(trans('user::module.messages.role.could_not_deleted',['name' => $role->name]));
+            $result = redirect()->back();
+        }
+        return $result;
     }
 }
