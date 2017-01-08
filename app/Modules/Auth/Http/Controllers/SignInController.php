@@ -35,7 +35,7 @@ class SignInController extends LoginController
     protected function authenticated(Request $request, $user)
     {
         \Session::remove('current.user');
-        $photo = $user->photos()->first();
+        $photo = $user->image;
         $roles = $user->roles();
 
         event(new UserIsLogged($user));

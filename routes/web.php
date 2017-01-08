@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', config('app.home_route'))->middleware(['debug','auth'])->name('public');
+Route::get('/', config('app.home_route'))->middleware(['debug'])->name('public');
 
 Route::get('/dashboard', 'HomeController@dashboard')
     ->middleware(['debug','auth'])

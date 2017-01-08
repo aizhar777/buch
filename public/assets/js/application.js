@@ -170,7 +170,18 @@ application.listeners = function () {
 
     // Profile requisites
     //$('#requisites_table').DataTable();
-    $('.user_requisites').dblclick(self.showUserRequisitesForm)
+    $('.user_requisites').dblclick(self.showUserRequisitesForm);
+    self.profImages();
+};
+
+application.profImages = function () {
+    $('#profile-images').masonry({
+        // options
+        gutter: 20,
+        itemSelector: '.item_image',
+        columnWidth: '.item_image',
+        percentPosition: true
+    });
 };
 
 application.showOrHideSubs = function () {

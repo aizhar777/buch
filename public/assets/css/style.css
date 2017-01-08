@@ -28,8 +28,8 @@ body {
 .item_image{
     display: table;
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 31%;
+    min-width: 150px;
     overflow: hidden;
     margin-bottom: 20px;
 }

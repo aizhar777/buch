@@ -149,24 +149,23 @@
                             <br>
                             @if($images->count() > 0)
                             <!-- =============================================================================== -->
-                                <div class="row">
+                                <div id="profile-images">
                                     {{--  @each('user::each.profile_images', $user->photos, 'photo') --}}
                                     @foreach($images as $photo)
-                                        <div class="col-sm-12 col-md-6 col-lg-4">
-                                            <div class="item_image">
-                                                <div class="image_wrap">
-                                                    <img class="img-responsive" src="/upload/images/{{$photo->src}}" alt="{{trans('user::profile.photo')}} #{{$photo->id}} - {{$user->name}}"/>
-                                                </div>
-                                                <p>{{trans('user::profile.photo')}} #{{$photo->id}} - {{$user->name}} {{--$photo->name--}}</p>
-                                                @if($user->is_current())
-                                                <div class="links">
-                                                    <a href="{{route('user.update.image',['id' => $user->id, 'image' => $photo->id])}}" title="{{trans('user::profile.set_default_image')}}" data-image-id="{{$photo->id}}" class="set_default_image"><i class="fa fa-user"></i></a>
-                                                    <a href="#" title="{{trans('modules.menu.context.delete')}} {{trans('user::profile.photo')}}"><i class="fa fa-trash"></i></a>
-                                                </div>
-                                                @endif
+                                        <div class="item_image">
+                                            <div class="image_wrap">
+                                                <img class="img-responsive" src="/upload/images/{{$photo->src}}" alt="{{trans('user::profile.photo')}} #{{$photo->id}} - {{$user->name}}"/>
                                             </div>
+                                            <p>{{trans('user::profile.photo')}} #{{$photo->id}} - {{$user->name}} {{--$photo->name--}}</p>
+                                            @if($user->is_current())
+                                            <div class="links">
+                                                <a href="{{route('user.update.image',['id' => $user->id, 'image' => $photo->id])}}" title="{{trans('user::profile.set_default_image')}}" data-image-id="{{$photo->id}}" class="set_default_image"><i class="fa fa-user"></i></a>
+                                                <a href="#" title="{{trans('modules.menu.context.delete')}} {{trans('user::profile.photo')}}"><i class="fa fa-trash"></i></a>
+                                            </div>
+                                            @endif
                                         </div>
                                     @endforeach
+                                    <div class="clearfix"></div>
                                 </div>
                             <!-- =============================================================================== -->
                             @endif

@@ -1,6 +1,6 @@
 <?php
-
 use Illuminate\Database\Seeder;
+
 
 class ProductsTableSeeeder extends Seeder
 {
@@ -15,23 +15,8 @@ class ProductsTableSeeeder extends Seeder
         $stock = 1; //\App\Stock::firstOrFail()->id;
         $subdivision = 1; //\App\Subdivision::firstOrFail()->id;
 
-        for ($i = 0; $i < 10; $i++) {
-            foreach ($this->getProductsArray() as $product){
-                \App\Product::create($product);
-            }
-
-/*            $service = rand(0, 1);
-            \App\Product::create([
-                'name' => $faker->title,
-                'description' => $faker->text(rand(130, 640)),
-                'price' => $faker->randomFloat(null, 5000, 10000),
-                'cost' => $faker->randomFloat(null, null, 3000),
-                'гтше' => (rand(0, 1)) ? "Шт." : "Ед.",
-                'is_service' => $service,
-                'balance' => $service ? 1 : rand(3, 100),
-                'stock_id' => $stock,
-                'subdivision_id' => $subdivision,
-            ]);*/
+        foreach ($this->getProductsArray() as $product){
+            \App\Product::create($product);
         }
     }
 

@@ -12,7 +12,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = new \App\User();
-        $user->name = 'User';
+        $user->name = 'First';
+        $user->surname = 'User';
+        $user->patronymic = 'and test';
         $user->email = 'user@user.com';
         $user->password = bcrypt('userpass');
         if ($user->save()){

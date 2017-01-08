@@ -3,6 +3,7 @@
 namespace App\Modules\User\Http\Requests;
 
 use App\Library\Traits\CurrentUserModel;
+use App\Role;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -28,14 +29,24 @@ class UpdateRoleRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
+     * @param Request $request
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'name' => 'required',
-            'slug' => 'required|alpha_dash|unique:roles,slug',
+            'slug' => 'required|alpha_dash|unique:roles,slug'.$this->findRoleId($request),
         ];
+    }
+
+    public function findRoleId(Request $request)
+    {
+        $patId = '';
+        $role = Role::where('slug',$request->get('slug'))->first();
+        if($role instanceof Role)
+            $patId = ','.$role->id;
+
+        return $patId;
     }
 }

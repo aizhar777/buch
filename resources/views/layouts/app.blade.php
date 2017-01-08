@@ -51,6 +51,7 @@
 <script src="{{url('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- iCheck -->
 <script src="{{url('assets/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{url('assets/plugins/masonry/masonry.min.js')}}"></script>
 <script>
     $(function () {
         $('input').iCheck({
