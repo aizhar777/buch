@@ -16,6 +16,7 @@ use App\Modules\User\Http\Requests\UpdateRolePermissionsRequest;
 use App\Modules\User\Http\Requests\UpdateRoleRequest;
 use App\Modules\User\Http\Requests\UpdateUserPasswordRequest;
 use App\Modules\User\Http\Requests\UpdateUserRequisitesRequest;
+use App\Modules\User\Http\Requests\UpdateUserRoleRequest;
 use App\Requisite;
 use App\Role;
 use App\User;
@@ -168,6 +169,18 @@ class DataController extends Controller
         ]);
     }
 
+    public function updateUserRole($id, UpdateUserRoleRequest $request)
+    {
+        $user = User::where('id', $id)->firstOrFail();
+
+        $user->syncRoles($request->get('roles'));
+        if($user->is_current()) $this->reloadUserRoles();
+
+        \Flash::info(trans('user::module.messages.user.user_role_updated'));
+        return redirect()->route('user.profile',['id' => $id]);
+
+    }
+
     /**
      * Update user profile
      *
@@ -234,10 +247,10 @@ class DataController extends Controller
 
 
         if($role instanceof Role){
-            \Flash::success(trans('user::module.role.created_successfully',['name' => $role->name]));
+            \Flash::success(trans('user::module.messages.role.created_successfully',['name' => $role->name]));
             return redirect()->route('user.roles.show_slug',['slug' => $role->slug]);
         }else{
-            \Flash::error(trans('user::module.role.could_not_create',['name' => $request->input('name')]));
+            \Flash::error(trans('user::module.messages.role.could_not_create',['name' => $request->input('name')]));
             return redirect()->back()->withInput($request->all());
         }
     }

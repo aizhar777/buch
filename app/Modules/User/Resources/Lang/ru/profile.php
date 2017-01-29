@@ -17,6 +17,8 @@ return [
     'trade_with_client' => 'Сделка с :NAME',
     'requisites_not_found' => 'Реквизиты отсутствуют',
     'add_requisite' => 'Добавить реквизиты',
+    'change_role' => 'Изменить Группу пользователя',
+    'user_role' => 'Группа пользователя',
     'requisite' => 'Реквизиты',
     //'test' => 'test',
 

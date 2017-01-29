@@ -38,6 +38,7 @@ class PermissionsTableSeeder extends Seeder
         'create',
         'edit',
         'delete',
+        'change',
     ];
 
     /**

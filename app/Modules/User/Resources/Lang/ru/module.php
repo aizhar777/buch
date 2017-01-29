@@ -37,6 +37,7 @@ return [
             'image_could_not_updated' => 'Не удалось обновить фото',
             'image_uploaded_successfully' => 'Ваше фото успешно загружено',
             'image_could_not_upload' => 'Не удалось загрузить ваше фото',
+            'user_role_updated' => 'Роли пользователя были обновлены'
         ],
 
         'role' => [

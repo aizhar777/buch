@@ -82,7 +82,7 @@
                             <hr>
                         @endif
 
-                        <strong><i class="fa fa-pencil margin-r-5"></i> Roles</strong>
+                        <strong><i class="fa fa-users margin-r-5"></i> Roles</strong>
 
                         <p>
                             @foreach($userRolesArray as $rlLabel) <span class="label label-info">{{$rlLabel}}</span> @endforeach

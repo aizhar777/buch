@@ -65,10 +65,13 @@ class IndexController extends Controller
      */
     public function editAction(User $user)
     {
-        $fields = BFields::getInstance()->all($user->id,$user::TYPE);
+        $fields = BFields::getInstance()->all($user->id, $user::TYPE);
+        $roles  = Role::all();
         return View('user::profile_edit',[
-            'user'=> $user,
-            'fields' => $fields
+            'user'    => $user,
+            'fields'  => $fields,
+            'u_roles' => $user->roles,
+            'roles'   => $roles
         ]);
     }
 

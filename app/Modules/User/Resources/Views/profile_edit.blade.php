@@ -39,6 +39,13 @@
     <!-- Custom Tabs (Pulled to the right) -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
+
+                @perm('change.role')
+                <li class="@if(request('tab') == 'role') active @endif">
+                    <a href="#tab_role" data-toggle="tab">{{trans('user::profile.user_role')}}</a>
+                </li>
+                @endperm
+
                 <li class="@if(request('tab') == 'requisite') active @endif">
                     <a href="#tab_requisite" data-toggle="tab">{{trans('user::profile.requisite')}}</a>
                 </li>
@@ -48,6 +55,7 @@
                 <li class="@if(request('tab') == 'profile' || request('tab') == null) active @endif">
                     <a href="#tab_1" data-toggle="tab">{{trans('user::profile.profile')}}</a>
                 </li>
+
                 <li class="pull-left header"><i class="fa fa-user"></i> {{trans('modules.menu.context.update')}} {{$user->name or trans('modules.empty')}}</li>
             </ul>
             <div class="tab-content">
@@ -181,6 +189,45 @@
                     </form>
                 </div>
                 <!-- /.tab-pane -->
+                @perm('change.role')
+                <div class="tab-pane @if(request('tab') == 'role') active @endif " id="tab_role">
+                    <h3>{{trans('user::profile.change_role')}}</h3>
+                    @if(!empty($roles))
+                    <form method="post" action="{{route('user.update.role',['id' => $user->id])}}">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+
+                        <div class="form-group">
+                            <label for="roles">{{ trans('trans_id') }}</label>
+                            <select name="roles[]" id="roles" class="form-control select_roles" multiple>
+
+                                <?php  ?>
+                                @foreach($roles as $role)
+                                    <option
+                                            value="{{ $role->id }}"
+                                            title="{{ $role->description }}"
+                                            @foreach($u_roles as $u_role)
+                                                @if($u_role->id ==  $role->id)
+                                                    selected
+                                                @endif
+                                            @endforeach
+                                    >{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">{{trans('modules.menu.context.update')}}</button>
+                        </div>
+                    </form>
+                    @else
+                        <div class="alert alert warning">
+                            <p>{{ trans('not_instance_role_trans_id') }}</p>
+                        </div>
+                    @endif
+                </div>
+                <!-- /.tab-pane -->
+                @endperm
             </div>
             <!-- /.tab-content -->
         </div>

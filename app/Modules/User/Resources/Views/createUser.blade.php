@@ -44,22 +44,22 @@
 
                     <div class="form-group">
                       <label for="input_name">{{ trans('user::form.name') }}</label>
-                      <input name="name" type="text" class="form-control" id="input_name" placeholder="{{ trans('user::form.name') }}">
+                      <input name="name" type="text" class="form-control" id="input_name" placeholder="{{ trans('user::form.name') }}" value="{{ old('name') }}">
                     </div>
 
                     <div class="form-group">
                       <label for="input_surname">{{ trans('user::form.surname') }}</label>
-                      <input name="surname" type="text" class="form-control" id="input_surname" placeholder="{{ trans('user::form.surname') }}">
+                      <input name="surname" type="text" class="form-control" id="input_surname" placeholder="{{ trans('user::form.surname') }}" value="{{ old('surname') }}">
                     </div>
 
                     <div class="form-group">
                       <label for="input_patronymic">{{ trans('user::form.patronymic') }}</label>
-                      <input name="patronymic" type="text" class="form-control" id="input_patronymic" placeholder="{{ trans('user::form.patronymic') }}">
+                      <input name="patronymic" type="text" class="form-control" id="input_patronymic" placeholder="{{ trans('user::form.patronymic') }}" value="{{ old('patronymic') }}">
                     </div>
 
                     <div class="form-group">
                       <label for="input_email">{{ trans('user::form.email') }}</label>
-                      <input name="email" type="email" class="form-control" id="input_email" placeholder="{{ trans('user::form.email') }}">
+                      <input name="email" type="email" class="form-control" id="input_email" placeholder="{{ trans('user::form.email') }}" value="{{ old('email') }}">
                     </div>
 
                     <div class="form-group">
@@ -78,7 +78,7 @@
                           <select id="input_role" class="select2_multiple form-control" name="roles[]" multiple>
                               <option value="*">{{ trans('user::form.change') }}</option>
                               @foreach ($roles as $role)
-                                  <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                  <option value="{{ $role->id }}" @if(isset(old('roles')[$role->id])) selected @endif >{{ $role->name }}</option>
                               @endforeach
                           </select>
                         </div>
