@@ -64,13 +64,12 @@ application.updateSettings = function (slug) {
 application.productTradeOptions = function() {
     var self = this;
     var blockOptions = $('#options_block');
-    var st = '<h4>Products:</h4>';
     var html = '';
     $( "#select_products option:selected" ).each(function() {
         var options = $( this );
         html += application.getInputForTradeOptions(options.text(), options.val(),options.attr('data-balance'),options.attr('data-service'));
     });
-    blockOptions.html(st+html);
+    blockOptions.html(html);
 };
 
 application.getInputForTradeOptions = function(title, id, max, is_service) {

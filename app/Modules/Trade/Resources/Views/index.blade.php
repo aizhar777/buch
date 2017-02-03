@@ -7,13 +7,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Trades
-            <small>List</small>
+            {{trans('modules.breadcrumbs.trades')}}
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Trades</a></li>
-            <li class="active">list</li>
+            <li><a href="/dashboard"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li class="active">{{trans('modules.breadcrumbs.trades')}}</li>
         </ol>
     </section>
 
@@ -25,13 +23,12 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">List</h3>
+                <h3 class="box-title">{{ trans('modules.list') }}</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fa fa-times"></i></button>
+                        <i class="fa fa-minus"></i>
+                    </button>
                 </div>
             </div>
             <div class="box-body">
@@ -40,15 +37,15 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>Trade ID</th>
-                            <th>Status</th>
-                            <th>PPC</th>
-                            <th>Curator</th>
-                            <th>Client</th>
-                            <th>Payment is completed</th>
-                            <th>Products</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>{{ trans('trade::view.table.trade_id') }}</th>
+                            <th>{{ trans('trade::view.table.status') }}</th>
+                            <th>{{ trans('trade::view.table.ppc') }}</th>
+                            <th>{{ trans('trade::view.table.curator') }}</th>
+                            <th>{{ trans('trade::view.table.client') }}</th>
+                            <th>{{ trans('trade::view.table.payment_is_completed') }}</th>
+                            <th>{{ trans('trade::view.table.products') }}</th>
+                            <th>{{ trans('trade::view.table.date') }}</th>
+                            <th>{{ trans('trade::view.table.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -67,14 +64,14 @@
                                     <input type="hidden" name="trade" value="null">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="exampleModalLabel">Add Product</h4>
+                                        <h4 class="modal-title" id="exampleModalLabel">{{ trans('trade::view.modal.add_product') }}</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p><i class="fa fa-refresh fa-spin fa-fw"></i> Wait..</p>
+                                        <p><i class="fa fa-refresh fa-spin fa-fw"></i> {{ trans('trade::view.modal.wait') }}</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" onclick="" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="application.addProductFormSend(true);">Add products</button>
+                                        <button type="submit" onclick="" class="btn btn-default" data-dismiss="modal">{{ trans('modules.menu.context.close') }}</button>
+                                        <button type="button" class="btn btn-primary" onclick="application.addProductFormSend(true);">{{ trans('trade::view.modal.add_product') }}</button>
                                     </div>
                                 </form>
                             </div>
@@ -83,7 +80,7 @@
 
                 @else
                     <div class="alert alert-info">
-                        <h4>Trade not found</h4>
+                        <h4>{{ trans('trade::view.trade_not_found') }}</h4>
                     </div>
                 @endif
             </div>
@@ -91,9 +88,9 @@
             <div class="box-footer">
                 @if($trades->total() > 1 )
                     @if(request()->has('items') && is_numeric(request('items')))
-                        {{$trades->appends(['items' => request('items')])->links()}}
+                        {{ $trades->appends(['items' => request('items')])->links() }}
                     @else
-                        {{$trades->links()}}
+                        {{ $trades->links() }}
                     @endif
                 @endif
             </div>

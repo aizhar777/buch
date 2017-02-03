@@ -7,7 +7,7 @@ use App\Library\Module;
 
 class TradeModule extends Module
 {
-    protected $name = 'Trade';
+    protected $name = 'trade::module.module_name';
     protected $permission = 'view.trade';
     /**
      * dropdown links
@@ -38,7 +38,7 @@ class TradeModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '<li><a href="' . route('trade') .'">Trade</a></li><li><a href="' . route('trade.create') .'">Create Trade</a></li>';
+        return '<li><a href="' . route('trade') .'">'. trans('trade::module.module_links.all') .'</a></li><li><a href="' . route('trade.create') .'">'. trans('trade::module.module_links.create') .'</a></li>';
     }
 
     /**

@@ -22,7 +22,7 @@ class AjaxController extends Controller
     public function getProducts($id)
     {
         if(!$this->checkPerm('show.trade'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess(trans('trade:module.messages.access_denied'));
 
         $trade = Trade::findByIdWithAllRelations($id);
         return view('trade::ajax.trade_products',['products' => $trade->products, 'trade_id' => $trade->id]);
@@ -47,7 +47,7 @@ class AjaxController extends Controller
                 "data" => $data
             ];
         }catch (\Exception $e){
-            $msg = "An unknown error occurred, please try again later!";
+            $msg = trans('trade::module.messages.unknown_error');
             if(config('app.debug') == true)
                 $msg .= '<p>' . $e->getMessage() .' '. $e->getFile() . ' on line ' . $e->getLine() . '</p>';
             $response = "<div class='alert alert-error'>" . $msg . "</div>";
@@ -70,24 +70,24 @@ class AjaxController extends Controller
             if($request->ajax()){
                 $result = json_encode([
                     'status' => "success",
-                    'title' => "Update",
-                    'message' => "Quantity of successfully updated",
+                    'title' => trans('trade::module.messages.update'),
+                    'message' => trans('trade::module.messages.quantity_updated_successfully'),
                     "data" => []
                 ]);
             }else{
-                \Flash::success('Quantity updated');
+                \Flash::success(trans('trade::module.messages.quantity_updated'));
                 $result = redirect()->route('trade.show',['id' => $request->get('trade')]);
             }
         }else{
             if($request->ajax()){
                 $result = json_encode([
                     'status' => "error",
-                    'title' => "Update",
-                    'message' => "Can not update quantity of the product, try again later",
+                    'title' => trans('trade::module.messages.update'),
+                    'message' => trans('trade::module.messages.quantity_could_not_update'),
                     "data" => []
                 ]);
             }else{
-                \Flash::error('Can not update quantity of the product, try again later');
+                \Flash::error(trans('trade::module.messages.quantity_could_not_update'));
                 $result = redirect()->route('trade.show',['id' => $request->get('trade')]);
             }
         }

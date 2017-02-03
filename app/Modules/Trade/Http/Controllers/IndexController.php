@@ -27,7 +27,7 @@ class IndexController extends Controller
     public function index()
     {
         if (!$this->checkPerm('view.trade'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess(trans('trade::module.messages.not_enough_rights_to_view'));
 
         $trades = Trade::paginate($this->perPager());
         return view('trade::index', ['trades' => $trades]);
@@ -41,7 +41,7 @@ class IndexController extends Controller
     public function create()
     {
         if (!$this->checkPerm('create.trade'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess(trans('trade::module.messages.not_enough_rights_to_view'));
 
         $products = Product::all();
         $users = User::all();
@@ -68,10 +68,10 @@ class IndexController extends Controller
         $tradeCreated = Trade::createTrade($request);
         if ($tradeCreated instanceof Trade) {
             event(new TradeCreated($tradeCreated, $this->getCurrentUser()));
-            \Flash::success('Trade created!');
+            \Flash::success(trans('trade::module.messages.created_successfully'));
             return redirect()->route('trade');
         } else {
-            \Flash::error('Trade not created!');
+            \Flash::error(trans('trade::module.messages.could_not_create'));
             return redirect()->back()->withInput($request->all());
         }
     }
@@ -85,7 +85,7 @@ class IndexController extends Controller
     public function show($id)
     {
         if (!$this->checkPerm('show.trade'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess(trans('trade:module.messages.access_denied'));
 
         $trade = Trade::findByIdWithAllRelations($id);
 
@@ -103,7 +103,7 @@ class IndexController extends Controller
     public function edit($id)
     {
         if (!$this->checkPerm('create.trade'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess(trans('trade::module.messages.not_enough_rights_to_view'));
 
         $trade = Trade::whereId($id)->with('statuses', 'ppCode', 'client', 'supervisor', 'completer', 'products')->firstOrFail();
         $users = User::all();
@@ -131,10 +131,10 @@ class IndexController extends Controller
         $result = Trade::updateTradeandProducts($request, $id);
 
         if ($result && !is_array($result)) {
-            \Flash::success('Trade updated!');
+            \Flash::success(trans('trade::module.messages.updated_successfully'));
             return redirect()->route('trade.show', ['id' => $id]);
         } else {
-            $errors = '<p>Trade not updated!</p>';
+            $errors = '<p>' . trans('trade::messages.could_not_update') . '</p>';
             foreach ($result as $err) $errors .= "<p>$err</p>";
             \Flash::error($errors);
             return redirect()->back()->withInput($request->all());
@@ -149,7 +149,7 @@ class IndexController extends Controller
      */
     public function destroy($id)
     {
-        \Flash::warning('Removing trade unless provided. You can trade moved to the archive. TRADE_ID:' . $id);
+        \Flash::warning(trans('trade::module.messages.trade_not_delete'));
         return redirect()->back();
     }
 }
