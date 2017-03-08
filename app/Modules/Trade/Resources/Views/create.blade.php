@@ -1,19 +1,19 @@
 @extends('layouts.main')
 
-@section('title', 'Create trade -')
+@section('title', trans('trade::module.module_links.create') . ' -')
 
 @section('content')
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Trade
-            <small>Add new</small>
+            {{ trans('trade::module.module_name') }}
+            <small>{{ trans('modules.menu.context.add') }}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Trades</a></li>
-            <li class="active">Add</li>
+            <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{route('trade')}}">{{trans('modules.breadcrumbs.trades')}}</a></li>
+            <li class="active">{{ trans('modules.menu.context.create') }}</li>
         </ol>
     </section>
 
@@ -37,19 +37,20 @@
                     {{csrf_field()}}
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">Title</h3>
+                        <h3 class="box-title">{{ trans('trade::module.forms.form_title_create') }}</h3>
 
                         <div class="box-tools pull-right">
+                            <a class="btn btn-box-tool" href="{{route('trade')}}">{{ trans('trade::module.module_links.all') }}</a>
                             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                <i class="fa fa-minus"></i></button>
-                            <a class="btn btn-box-tool" href="{{route('trade')}}">All trades</a>
+                                <i class="fa fa-minus"></i>
+                            </button>
                         </div>
                     </div>
 
                     <div class="box-body">
 
                         <div class="form-group">
-                            <label for="trade_status" class="control-label">Status</label>
+                            <label for="trade_status" class="control-label">{{ trans('trade::module.forms.input_status_label') }}</label>
                             <select id="trade_status" name="status" class="form-control select2">
                                 @foreach($all_status as $status)
                                     <option value="{{$status->id}}" title="{{$status->description}}">{{$status->name}}</option>
@@ -58,9 +59,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="trade_curator" class="control-label">Curator</label>
+                            <label for="trade_curator" class="control-label">{{ trans('trade::module.forms.input_curator_label') }}</label>
                             <select id="trade_curator" name="curator" class="form-control select2">
-                                <option>Select curator</option>
+                                <option>{{ trans('trade::module.forms.input_curator_placeholder') }}</option>
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
@@ -68,9 +69,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="trade_client" class="control-label">Client</label>
+                            <label for="trade_client" class="control-label">{{ trans('trade::module.forms.input_client_label') }}</label>
                             <select id="trade_client" name="client_id" class="form-control select2" required>
-                                <option>Select client</option>
+                                <option>{{ trans('trade::module.forms.input_client_placeholder') }}</option>
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}}</option>
                                 @endforeach
@@ -78,9 +79,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="trade_ppc" class="control-label">Purchase code</label>
+                            <label for="trade_ppc" class="control-label">{{ trans('trade::module.forms.input_ppc_label') }}</label>
                             <select id="trade_ppc" name="ppc" class="form-control select2">
-                                <option>Select PPC</option>
+                                <option>{{ trans('trade::module.forms.input_ppc_placeholder') }}</option>
                                 @foreach($codes as $ppc)
                                     <option value="{{$ppc->id}}" title="{{$ppc->description}}">{{$ppc->code}}: {{str_limit($ppc->description, 80, '...')}}</option>
                                 @endforeach
@@ -90,7 +91,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button class="btn btn-large btn-primary" type="submit">Create</button>
+                        <button class="btn btn-large btn-primary" type="submit">{{ trans('modules.menu.context.create') }}</button>
                     </div>
                 <!-- /.box-footer-->
                 </form>

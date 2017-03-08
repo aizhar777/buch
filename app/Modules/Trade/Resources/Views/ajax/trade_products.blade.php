@@ -3,15 +3,15 @@
 <table id="products_table" class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th>PID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th style="width: 90px;">Amount</th>
-        <th>Stock</th>
-        <th>Subdivision</th>
-        <th>Sum</th>
-        <th>Action</th>
+        <th>№</th>
+        <th>{{ trans('trade::module.view.product_name') }}</th>
+        <th>{{ trans('trade::module.view.product_desc') }}</th>
+        <th>{{ trans('trade::module.view.product_price') }}</th>
+        <th style="width: 90px;">{{ trans('trade::module.view.product_amount') }}</th>
+        <th>{{ trans('modules.stock') }}</th>
+        <th>{{ trans('modules.subdivision') }}</th>
+        <th>{{ trans('trade::module.view.product_sum') }}</th>
+        <th>{{ trans('modules.menu.context.action') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -46,7 +46,7 @@
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Action <span class="caret"></span>
+                        {{ trans('modules.menu.context.action') }} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a href="#">Action</a></li>
@@ -65,15 +65,15 @@
     </tbody>
     <tfoot>
     <tr>
-        <th>PID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Amount</th>
-        <th>Stock</th>
-        <th>Subdivision</th>
-        <th>Sum</th>
-        <th>Action</th>
+        <th>№</th>
+        <th>{{ trans('trade::module.view.product_name') }}</th>
+        <th>{{ trans('trade::module.view.product_desc') }}</th>
+        <th>{{ trans('trade::module.view.product_price') }}</th>
+        <th>{{ trans('trade::module.view.product_amount') }}</th>
+        <th>{{ trans('modules.stock') }}</th>
+        <th>{{ trans('modules.subdivision') }}</th>
+        <th>{{ trans('trade::module.view.product_sum') }}</th>
+        <th>{{ trans('modules.menu.context.action') }}</th>
     </tr>
     </tfoot>
 </table>

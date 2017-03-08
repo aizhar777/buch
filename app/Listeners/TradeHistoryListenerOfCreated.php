@@ -33,8 +33,8 @@ class TradeHistoryListenerOfCreated
 
         TradeHistory::create([
             'id_trade' => $trade->id,
-            'title' => "Creation of trade#{$trade->id}",
-            'description' => "The creator of {$user->id}#{$user->name}",
+            'title' => trans('trade::module.event.creation_trade', [ 'id' => $trade->id ]),
+            'description' => trans('trade::module.event.trade_creator', [ 'name' => $user->name, 'id' => $user->id ]),
             'params' => json_encode(['trade' => $trade->toArray()]),
         ]);
     }

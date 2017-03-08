@@ -36,8 +36,8 @@ class TradeHistoryListenerOnIncreaseOfItems
 
         TradeHistory::create([
             'id_trade' => $trade->id,
-            'title' => "{$user->id}#{$user->name} added products",
-            'description' => "The creator of {$user->id}#{$user->name}<br>Products" . $this->htmlProductList($products),
+            'title' => trans('trade::module.event.user_added_product_title'),
+            'description' => trans('trade::module.event.user_added_product', [ 'id' => $user->id, 'name' => $user->name ]) . $this->htmlProductList($products),
             'params' => json_encode(['products' => $products->toArray()]),
         ]);
     }
@@ -50,9 +50,18 @@ class TradeHistoryListenerOnIncreaseOfItems
      */
     public function htmlProductList(\Illuminate\Database\Eloquent\Collection $products)
     {
+        $trans_id = 'trade::module.event.item_list_product';
         $html = "<ul>";
         foreach ($products as $product){
-            $html .= '<li>' . $product->name . ' (' . $this->products[$product->id] . ') cost of ' . number_format(($product->price * $this->products[$product->id]), 2, '.', ' ') . config('company.currency') . '</li>';
+            $html .= '<li>';
+
+            $html .= trans($trans_id, [
+                'product' => $product->name,
+                'count' => $this->products[$product->id],
+                'cost' => number_format(($product->price * $this->products[$product->id]), 2, '.', ' '),
+            ]);
+
+            $html .= '</li>';
         }
         return $html.'</ul>';
     }

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Trades -')
+@section('title', trans('trade::module.module_name'))
 
 @section('content')
 

@@ -1,20 +1,19 @@
 @extends('layouts.main')
 
-@section('title', 'Edit trade #' . $trade->id . ' -')
+@section('title', trans('trade::module.trade_edit_title',['id' => $trade->id]))
 
 @section('content')
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Edit trade #{{$trade->id}}
-            <small>it all starts here</small>
+            {{ trans('trade::module.trade_edit_title',['id' => $trade->id]) }}
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="{{route('trade')}}">Trades</a></li>
-            <li><a href="{{route('trade.show',['id' => $trade->id])}}">Trade #{{$trade->id}}</a></li>
-            <li class="active">Edit</li>
+            <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{route('trade')}}">{{trans('modules.breadcrumbs.trades')}}</a></li>
+            <li><a href="{{route('trade.show',['id' => $trade->id])}}">{{ trans('trade::module.trade_title',['id' => $trade->id]) }}</a></li>
+            <li class="active">{{ trans('modules.menu.context.edit') }}</li>
         </ol>
     </section>
 
@@ -37,64 +36,57 @@
     <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Edit trade form</h3>
+                <h3 class="box-title">{{ trans('trade::module.forms.form_title') }}</h3>
 
                 <div class="box-tools pull-right">
-                    <a class="btn btn-box-tool" href="{{route('trade.show',['id' => $trade->id])}}">Back to Trade</a>
-                    <a class="btn btn-box-tool" href="{{route('trade')}}">All trades</a>
+                    <a class="btn btn-box-tool" href="{{route('trade.show',['id' => $trade->id])}}">{{ trans('trade::module.view.back_to_trade') }}</a>
+                    <a class="btn btn-box-tool" href="{{route('trade')}}">{{ trans('trade::module.module_name') }}</a>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    <!--button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button-->
                 </div>
             </div>
             <div class="box-body">
 
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('trade::module.forms.input_status_label') }}</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <select name="status" class="select2 form-control">
                             @foreach($all_status as $status)
-                                <option value="{{$status->id}}" title="{{$status->description}}"
-                                        @if($status->id == $trade->status) selected @endif >{{$status->name}}</option>
+                                <option value="{{$status->id}}" title="{{$status->description}}" @if($status->id == $trade->status) selected @endif >{{$status->name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Curator</label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('trade::module.forms.input_curator_label') }}</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <select name="curator" class="select2 form-control">
-                            <option>Select curator</option>
                             @foreach($users as $user)
-                                <option value="{{$user->id}}"
-                                        @if($user->id == $trade->curator) selected @endif >{{$user->name}}</option>
+                                <option value="{{$user->id}}" @if($user->id == $trade->curator) selected @endif >{{$user->name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Client</label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('trade::module.forms.input_client_label') }}</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <select name="client_id" class="select2 form-control" required>
-                            <option>Select client</option>
                             @foreach($clients as $client)
-                                <option value="{{$client->id}}"
-                                        @if($client->id == $trade->client_id) selected @endif >{{$client->name}}</option>
+                                <option value="{{$client->id}}" @if($client->id == $trade->client_id) selected @endif >{{$client->name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Purchase code</label>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('trade::module.forms.input_ppc_label') }}</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <select name="ppc" class="select2 form-control">
-                            <option>Select PPC</option>
                             @foreach($codes as $ppc)
-                                <option value="{{$ppc->id}}" title="{{$ppc->description}}"
-                                        @if($ppc->id == $trade->ppc) selected @endif >{{$ppc->code}}
-                                    : {{str_limit($ppc->description, 80, '...')}}</option>
+                                <option value="{{$ppc->id}}" title="{{$ppc->description}}" @if($ppc->id == $trade->ppc) selected @endif >
+                                    {{ $ppc->code }} : {{ str_limit($ppc->description, 80, '...') }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -103,7 +95,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button class="btn btn-large btn-primary" type="submit">Update</button>
+                <button class="btn btn-large btn-primary" type="submit">{{ trans('modules.menu.context.update') }}</button>
             </div>
             <!-- /.box-footer-->
         </div>

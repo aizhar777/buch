@@ -93,7 +93,7 @@ application.getTradeProducts = function () {
     wrp_box.append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
     $.get(link.attr('href'), function(data) {
         wrp.html(data);
-        link.html('Update products');
+        link.html(link.attr('data-title-update'));
         wrp_box.find('.overlay').remove();
         console.log('products loaded');
         $('#trade_products_wrapper').trigger('trade.products.loaded');
