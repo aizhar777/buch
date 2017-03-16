@@ -6,7 +6,12 @@ use App\Library\Module;
 
 class SubdivisionModule extends Module
 {
-    public $name = 'Subdivision';
+    public $name = 'subdivision::module.module_name';
+    public $menu_link_format = '<li><a href="%1$s">%2$s</a></li>';
+    public $menu_links_array = [
+        'subdivision' => 'subdivision::module.module_links.all',
+        'subdivision.create' => 'subdivision::module.module_links.create'
+    ];
     protected $permission = 'view.subdivision';
     /**
      * dropdown links
@@ -37,7 +42,14 @@ class SubdivisionModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '<li><a href="' . route('subdivision') . '">All subdivisions</a></li><li><a href="' . route('subdivision.create') . '">Add subdivision</a></li>';
+        $links = '';
+        if (count($this->menu_links_array)) {
+            foreach ($this->menu_links_array as $link => $trans){
+                $links .= sprintf($this->menu_link_format, route($link), trans($trans));
+            }
+        }else $links = null;
+
+        return $links;
     }
 
     /**

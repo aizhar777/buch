@@ -21,7 +21,7 @@ class IndexController extends Controller
     public function index()
     {
         if(!$this->checkPerm('view.subdivision'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('subdivision::module.messages.access_denied') );
 
         $subdivisions = Subdivision::paginate($this->perPager());
         return view('subdivision::index',[
@@ -37,7 +37,7 @@ class IndexController extends Controller
     public function create()
     {
         if(!$this->checkPerm('create.subdivision'))
-            return $this->noAccess('Not enough rights to create');
+            return $this->noAccess( trans('subdivision::module.messages.access_denied') );
 
         $users = User::all();
         return view('subdivision::create',[
@@ -54,7 +54,7 @@ class IndexController extends Controller
     public function show($id)
     {
         if(!$this->checkPerm('show.subdivision'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('subdivision::module.messages.access_denied') );
 
         $sub = Subdivision::where('id',$id)->firstOrFail();
         return view('subdivision::show',['subdivision' => $sub]);
@@ -69,7 +69,7 @@ class IndexController extends Controller
     public function edit($id)
     {
         if(!$this->checkPerm('edit.subdivision'))
-            return $this->noAccess('Not enough rights to edit');
+            return $this->noAccess( trans('subdivision::module.messages.access_denied') );
 
         $sub = Subdivision::where('id',$id)->firstOrFail();
         $users = User::all();
@@ -90,10 +90,10 @@ class IndexController extends Controller
         $newSub = Subdivision::createNewSub($request->all());
 
         if($newSub instanceof Subdivision){
-            \Flash::success('New subdivision created!');
+            \Flash::success( trans('subdivision::module.messages.created_successfully') );
             return redirect()->route('subdivision.show',['id' => $newSub->id]);
         } else {
-            \Flash::error('New subdivision not created!');
+            \Flash::error( trans('subdivision::module.messages.could_not_create') );
             return redirect()->back()->withInput($request->all());
         }
     }
@@ -110,10 +110,10 @@ class IndexController extends Controller
         $sub = Subdivision::updateSub($id, $request->all());
 
         if($sub instanceof Subdivision){
-            \Flash::success('Subdivision ' . $sub->name . ' updated!');
+            \Flash::success( trans('subdivision::module.messages.updated_successfully') );
             return redirect()->route('subdivision.show',['id' => $sub->id]);
         } else {
-            \Flash::error('Subdivision not updated!');
+            \Flash::error( trans('subdivision::module.messages.could_not_update') );
             return redirect()->route('subdivision.show',['id' => $id]);
         }
     }
@@ -127,19 +127,19 @@ class IndexController extends Controller
     public function destroy($id)
     {
         if(!$this->checkPerm('delete.subdivision'))
-            return $this->noAccess('Not enough rights to delete');
+            return $this->noAccess( trans('subdivision::module.messages.access_denied') );
 
         if(Subdivision::all()->count() <= 1){
-            \Flash::warning('You can not delete the last subdivision!');
+            \Flash::warning(  trans('subdivision::module.messages.do_not_delete_the_last_subdivision') );
             return redirect()->back();
         }
 
         $sub = Subdivision::where('id',$id)->firstOrFail();
         if($sub->delete()){
-            \Flash::success('Subdivision Deleted!');
+            \Flash::success( trans('subdivision::module.messages.deleted_successfully') );
             return redirect()->route('subdivision');
         } else {
-            \Flash::error('Subdivision not deleted!');
+            \Flash::error( trans('subdivision::module.messages.could_not_delete') );
             return redirect()->route('subdivision');
         }
     }
