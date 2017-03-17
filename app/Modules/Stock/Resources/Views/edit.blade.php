@@ -4,13 +4,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Edit storage: {{$storage->name or 'Error'}}
-            <small>it all starts here</small>
+            {{$storage->name or 'Error'}}
+            <small>{{ trans('modules.menu.context.edit') }}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Examples</a></li>
-            <li class="active">Blank page</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{ route('stock') }}">{{trans('stock::module.module_links.all')}}</a></li>
+            <li class="active">{{ trans('modules.menu.context.edit') }}</li>
         </ol>
     </section>
 
@@ -34,39 +34,41 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Edit form</h3>
+                    <h3 class="box-title">{{ trans('stock::module.form.edit_stock_form') }}</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                        <a class="btn btn-box-tool" href="{{route('stock.show',['id' => $storage->id])}}">{{ trans('stock::module.view.go_back') }}</a>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="box-body">
 
                     <div class="form-group">
-                        <label for="stock_name" class="control-label col-md-3 col-sm-3 col-xs-12">Name storage</label>
+                        <label for="stock_name" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('stock::module.form.name') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input name="name"  id="stock_name" type="text" class="form-control" placeholder="Stock name" value="{{$storage->name}}">
+                            <input name="name"  id="stock_name" type="text" class="form-control" placeholder="{{ trans('stock::module.form.name') }}" value="{{$storage->name}}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="stock_slug" class="control-label col-md-3 col-sm-3 col-xs-12">Slug storage</label>
+                        <label for="stock_slug" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('stock::module.form.slug') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input name="slug"  id="stock_slug" type="text" class="form-control" placeholder="Stock slug" value="{{$storage->slug}}">
-                            <span id="helpBlock" class="help-block">Only Latin characters and dashes "-" or "_"</span>
+                            <input name="slug"  id="stock_slug" type="text" class="form-control" placeholder="{{ trans('stock::module.form.slug') }}" value="{{$storage->slug}}">
+                            <span id="helpBlock" class="help-block">{{ trans('stock::module.form.only_latin_and_dashes') }}</span>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="stock_description" class="control-label col-md-3 col-sm-3 col-xs-12">Description storage</label>
+                        <label for="stock_description" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('stock::module.form.desc') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea name="description" id="stock_description" rows="5" class="form-control" placeholder="Stock description">{{$storage->description}}</textarea>
+                            <textarea name="description" id="stock_description" rows="5" class="form-control" placeholder="{{ trans('stock::module.form.desc') }}">{{$storage->description}}</textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="stock_subdivision" class="control-label col-md-3 col-sm-3 col-xs-12">Subdivision storage</label>
+                        <label for="stock_subdivision" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('stock::module.form.subdivision') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <select id="stock_subdivision" name="subdivision_id" class="form-control">
                                 <option>Choose subdivision</option>
@@ -80,14 +82,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="is_responsible" class="control-label col-md-3 col-sm-3 col-xs-12">Add responseble for storage</label>
+                        <label for="is_responsible" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('stock::module.form.add_responsible_checkbox') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input name="is_responsible"  id="is_responsible" type="checkbox" @if(!empty($storage->is_responsible)) checked @endif >
                         </div>
                     </div>
 
                     <div class="form-group" id="stock_responsible_wrap">
-                        <label for="stock_responsible" class="control-label col-md-3 col-sm-3 col-xs-12">Responsible for storage</label>
+                        <label for="stock_responsible" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('stock::module.form.responsible') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <select id="stock_responsible" name="responsible" class="form-control">
                                 <option value="">Choose user</option>
@@ -103,7 +105,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button class="btn btn-large btn-primary" type="submit">Update</button>
+                    <button class="btn btn-large btn-primary" type="submit">{{ trans('modules.menu.context.update') }}</button>
                 </div>
                 <!-- /.box-footer-->
             </div>

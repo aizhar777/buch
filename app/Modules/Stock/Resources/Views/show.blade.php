@@ -6,12 +6,11 @@
     <section class="content-header">
         <h1>
             {{$stock->name or 'Error'}}
-            <small>it all starts here</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Examples</a></li>
-            <li class="active">Blank page</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{ route('stock') }}">{{trans('stock::module.module_links.all')}}</a></li>
+            <li class="active">{{$stock->name or 'Error'}}</li>
         </ol>
     </section>
 
@@ -33,25 +32,24 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Storage: {{$stock->name or 'Error'}}</h3>
+                <h3 class="box-title">{{$stock->name or 'Error'}}</h3>
 
                 <div class="box-tools pull-right">
-                    <a class="btn btn-box-tool" href="{{route('stock')}}">All store</a>
-                    <a class="btn btn-box-tool" href="{{route('stock.edit',['id' => $stock->id])}}">Edit</a>
-                    <a class="btn btn-box-tool" onclick="event.preventDefault();document.getElementById('stock-{{$stock->id}}-delete-form').submit();">Delete</a>
+                    <a class="btn btn-box-tool" href="{{route('stock')}}">{{trans('stock::module.module_links.all')}}</a>
+                    <a class="btn btn-box-tool" href="{{route('stock.edit',['id' => $stock->id])}}">{{ trans('modules.menu.context.edit') }}</a>
+                    <a class="btn btn-box-tool" onclick="event.preventDefault();document.getElementById('stock-{{$stock->id}}-delete-form').submit();">{{ trans('modules.menu.context.delete') }}</a>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                 </div>
                 @include('forms.stock_delete_form', ['id' => $stock->id])
             </div>
             <div class="box-body">
-                <div><b>Name:</b> {{$stock->name}}</div>
-                <div><b>Slug:</b> {{$stock->slug}}</div>
-                <div><b>Description:</b> {{$stock->description or 'Empty'}}</div>
-                <div><b>Address:</b> {{$stock->address or 'None'}}</div>
-                <div><b>Subdivision:</b> {{$stock->subdivision->name or 'Empty'}}</div>
-                <div><b>Responsible:</b> {{$stock->user->name or 'None'}}</div>
-                <div><b>Date:</b> {{date('d.m.Y H:i', strtotime($stock->created_at))}}</div>
+                <div><b>{{ trans('stock::module.view.name') }}:</b> {{$stock->name}}</div>
+                <div><b>{{ trans('stock::module.view.slug') }}:</b> {{$stock->slug}}</div>
+                <div><b>{{ trans('stock::module.view.desc') }}:</b> {{$stock->description or trans('stock::module.empty')}}</div>
+                <div><b>{{ trans('stock::module.view.address') }}:</b> {{$stock->address or trans('stock::module.empty')}}</div>
+                <div><b>{{ trans('stock::module.view.subdivision') }}:</b> {{$stock->subdivision->name or trans('stock::module.none')}}</div>
+                <div><b>{{ trans('stock::module.view.responsible') }}:</b> {{$stock->user->name or trans('stock::module.none')}}</div>
+                <div><b>{{ trans('stock::module.view.date') }}:</b> {{date('d.m.Y H:i', strtotime($stock->created_at))}}</div>
             </div>
             <!-- /.box-body -->
         </div>

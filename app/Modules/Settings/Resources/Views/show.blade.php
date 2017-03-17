@@ -45,6 +45,10 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <th>Clear cache</th>
+                            <th><a href="{{ route('clearCache') }}">Clear</a></th>
+                        </tr>
                         @foreach($settings as $setting)
                             <tr>
                                 <th>{{$setting->name}}</th>

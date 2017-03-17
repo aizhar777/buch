@@ -13,8 +13,14 @@ use App\Library\Module;
 
 class StockModule extends Module
 {
-    public $name = 'Storage';
+    public $name = 'stock::module.module_name';
     protected $permission = 'view.stock';
+    public $menu_list_link_format = '<li><a href="%1$s">%2$s</a></li>';
+    public $menu_link_format = '<a href="%1$s">%2$s</a>';
+    public $menu_links_array = [
+        'stock' => 'stock::module.module_links.all',
+        'stock.create' => 'stock::module.module_links.create'
+    ];
     /**
      * dropdown links
      *
@@ -23,7 +29,7 @@ class StockModule extends Module
      */
     protected function getDropDown()
     {
-        return '<a href="' . route('stock') . '">All store</a><a href="'.route('stock.create').'">Add new store</a>';
+        return $this->getHtmlLinks(false);
     }
 
     /**
@@ -44,7 +50,7 @@ class StockModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '<li><a href="' . route('stock') . '">All store</a></li><li><a href="'.route('stock.create').'">Add new store</a></li>';
+        return $this->getHtmlLinks(true);
     }
 
     /**
@@ -57,6 +63,25 @@ class StockModule extends Module
     public function getMenuSidebarIcon()
     {
         return 'fa fa-hdd-o';
+    }
+
+    /**
+     * Get html links
+     *
+     * @param bool $hasList
+     * @return null|string
+     */
+    public function getHtmlLinks($hasList = false)
+    {
+        $linksArray = ($hasList)? $this->menu_list_link_format: $this->menu_link_format;
+        $links = '';
+        if (count($this->menu_links_array)) {
+            foreach ($this->menu_links_array as $link => $trans){
+                $links .= sprintf($linksArray, route($link), trans($trans));
+            }
+        }else $links = null;
+
+        return $links;
     }
 
 

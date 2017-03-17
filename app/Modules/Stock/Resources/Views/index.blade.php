@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Stores
-            <small>list</small>
+            {{trans('stock::module.module_links.all')}}
+            <small>{{ trans('modules.list') }}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Stores List</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li class="active">{{trans('stock::module.module_links.all')}}</li>
         </ol>
     </section>
 
@@ -22,12 +22,11 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">List</h3>
+                <h3 class="box-title">{{trans('modules.list')}}</h3>
 
                 <div class="box-tools pull-right">
-                    <a class="btn btn-box-tool" href="{{route('stock.create')}}">Add stock</a>
+                    <a class="btn btn-box-tool" href="{{route('stock.create')}}">{{ trans('stock::module.module_links.create') }}</a>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
                 </div>
             </div>
             <div class="box-body">
@@ -36,15 +35,15 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>#ID</th>
-                            <th>Name</th>
-                            <th>Slug</th>
-                            <th>Description</th>
-                            <th>Subdivision</th>
-                            <th>Responsible</th>
-                            <th>address</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>№</th>
+                            <th>{{ trans('stock::module.view.name') }}</th>
+                            <th>{{ trans('stock::module.view.slug') }}</th>
+                            <th>{{ trans('stock::module.view.desc') }}</th>
+                            <th>{{ trans('stock::module.view.subdivision') }}</th>
+                            <th>{{ trans('stock::module.view.responsible') }}</th>
+                            <th>{{ trans('stock::module.view.address') }}</th>
+                            <th>{{ trans('stock::module.view.date') }}</th>
+                            <th>{{ trans('stock::module.view.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,18 +56,18 @@
                                 <th>{{$stock->subdivision->name or $stock->subdivision_id}}</th>
                                 <th>
                                     @if(!is_null($stock->responsible))
-                                        {{$stock->user->name}}
+                                        <a href="{{ route('user.profile',['id' => $stock->user->id]) }}">{{$stock->user->name or trans('stock::module.none')}}</a>
                                     @else
-                                        None
+                                        {{ trans('stock::module.none') }}
                                     @endif
                                 </th>
-                                <th>{{$stock->address or 'Empty'}}</th>
+                                <th>{{$stock->address or trans('stock::module.empty')}}</th>
                                 <th>{{date('d.m.Y H:i', strtotime($stock->created_at))}}</th>
                                 <th>
                                     <div class="btn-group">
-                                        <a class="btn btn-small btn-primary" href="{{route('stock.show', ['id'=> $stock->id])}}"> View</a>
-                                        <a class="btn btn-small btn-primary" href="{{route('stock.edit', ['id'=> $stock->id])}}"> Edit</a>
-                                        <a class="btn btn-small btn-primary" onclick="event.preventDefault();document.getElementById('stock-{{$stock->id}}-delete-form').submit();"> delete</a>
+                                        <a class="btn btn-sm btn-primary" href="{{route('stock.show', ['id'=> $stock->id])}}"> {{ trans('modules.menu.view.view') }}</a>
+                                        <a class="btn btn-sm btn-primary" href="{{route('stock.edit', ['id'=> $stock->id])}}"> {{ trans('modules.menu.context.edit') }}</a>
+                                        <a class="btn btn-sm btn-primary" onclick="event.preventDefault();document.getElementById('stock-{{$stock->id}}-delete-form').submit();"> {{ trans('modules.menu.context.delete') }}</a>
                                     </div>
                                     @include('forms.stock_delete_form', ['id' => $stock->id])
                                 </th>
@@ -78,7 +77,7 @@
                     </table>
                 @else
                     <div class="alert alert-info">
-                        <h4>Products not found</h4>
+                        <h4>{{ trans('stock::module.messages.stock_not_found') }}</h4>
                     </div>
                 @endif
             </div>

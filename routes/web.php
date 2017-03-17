@@ -20,6 +20,7 @@ Route::get('/dashboard', 'HomeController@dashboard')
 
 #---- TEST -----#
 Route::get('/test', 'TestResourceController@test');
+Route::get('/clear-cache', 'HomeController@clearCache')->name('clearCache');
 
 
 Route::get('/login', function () {

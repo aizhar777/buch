@@ -23,7 +23,7 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('view.stock'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('stock::module.messages.not_enough_rights_to_view') );
 
         $stocks = Stock::paginate($this->perPager());
         return view('stock::index',[
@@ -40,7 +40,7 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('create.stock'))
-            return $this->noAccess('Not enough rights to create');
+            return $this->noAccess( trans('stock::module.messages.not_enough_rights_to_view') );
 
         $subdivisions = Subdivision::all();
         $responsibles = User::all();
@@ -60,7 +60,7 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('show.stock'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('stock::module.messages.not_enough_rights_to_view') );
 
         $stock = Stock::where('id',$id)->firstOrFail();
         return view('stock::show',['stock' => $stock]);
@@ -76,7 +76,7 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('edit.stock'))
-            return $this->noAccess('Not enough rights to esit');
+            return $this->noAccess( trans('stock::module.messages.not_enough_rights_to_view') );
 
         $stock = Stock::where('id',$id)->firstOrFail();
         $subdivisions = Subdivision::all();
@@ -99,10 +99,10 @@ class IndexController extends Controller
         $newStock = Stock::createNewStorage($request->all());
 
         if($newStock instanceof Stock){
-            \Flash::success('New storage created!');
+            \Flash::success( trans('stock::module.messages.created_successfully') );
             return redirect()->route('stock.show',['id' => $newStock->id]);
         } else {
-            \Flash::error('New storage not created!');
+            \Flash::error( trans('stock::module.messages.could_not_create') );
             return redirect()->back()->withInput($request->all());
         }
     }
@@ -119,10 +119,10 @@ class IndexController extends Controller
         $stock = Stock::updateStorage($id, $request->all());
 
         if($stock instanceof Stock){
-            \Flash::success('Storage ' . $stock->name . ' updated!');
+            \Flash::success( trans('stock::module.messages.updated_successfully') );
             return redirect()->route('stock.show',['id' => $stock->id]);
         } else {
-            \Flash::error('Storage not updated!');
+            \Flash::error( trans('stock::module.messages.could_not_update') );
             return redirect()->route('stock.show',['id' => $id]);
         }
     }
@@ -137,19 +137,19 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('delete.stock'))
-            return $this->noAccess('Not enough rights to delete');
+            return $this->noAccess( trans('stock::module.messages.not_enough_rights_to_view') );
 
         if(Stock::all()->count() <= 1){
-            \Flash::warning('You can not delete the last storage!');
+            \Flash::warning( trans('stock::module.messages.do_not_delete_the_last_stock') );
             return redirect()->back();
         }
 
         $stock = Stock::where('id',$id)->firstOrFail();
         if($stock->delete()){
-            \Flash::success('Storage Deleted!');
+            \Flash::success( trans('stock::module.messages.deleted_successfully') );
             return redirect()->route('stock');
         } else {
-            \Flash::error('Storage not deleted!');
+            \Flash::error( trans('stock::module.messages.could_not_delete') );
             return redirect()->route('stock');
         }
     }
