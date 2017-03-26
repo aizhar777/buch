@@ -15,11 +15,11 @@ class DataController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('edit.settings'))
-            return json_encode(['status' => 'error', 'title' => 'Forbiden', 'message' => 'You are not have permission to update']);
+            return json_encode(['status' => 'error', 'title' => 'Forbiden', 'message' =>  trans('settings::module.messages.not_enough_rights_to_view') ]);
 
         $result = [
-            'title' => 'Oh no!',
-            'message' => 'Unable to update settings',
+            'title' => trans('settings::module.messages.oh_no'),
+            'message' => trans('settings::module.messages.could_not_update'),
             'status' => 'error'
         ];
         $settings = Setting::where('slug', $slug)->firstOrFail();
@@ -28,8 +28,8 @@ class DataController extends Controller
                 $settings->value = $request->get('value');
             if($settings->save())
                 $result = [
-                    'title' => 'Settings updated',
-                    'message' => $settings->name . ' successfully updated!',
+                    'title' => trans('settings::module.messages.update',['name' => $settings->name]),
+                    'message' => trans('settings::module.messages.updated'),
                     'status' => 'success'
                 ];
         }

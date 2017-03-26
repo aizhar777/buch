@@ -41,11 +41,13 @@
         @if(\Module::count() > 0)
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">MODULES</li>
+            <li class="header">LINKS</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
             <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+            <li><a href="{{ route('clearCache') }}"><i class="fa fa-eraser"></i> <span>Очистить кэш</span></a></li>
 
+            <li class="header">MODULES</li>
             @foreach(\Module::all() as $module)
                 @if ($module['enabled'])
                     <?php

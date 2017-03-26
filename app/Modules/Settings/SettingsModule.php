@@ -7,7 +7,7 @@ use App\Library\Module;
 
 class SettingsModule extends Module
 {
-    public $name = 'Settings';
+    public $name = 'settings::module.module_name';
     protected $permission = 'view.settings';
     /**
      * dropdown links
@@ -38,7 +38,7 @@ class SettingsModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '<li><a href="'.route('settings').'">All settings</a></li>';
+        return '<li><a href="'.route('settings').'">' . trans('settings::module.module_links.all') . '</a></li>';
     }
 
     /**

@@ -5,13 +5,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Settings
-            <small>site</small>
+            {{trans('settings::module.module_name')}}
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li class="active">all</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li class="active">{{trans('settings::module.module_name')}}</li>
         </ol>
     </section>
 
@@ -23,14 +21,12 @@
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Title</h3>
+                <h3 class="box-title">{{ trans('settings::module.list') }}</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fa fa-times"></i></button>
-                    <a class="btn btn-box-tool" href="#{{route('settings')}}">Add settings</a>
+                        <i class="fa fa-minus"></i>
+                    </button>
                 </div>
             </div>
             <div class="box-body">
@@ -40,15 +36,11 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Value</th>
+                            <th>{{ trans('settings::module.view.name') }}</th>
+                            <th>{{ trans('settings::module.view.value') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th>Clear cache</th>
-                            <th><a href="{{ route('clearCache') }}">Clear</a></th>
-                        </tr>
                         @foreach($settings as $setting)
                             <tr>
                                 <th>{{$setting->name}}</th>
@@ -64,7 +56,7 @@
                                                         <span class="check_label">OFF</span>
                                                     @endif
                                                 </label>
-                                                <span id="helpBlock" class="help-block">{{$setting->description}}</span>
+                                                @if(!empty($setting->description))<span id="helpBlock" class="help-block">{{$setting->description}}</span> @endif
                                             </div>
                                         @else
                                             <div class="input-group" id="id_settings_{{$setting->slug}}">
@@ -73,7 +65,7 @@
                                                     <button class="btn btn-small btn-primary" onclick="application.updateSettings('{{$setting->slug}}');"><i class="fa fa-refresh"></i></button>
                                                 </span>
                                             </div>
-                                            <span id="helpBlock" class="help-block">{{$setting->description}}</span>
+                                            @if(!empty($setting->description)) <span id="helpBlock" class="help-block">{{$setting->description}}</span> @endif
                                         @endif
 
                                     </div>
@@ -85,7 +77,7 @@
 
                 @else
                     <div class="alert alert-info">
-                        <h4>Settings not found</h4>
+                        <h4>{{ trans('settings::module.view.settings_not_found') }}</h4>
                     </div>
                 @endif
             </div>

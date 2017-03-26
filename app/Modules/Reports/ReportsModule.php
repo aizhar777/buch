@@ -7,8 +7,13 @@ use App\Library\Module;
 
 class ReportsModule extends Module
 {
-    public $name = 'Reports';
+    public $name = 'reports::module.module_name';
     protected $permission = 'view.trade';
+    public $menu_link_format = '<li><a href="%1$s">%2$s</a></li>';
+    public $menu_links_array = [
+        'reports' => 'reports::module.module_links.all',
+        'reports.create' => 'reports::module.module_links.create'
+    ];
     /**
      * dropdown links
      *
@@ -38,7 +43,14 @@ class ReportsModule extends Module
      */
     public function getMenuSidebar()
     {
-        return "<li><a href='".route('reports')."'>All</a></li><li><a href='".route('reports.create')."'>Create</a></li>";
+        $links = '';
+        if (count($this->menu_links_array)) {
+            foreach ($this->menu_links_array as $link => $trans){
+                $links .= sprintf($this->menu_link_format, route($link), trans($trans));
+            }
+        }else $links = null;
+
+        return $links;
     }
 
 

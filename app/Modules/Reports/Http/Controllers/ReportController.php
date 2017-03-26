@@ -23,6 +23,7 @@ class ReportController extends Controller
      */
     public function index()
     {
+        //TODO: сделать проверку прав
         $reports = Report::paginate($this->perPager());
         return view('reports::index',['reports' => $reports]);
     }
@@ -45,11 +46,12 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        //TODO: сделать проверку прав
         if ($request->get('report') == 'generate')
         dispatch(new GenerateReport(new ReportGenerator()));
         return json_encode([
             'status' => "success",
-            'message' => 'Creating a report is added to the queue',
+            'message' => trans('reports::module.messages.created'),
         ]);
     }
 

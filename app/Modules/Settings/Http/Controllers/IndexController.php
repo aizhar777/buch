@@ -20,7 +20,7 @@ class IndexController extends Controller
     public function view(Request $request)
     {
         if(!$this->checkPerm('view.settings'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('settings::module.messages.access_denied') );
 
         $settings = Setting::paginate($this->perPager());
         return view('settings::show',[
@@ -31,14 +31,14 @@ class IndexController extends Controller
     public function create()
     {
         if(!$this->checkPerm('create.settings'))
-            return $this->noAccess('Not enough rights to create');
+            return $this->noAccess( trans('settings::module.messages.access_denied') );
         return view('settings::create');
     }
 
     public function edit($id)
     {
         if(!$this->checkPerm('edit.settings'))
-            return $this->noAccess('Not enough rights to edit');
+            return $this->noAccess( trans('settings::module.messages.access_denied') );
         return view('settings::edit');
     }
 }
