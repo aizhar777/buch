@@ -15,18 +15,21 @@ use Illuminate\Support\Facades\Redirect;
 
 class DataController extends Controller
 {
+
     /**
      * Create new product action
      *
+     * @param CreateProductRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(CreateProductRequest $request)
     {
         $product = Product::createNew($request);
         if($product){
-            \Flash::success('New product created!');
+            \Flash::success( trans('products::module.messages.created_successfully') );
             return redirect()->route('products');
         }else{
-            \Flash::error('Error: new product not created!');
+            \Flash::error( trans('products::module.messages.could_not_create') );
             return redirect()->route('products.create')->withInput($request->all());
         }
     }
@@ -35,10 +38,10 @@ class DataController extends Controller
     {
         $product = Product::updateById($id, $request);
         if($product){
-            \Flash::success('Product save!');
+            \Flash::success( trans('products::module.messages.updated_successfully') );
             return redirect()->route('products');
         }else{
-            \Flash::error('Error: Product not saved!');
+            \Flash::error( trans('products::module.messages.could_not_update') );
             return redirect()->route('products.edit',['id' => $id]);
         }
     }
@@ -47,13 +50,13 @@ class DataController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('delete.product'))
-            return $this->noAccess('Not enough rights to delete');
+            return $this->noAccess( trans('products::module.messages.access_denied') );
 
         if(Product::deleteById($id)){
-            \Flash::success('Successfully deleted!');
+            \Flash::success( trans('products::module.messages.deleted_successfully') );
             return redirect()->route('products');
         }else{
-            \Flash::error('Could not delete');
+            \Flash::error( trans('products::module.messages.could_not_delete') );
             return redirect()->route('products',['id' => $id]);
         }
 

@@ -20,7 +20,7 @@ class IndexController extends Controller
     public function viewAll()
     {
         if(!$this->checkPerm('view.product'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('products::module.messages.access_denied') );
 
         $products = Product::with('stock', 'subdivision')->orderBy('updated_at')->paginate($this->perPager());
         return view('products::show',[
@@ -31,7 +31,7 @@ class IndexController extends Controller
     public function viewOne($id)
     {
         if(!$this->checkPerm('show.product'))
-            return $this->noAccess('Not enough rights to view');
+            return $this->noAccess( trans('products::module.messages.access_denied') );
 
         $product = Product::where('id', $id)->firstOrFail();
         return view('products::show_one',[
@@ -43,7 +43,7 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('create.product'))
-            return $this->noAccess('Not enough rights to delete');
+            return $this->noAccess( trans('products::module.messages.access_denied') );
 
         $stocks = Stock::all();
         $subs = Subdivision::all();
@@ -57,7 +57,7 @@ class IndexController extends Controller
     {
         $user = $this->getCurrentUser();
         if(!$this->checkPerm('edit.product'))
-            return $this->noAccess('Not enough rights to delete');
+            return $this->noAccess( trans('products::module.messages.access_denied') );
 
         $product = Product::where('id', $id)->firstOrFail();
         $stocks = Stock::all();

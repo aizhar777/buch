@@ -14,9 +14,14 @@ use App\Product;
 class ProductsModule extends Module
 {
 
-    public $name = 'Products';
+    public $name = 'products::module.module_name';
     public $with_div = 6;
     protected $permission = 'view.product';
+    public $menu_link_format = '<li><a href="%1$s">%2$s</a></li>';
+    public $menu_links_array = [
+        'products' => 'products::module.module_links.all',
+        'products.create' => 'products::module.module_links.create'
+    ];
 
     /**
      * dropdown links
@@ -26,8 +31,7 @@ class ProductsModule extends Module
      */
     protected function getDropDown()
     {
-        return '<li><a href="'.route('products').'">All products</a></li>
-        <li><a href="'.route('products.create').'">Create product</a></li>';
+        return $this->createHtmlList();
     }
 
     /**
@@ -38,52 +42,32 @@ class ProductsModule extends Module
     protected function getContent()
     {
         $tableOpen = '<table class="table table-hover table-responsive"> <thead> <tr> 
-            <th>#ID</th> 
-            <th>Name</th> 
-            <th>Description</th> 
-            <th>Price</th> 
-            <th>Cost</th>
-            <th>Is a service</th>
-            <th>Balance</th>
-            <th>Stock</th>
-            <th>Subdivision</th>
-            <th>Created</th>
+            <th>'. trans('products::module.view.id') .'</th> 
+            <th>'. trans('products::module.view.name') .'</th> 
+            <th>'. trans('products::module.view.price') .'</th> 
+            <th>'. trans('products::module.view.cost') .'</th> 
+            <th>'. trans('products::module.view.balance') .'</th>
+            <th>'. trans('products::module.view.date') .'</th>
             </tr> </thead> <tbody> ';
         $tBody = '';
         $tbClose = '</tbody> </table>';
-        $content = '<div class="alert alert-info">You have no products!</div>';
+        $content = '<div class="alert alert-info">'. trans('products::module.messages.not_found') .'</div>';
 
         $products = Product::with('stock', 'subdivision')->take(5);
 
         if($products->count() > 0) {
             foreach ($products->get() as $product) {
                 $date = date('d-m-Y H:s', strtotime($product->created_at));
-
-                $stock = $product->stock_id . ' stock';
-                if($product->stock)
-                    $stock = $product->stock->name;
-
-                $subdivision = $product->subdivision_id . ' subdivision';
-                if($product->subdivision)
-                    $subdivision = $product->subdivision->name;
-
-                $is_service = 'no';
-                if ($product->is_service)
-                    $is_service = 'yes';
-
-                $description = str_limit($product->description,20);
+                $theService = '<span class="label label-default">'. trans('products::module.is_service') .'</span>';
+                $balance = ($product->is_service)? $theService : $product->balance;
 
                 $tBody .= "
                 <tr> 
                     <th>{$product->id}</th> 
                     <td>{$product->name}</td> 
-                    <td>$description</td> 
                     <td>{$product->price}</td> 
                     <td>{$product->cost}</td> 
-                    <td>$is_service</td> 
-                    <td>{$product->balance}</td> 
-                    <td>$stock</td> 
-                    <td>$subdivision</td> 
+                    <td>{$balance}</td> 
                     <td>$date</td> 
                 </tr>
             ";
@@ -102,9 +86,7 @@ class ProductsModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '
-            <li><a href="'.route('products').'">All products</a></li>
-            <li><a href="'.route('products.create').'">Create product</a></li>';
+        return $this->createHtmlList();
     }
 
     /**
@@ -117,5 +99,22 @@ class ProductsModule extends Module
     public function getMenuSidebarIcon()
     {
         return 'fa fa-product-hunt';
+    }
+
+    /**
+     * Create HTML List links
+     *
+     * @return null|string
+     */
+    public function createHtmlList()
+    {
+        $links = '';
+        if (count($this->menu_links_array)) {
+            foreach ($this->menu_links_array as $link => $trans){
+                $links .= sprintf($this->menu_link_format, route($link), trans($trans));
+            }
+        }else $links = null;
+
+        return $links;
     }
 }

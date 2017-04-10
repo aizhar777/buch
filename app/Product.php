@@ -60,6 +60,7 @@ class Product extends Model
         'description',
         'price',
         'cost',
+        'unit',
         'is_service',
         'balance',
         'stock_id',
@@ -137,6 +138,12 @@ class Product extends Model
         return false;
     }
 
+    /**
+     * Delete product
+     *
+     * @param integer $id
+     * @return bool
+     */
     public static function deleteById($id)
     {
         $product = self::find($id)->firstOrFail();

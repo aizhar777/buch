@@ -125,12 +125,12 @@ class ForeignKeysSetupAllTables extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->foreign('stock_id')
                 ->references('id')->on('stocks')
-                ->onDelete('set null')
+                ->onDelete('SET NULL')
                 ->onUpdate('no action');
 
             $table->foreign('subdivision_id')
                 ->references('id')->on('subdivisions')
-                ->onDelete('set null')
+                ->onDelete('SET NULL')
                 ->onUpdate('no action');
         });
 
@@ -144,7 +144,7 @@ class ForeignKeysSetupAllTables extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('image_id')
                 ->references('id')->on('images')
-                ->onDelete('set null')
+                ->onDelete('SET NULL')
                 ->onUpdate('restrict');
         });
 
