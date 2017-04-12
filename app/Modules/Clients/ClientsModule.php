@@ -9,9 +9,15 @@ use App\User;
 
 class ClientsModule extends Module
 {
-    public $name = 'Clients';
+    public $name = 'clients::module.module_name';
     public $with_div = 6;
     protected $permission = 'view.client';
+    public $menu_list_link_format = '<li><a href="%1$s">%2$s</a></li>';
+    public $menu_link_format = '<a href="%1$s">%2$s</a>';
+    public $menu_links_array = [
+        'clients' => 'clients::module.module_links.all',
+        'clients.create' => 'clients::module.module_links.create'
+    ];
 
     /**
      * dropdown links
@@ -21,8 +27,7 @@ class ClientsModule extends Module
      */
     protected function getDropDown()
     {
-        return '<li><a href="'.route('clients').'">All client</a></li>
-        <li><a href="'.route('clients.create').'">Create client</a></li>';
+        return $this->createHtmlLinks();
     }
 
     /**
@@ -73,9 +78,25 @@ class ClientsModule extends Module
      */
     public function getMenuSidebar()
     {
-        return '
-            <li><a href="'.route('clients').'">All clients</a></li>
-            <li><a href="'.route('clients.create').'">Create client</a></li>';
+        return $this->createHtmlLinks();
+    }
+
+
+    /**
+     * @param bool $has_list
+     * @return null|string
+     */
+    public function createHtmlLinks($has_list = true)
+    {
+        $format = ($has_list)? $this->menu_list_link_format : $this->menu_link_format;
+        $links = '';
+        if (count($this->menu_links_array)) {
+            foreach ($this->menu_links_array as $link => $trans){
+                $links .= sprintf($format, route($link), trans($trans));
+            }
+        }else $links = null;
+
+        return $links;
     }
 
     /**

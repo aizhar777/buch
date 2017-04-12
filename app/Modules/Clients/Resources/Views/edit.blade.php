@@ -4,14 +4,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{$client->email or 'Error'}}
-            <small>Edit</small>
+            {{$client->name or 'Error'}}
+            <small>{{ trans('modules.menu.context.edit') }}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Clients</a></li>
-            <li><a href="#">{{$client->email or 'Error'}}</a></li>
-            <li class="active">Edit</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{ route('clients') }}">{{trans('clients::module.module_name')}}</a></li>
+            <li><a href="{{ route('clients',['id' => $client->id]) }}">{{$client->name or trans('clients::module.empty')}}</a></li>
+            <li class="active">{{ trans('modules.menu.context.edit') }}</li>
         </ol>
     </section>
 
@@ -37,43 +37,41 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Edit client form</h3>
+                    <h3 class="box-title">{{ trans('clients::module.form.edit_form_label') }}</h3>
 
                     <div class="box-tools pull-right">
-                        <a class="btn btn-box-tool" href="{{route('clients',['id' => $client->id])}}">Back</a>
-                        <a class="btn btn-box-tool" href="{{route('clients')}}">All clients</a>
+                        <a class="btn btn-box-tool" href="{{route('clients',['id' => $client->id])}}">{{ trans('modules.menu.context.back') }}</a>
+                        <a class="btn btn-box-tool" href="{{route('clients')}}">{{trans('clients::module.module_links.all')}}</a>
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                        <!--button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button-->
                     </div>
                 </div>
                 <div class="box-body">
 
                     <div class="form-group">
-                        <label for="client_name" class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
+                        <label for="client_name" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.name') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input name="name"  id="client_name" type="text" class="form-control" placeholder="Client Name" value="{{$client->name}}">
+                            <input name="name"  id="client_name" type="text" class="form-control" placeholder="{{ trans('clients::module.form.name') }}" value="{{$client->name}}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="client_email" class="control-label col-md-3 col-sm-3 col-xs-12">E-mail</label>
+                        <label for="client_email" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.email') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input name="email"  id="client_email" type="text" class="form-control" placeholder="Client email" value="{{$client->email}}">
+                            <input name="email"  id="client_email" type="text" class="form-control" placeholder="{{ trans('clients::module.form.email') }}" value="{{$client->email}}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="client_phone" class="control-label col-md-3 col-sm-3 col-xs-12">Phone</label>
+                        <label for="client_phone" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.phone') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input name="phone"  id="client_phone" type="text" class="form-control" placeholder="Client phone" value="{{$client->phone}}">
+                            <input name="phone"  id="client_phone" type="text" class="form-control" placeholder="{{ trans('clients::module.form.phone') }}" value="{{$client->phone}}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="client_curator" class="control-label col-md-3 col-sm-3 col-xs-12">Client curator</label>
+                        <label for="client_curator" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.curator') }}</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <select id="client_curator" name="curator" class="form-control">
-                                <option value="null">Choose curator</option>
                                 @if(!empty($curators))
                                     @foreach($curators as $curator)
                                         <option value="{{$curator->id}}" @if($client->curator == $curator->id) selected @endif >{{$curator->id}}# {{$curator->name}} @if($client->curator == $curator->id) <--current @endif </option>
@@ -119,42 +117,42 @@
                 <!-- Default box -->
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Create requisite form</h3>
+                        <h3 class="box-title">{{ trans('clients::module.form.edit_requisite_form_label') }}</h3>
                     </div>
                     <div class="box-body">
 
                         <div class="form-group">
-                            <label for="requisite_legal_name" class="control-label col-md-3 col-sm-3 col-xs-12">Legal name</label>
+                            <label for="requisite_legal_name" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.legal_name') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[legal_name]" id="requisite_legal_name" type="text" class="form-control" placeholder="Client legal name" value="{{$requisit->legal_name}}">
+                                <input name="requisite[legal_name]" id="requisite_legal_name" type="text" class="form-control" placeholder="{{ trans('clients::module.form.legal_name') }}" value="{{$requisit->legal_name}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_bank" class="control-label col-md-3 col-sm-3 col-xs-12">Bank</label>
+                            <label for="requisite_bank" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.bank') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[bank]" id="requisite_bank" type="text" class="form-control" placeholder="Client's bank" value="{{$requisit->bank}}">
+                                <input name="requisite[bank]" id="requisite_bank" type="text" class="form-control" placeholder="{{ trans('clients::module.form.bank') }}" value="{{$requisit->bank}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_iik" class="control-label col-md-3 col-sm-3 col-xs-12">IIK</label>
+                            <label for="requisite_iik" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.iik') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[iik]" id="requisite_iik" type="text" class="form-control" placeholder="Client's iik" value="{{$requisit->iik}}">
+                                <input name="requisite[iik]" id="requisite_iik" type="text" class="form-control" placeholder="{{ trans('clients::module.form.iik') }}" value="{{$requisit->iik}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_bin" class="control-label col-md-3 col-sm-3 col-xs-12">BIN</label>
+                            <label for="requisite_bin" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.bin') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[bin]" id="requisite_bin" type="text" class="form-control" placeholder="Client's bin" value="{{$requisit->bin}}">
+                                <input name="requisite[bin]" id="requisite_bin" type="text" class="form-control" placeholder="{{ trans('clients::module.form.bin') }}" value="{{$requisit->bin}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_cbe" class="control-label col-md-3 col-sm-3 col-xs-12">CBE</label>
+                            <label for="requisite_cbe" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.cbe') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[cbe]" id="requisite_cbe" type="text" class="form-control" placeholder="Client's cbe" value="{{$requisit->cbe}}">
+                                <input name="requisite[cbe]" id="requisite_cbe" type="text" class="form-control" placeholder="{{ trans('clients::module.form.cbe') }}" value="{{$requisit->cbe}}">
                             </div>
                         </div>
                     </div>
@@ -167,55 +165,51 @@
                 <!-- Default box -->
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Create requisite form</h3>
+                        <h3 class="box-title">{{ trans('clients::module.form.edit_requisite_form_label') }}</h3>
                     </div>
                     <div class="box-body">
 
                         <div class="form-group">
-                            <label for="requisite_legal_name" class="control-label col-md-3 col-sm-3 col-xs-12">Legal name</label>
+                            <label for="requisite_legal_name" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.legal_name') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[legal_name]" id="requisite_legal_name" type="text" class="form-control" placeholder="Client legal name" value="{{$requisite->legal_name}}">
+                                <input name="requisite[legal_name]" id="requisite_legal_name" type="text" class="form-control" placeholder="{{ trans('clients::module.form.legal_name') }}" value="{{$requisite->legal_name}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_bank" class="control-label col-md-3 col-sm-3 col-xs-12">Bank</label>
+                            <label for="requisite_bank" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.bank') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[bank]" id="requisite_bank" type="text" class="form-control" placeholder="Client's bank" value="{{$requisite->bank}}">
+                                <input name="requisite[bank]" id="requisite_bank" type="text" class="form-control" placeholder="{{ trans('clients::module.form.bank') }}" value="{{$requisite->bank}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_iik" class="control-label col-md-3 col-sm-3 col-xs-12">IIK</label>
+                            <label for="requisite_iik" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.iik') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[iik]" id="requisite_iik" type="text" class="form-control" placeholder="Client's iik" value="{{$requisite->iik}}">
+                                <input name="requisite[iik]" id="requisite_iik" type="text" class="form-control" placeholder="{{ trans('clients::module.form.iik') }}" value="{{$requisite->iik}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_bin" class="control-label col-md-3 col-sm-3 col-xs-12">BIN</label>
+                            <label for="requisite_bin" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.bin') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[bin]" id="requisite_bin" type="text" class="form-control" placeholder="Client's bin" value="{{$requisite->bin}}">
+                                <input name="requisite[bin]" id="requisite_bin" type="text" class="form-control" placeholder="{{ trans('clients::module.form.bin') }}" value="{{$requisite->bin}}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="requisite_cbe" class="control-label col-md-3 col-sm-3 col-xs-12">CBE</label>
+                            <label for="requisite_cbe" class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('clients::module.form.cbe') }}</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input name="requisite[cbe]" id="requisite_cbe" type="text" class="form-control" placeholder="Client's cbe" value="{{$requisite->cbe}}">
+                                <input name="requisite[cbe]" id="requisite_cbe" type="text" class="form-control" placeholder="{{ trans('clients::module.form.cbe') }}" value="{{$requisite->cbe}}">
                             </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer">
-                        Footer
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
                 <!-- /.box -->
             @endif
             <div>
-                <button class="btn btn-large btn-primary" type="submit">Edit</button>
+                <button class="btn btn-large btn-primary" type="submit">{{ trans('modules.menu.context.update') }}</button>
             </div>
         </form>
 

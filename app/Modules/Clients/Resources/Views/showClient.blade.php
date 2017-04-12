@@ -8,9 +8,9 @@
             <small>{{$client->email or 'Error'}}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Clients</a></li>
-            <li class="active">{{$client->email or 'Error'}}</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li><a href="{{ route('clients') }}">{{trans('clients::module.module_name')}}</a></li>
+            <li class="active">{{$client->name or trans('modules.empty')}}</li>
         </ol>
     </section>
 
@@ -33,29 +33,37 @@
                 <h3 class="box-title">{{$client->name or 'Error'}}</h3>
 
                 <div class="box-tools pull-right">
-                    <a class="btn btn-box-tool" href="{{route('clients')}}">All clients</a>
-                    <a class="btn btn-box-tool" href="{{route('clients.edit',['id' => $client->id])}}">Edit</a>
-                    <a class="btn btn-box-tool" onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();">Delete</a>
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    <!--button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button-->
+                    <a class="btn btn-box-tool" href="{{route('clients')}}">
+                        {{ trans('clients::module.module_links.all') }}
+                    </a>
+                    <a class="btn btn-box-tool" href="{{route('clients.edit',['id' => $client->id])}}" title="{{ trans('modules.menu.context.edit') }}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-box-tool"
+                       onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();"
+                       title="{{ trans('modules.menu.context.delete') }}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
                 </div>
             </div>
             <div class="box-body">
-                <h4>Client data:</h4>
-                <div><b>Name:</b> {{$client->name}}</div>
-                <div><b>E-Mail:</b> {{$client->email}}</div>
-                <div><b>Phone:</b> {{$client->phone}}</div>
+                <div><b>{{ trans('clients::module.view.name') }}:</b> {{$client->name}}</div>
+                <div><b>{{ trans('clients::module.view.email') }}:</b> {{$client->email}}</div>
+                <div><b>{{ trans('clients::module.view.phone') }}:</b> {{$client->phone}}</div>
                 <div>
-                    <b>Curator:</b>
+                    <b>{{ trans('clients::module.view.curator') }}:</b>
                     @if($client->supervise)
                         <a href="{{route('user.profile',['id' => $client->supervise->id])}}">{{$client->supervise->name}}</a>
                     @else
-                        none
+                        {{ trans('clients::module.none') }}
                     @endif
                 </div>
 
                 @if(!empty($fields))
-                    <h4>Additional Information:</h4>
+                    <h4>{{ trans('clients::module.view.addit_inf') }}:</h4>
                     @foreach($fields as $key => $value)
                         @if(is_array($value['data']))
                             <select name="{{$key}}" id="{{$key}}">
@@ -77,17 +85,17 @@
 
                 @if($client->requisites && $client->requisites->count() > 0)
                     <div class="ln_solid"></div>
-                    <h4>Client requisite</h4>
+                    <h4>{{ trans('clients::module.view.requisites') }}</h4>
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>#ID</th>
-                            <th>Legal name</th>
-                            <th>Bank</th>
-                            <th>IIK</th>
-                            <th>BIN</th>
-                            <th>CBE</th>
-                            <th>Date</th>
+                            <th>{{ trans('clients::module.view.id') }}</th>
+                            <th>{{ trans('clients::module.view.legal_name') }}</th>
+                            <th>{{ trans('clients::module.view.bank') }}</th>
+                            <th>{{ trans('clients::module.view.iik') }}</th>
+                            <th>{{ trans('clients::module.view.bin') }}</th>
+                            <th>{{ trans('clients::module.view.cbe') }}</th>
+                            <th>{{ trans('clients::module.view.date') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -106,7 +114,7 @@
                     </table>
                 @else
                     <div class="alert alert-warning">
-                        The client <strong>no requisites!</strong>
+                        {{ trans('clients::module.messages.req_not_found') }}
                     </div>
                 @endif
             </div>

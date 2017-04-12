@@ -38,7 +38,7 @@ class UserModule extends Module
      */
     protected function getDropDown()
     {
-        return '<a href="/users/list"> All users</a>';
+        return '<li><a href="/users/list"> All users</a></li>';
     }
 
     /**

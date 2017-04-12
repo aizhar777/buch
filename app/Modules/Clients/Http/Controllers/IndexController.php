@@ -9,6 +9,12 @@ use App\User;
 
 class IndexController extends Controller
 {
+    /**
+     * Index page action
+     *
+     * @param null $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|null
+     */
     public function view($id = null)
     {
         $view = null;
@@ -22,10 +28,15 @@ class IndexController extends Controller
         return $view;
     }
 
+    /**
+     * Show All Clients
+     *
+     * @return \Illuminate\View\View
+     */
     public function viewAll()
     {
         if(!$this->checkPerm('view.client'))
-            return $this->noAccess('Insufficient permissions to view');
+            return $this->noAccess( trans('modules.messages.not_enough_rights_to_view') );
 
         $this->perPager();
         $clients = Client::with('requisites', 'supervise')->paginate($this->countItems);
@@ -35,10 +46,16 @@ class IndexController extends Controller
         ]);
     }
 
+    /**
+     * Show One Client
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function viewOne($id)
     {
         if(!$this->checkPerm('show.client'))
-            return $this->noAccess('Insufficient permissions to view');
+            return $this->noAccess( trans('modules.messages.not_enough_rights_to_view') );
 
         $client = Client::whereId($id)->firstOrFail();
         $fields = BFields::getInstance()->all($client->id,$client::TYPE);
@@ -49,19 +66,30 @@ class IndexController extends Controller
         ]);
     }
 
+    /**
+     * Create client Action
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         if(!$this->checkPerm('create.client'))
-            return $this->noAccess('Insufficient permissions to create');
+            return $this->noAccess( trans('modules.messages.not_enough_rights_to_view') );
 
         $users = User::all();
         return view('clients::create',['curators' => $users]);
     }
 
+    /**
+     * Edit client action
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
         if(!$this->checkPerm('edit.client'))
-            return $this->noAccess('Insufficient permissions to delete');
+            return $this->noAccess( trans('modules.messages.not_enough_rights_to_view') );
 
         $client = Client::find($id)->firstOrFail();
         $users = User::all();

@@ -4,13 +4,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Clients
-            <small>list</small>
+            {{ trans('clients::module.module_name') }}
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="#">Examples</a></li>
-            <li class="active">Blank page</li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>  {{trans('modules.breadcrumbs.dashboard')}}</a></li>
+            <li class="active">{{trans('clients::module.module_name')}}</li>
         </ol>
     </section>
 
@@ -30,12 +28,11 @@
     <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">All clients</h3>
+                <h3 class="box-title">{{ trans('clients::module.module_links.all') }}</h3>
 
                 <div class="box-tools pull-right">
-                    <a class="btn btn-box-tool" href="{{route('clients.create')}}">Add client</a>
+                    <a class="btn btn-box-tool" href="{{route('clients.create')}}">{{ trans('clients::module.module_links.create') }}</a>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    <!--button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button-->
                 </div>
             </div>
             <div class="box-body">
@@ -44,13 +41,13 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>#ID</th>
-                            <th>Name</th>
-                            <th>E-Mail</th>
-                            <th>Phone</th>
-                            <th>Curator</th>
-                            <th>Date</th>
-                            <th>Action</th>
+                            <th>{{ trans('clients::module.view.id') }}</th>
+                            <th>{{ trans('clients::module.view.name') }}</th>
+                            <th>{{ trans('clients::module.view.email') }}</th>
+                            <th>{{ trans('clients::module.view.phone') }}</th>
+                            <th>{{ trans('clients::module.view.curator') }}</th>
+                            <th>{{ trans('clients::module.view.date') }}</th>
+                            <th>{{ trans('clients::module.view.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,15 +61,15 @@
                                     @if($client->supervise)
                                         <a href="{{route('user.profile',['id' => $client->supervise->id])}}">{{$client->supervise->name}}</a>
                                     @else
-                                        none
+                                        {{ trans('clients::module.none') }}
                                     @endif
                                 </th>
                                 <th>{{date('d.m.Y H:i', strtotime($client->created_at))}}</th>
                                 <th>
                                     <div class="btn-group">
-                                        <a class="btn btn-small btn-primary btn-round" href="{{route('clients', ['id'=> $client->id])}}"> View</a>
-                                        <a class="btn btn-small btn-primary btn-round" href="{{route('clients.edit', ['id'=> $client->id])}}"> Edit</a>
-                                        <a class="btn btn-small btn-primary btn-round" onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();"> delete</a>
+                                        <a class="btn btn-small btn-default btn-round" title="{{ trans('modules.menu.view.view') }}" href="{{route('clients', ['id'=> $client->id])}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a class="btn btn-small btn-default btn-round" title="{{ trans('modules.menu.context.edit') }}" href="{{route('clients.edit', ['id'=> $client->id])}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a class="btn btn-small btn-danger btn-round"  title="{{ trans('modules.menu.context.delete') }}" onclick="event.preventDefault();document.getElementById('clients-{{$client->id}}-delete-form').submit();"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </div>
                                     @include('forms.clients_delete_form', ['id' => $client->id])
                                 </th>
@@ -82,7 +79,7 @@
                     </table>
                 @else
                     <div class="alert alert-info">
-                        <h4>Clients not found</h4>
+                        <h4>{{ trans('clients::module.messages.not_found') }}</h4>
                     </div>
                 @endif
             </div>
