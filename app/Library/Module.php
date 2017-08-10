@@ -49,7 +49,7 @@ abstract class Module implements ModuleInterface
     protected $_dropdown = '<div class="btn-group"><button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
                     <i class="fa phpdebugbar-fa-arrow-down"></i></button><ul class="dropdown-menu" role="menu"> %s </ul></div>';
 
-    protected $_content = '<div class="x_content">%s</div>';
+    protected $_content = '<div class="x_content table-responsive">%s</div>';
 
     protected $_sidebarMenu = '<li class="treeview">
                 <a href="#"><i class="%1$s"></i> <span> %2$s </span>

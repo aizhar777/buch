@@ -37,10 +37,13 @@ class ClientsModule extends Module
      */
     protected function getContent()
     {
-        $tableOpen = '<table class="table table-hover table-responsive"> <thead> <tr> <th>#ID</th> <th>Name</th> <th>E-Mail</th> <th>Phone</th> <th>Curator</th><th>Reg date</th></tr> </thead> <tbody> ';
+        $tableOpen = '<table class="table table-hover table-responsive"> <thead> <tr><th>#ID</th>
+<th>'.trans('clients::module.view.name').'</th><th>'.trans('clients::module.view.email').'</th>
+<th>'.trans('clients::module.view.phone').'</th><th>'.trans('clients::module.view.curator').'</th>
+<th>'.trans('clients::module.view.reg_date').'</th></tr> </thead> <tbody>';
         $tBody = '';
         $tbClose = '</tbody> </table>';
-        $content = '<div class="alert alert-info">You have no clients!</div>';
+        $content = '<div class="alert alert-info">'.trans('clients::module.messages.not_found').'</div>';
 
         $clients = Client::with('supervise')->take(10)->get();
 
@@ -48,7 +51,7 @@ class ClientsModule extends Module
 
             foreach ($clients as $client) {
                 $date = date('d-m-Y H:s', strtotime($client->created_at));
-                $curator = 'none';
+                $curator = trans('clients::module.none');
                 if ($client->supervise instanceof User) {
                     $curator = '<a href="' . route('user.profile', ['id' => $client->supervise->id]) . '">' . $client->supervise->name . '</a>';
                 }
